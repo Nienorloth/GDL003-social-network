@@ -13,6 +13,7 @@
 
   /* */
   const register = () => {
+    document.getElementById('id01').style.display="block";
     let email = document.getElementById("email-input").value;
     let password = document.getElementById("password-input").value;
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -39,6 +40,7 @@
       alert("Usuario no existe, favor de registrarse");
     });
   }
+
 
 document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("loginButton").addEventListener("click", login);
