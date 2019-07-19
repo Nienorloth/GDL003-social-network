@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
     <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/x-icon" href="Images/socialicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   </head>
@@ -19,8 +20,24 @@
         <input type="password" placeholder="Contraseña" id="password-input" class="password-input" required/>
         <button type="button" id="loginButton" class="loginButton">Iniciar sesión</button>
         <button type="button" id="registerButton" class="registerButton">Registrar nueva cuenta</button>
+        <button type="button" onclick="document.getElementById('id01').style.display='block'">Registrar nueva cuenta</button>
+        
       </form>
     </section>
+    <section id="registerModal" class="registerModal">
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+              <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <p>Some text. Some text. Some text.</p>
+                <p>Some text. Some text. Some text.</p>
+              </div>
+            </div>
+          </div>
+    </section>
+    
+
+
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
