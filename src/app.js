@@ -8,9 +8,9 @@
   const register = () => {
       let email = document.getElementById("email-input").value;
       let password = document.getElementById("password-input").value;
-      console.log(email,password);
 
+      console.log(email);
+      console.log(password);
+      
   }
-
-
-  document.getElementById("registerButton").addEventListener(click, register);
+  document.getElementById("registerButton").addEventListener("click", register);
