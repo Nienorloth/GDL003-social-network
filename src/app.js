@@ -39,6 +39,8 @@
       let errorMessage = error.message;
       alert("Usuario no existe, favor de registrarse");
     });
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("timeLine").style.display="block";
   }
 
 
