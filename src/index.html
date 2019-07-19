@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
     <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/x-icon" href="Images/socialicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!--First page with login option and register option-->
+    <!--First page with login button and register button-->
     <section id="loginPage" class="loginPage">
       <img class="sociallogo" src="Images/logo.gif" alt="Logo">
       <form class="loginform" method="post">
@@ -21,14 +22,35 @@
         <button type="button" id="registerButton" class="registerButton">Registrar nueva cuenta</button>
       </form>
     </section>
-
-
-
-
+    
+    <!--Modal section for register option-->
+    <section id="registerModal" class="registerModal">
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+              <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div>
+                    <form>
+                      <label for="fname">Correo electrónico:</label>
+                      <input type="text" id="fname" name="firstname" placeholder="Ingrese correo electrónico...">
+                  
+                      <label for="lname">Ingrese contraseña:</label>
+                      <input type="text" id="lname" name="lastname" placeholder="Ingrese su Contraseña..">
+                  
+                      <label for="country">Confirmar contraseña:</label>
+                      <input type="text" id="lname" name="lastname" placeholder="Confirme su contraseña..">
+                      <input type="submit" value="Registrar">
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+    </section>
     <section id="timeLine" class="timeLine">
       <header class="timeLineHeader">
       </header>
     </section>
+    
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
