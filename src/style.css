@@ -1,0 +1,53 @@
+body,html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.sociallogo {
+  display: block;
+  margin: auto;
+  margin-bottom: 25px;
+  width: 60%;
+}
+.loginPage {
+  background-image: url("Images/phoneBackground.png");
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+}
+.loginform {
+  display:block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  margin:auto;
+  padding: 5px;
+  text-align: center;
+  width: 75%;
+}
+.loginLabel {
+  display: flex;
+}
+.email-input,.password-input {
+  background: #F2EFE9;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  height: 25px;
+  margin-bottom: 30px;
+  margin-top: 5px;
+  padding: 5px;
+  width: 95%;
+}
+.loginButton,.registerButton {
+  background: #5BD9CC;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 18px;
+  padding: 7px;
+  width: 73%;
+}
