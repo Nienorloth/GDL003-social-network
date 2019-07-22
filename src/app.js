@@ -12,21 +12,6 @@
   firebase.initializeApp(firebaseConfig);
 
   /* */
-  const register = () => {
-    document.getElementById('id01').style.display="block";
-    let email = document.getElementById("email-input").value;
-    let password = document.getElementById("password-input").value;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function(correct) {
-      alert("Se ha registrado correctamente");
-    })
-    .catch(function(error) {
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      alert("Error, tu contraseña debe ser de mínimo 6 caracteres");
-    });
-  }
-
   const login = () => {
     let email = document.getElementById("email-input").value;
     let password = document.getElementById("password-input").value;
@@ -41,8 +26,33 @@
     });
     document.getElementById("loginPage").style.display="none";
     document.getElementById("timeLine").style.display="block";
-  }
+  };
+
+  const register = () => {
+    document.getElementById('id01').style.display="block";
+    let email = document.getElementById("registerEmail").value="";
+    let password = document.getElementById("registerPassword").value="";
+    let passwordConfirmed = document.getElementById("registerConfirmPassword").value="";
+    let verificationCode = document.getElementById("registerVerificationCode").value="";
+  };
+
+  const registerConfirmed = () => {
+    document.getElementById('id01').style.display="none";
+    let email = document.getElementById("registerEmail").value;
+    let passwordConfirmed = document.getElementById("registerConfirmPassword").value;
+    let verificationCode = document.getElementById("registerVerificationCode").value;
+    firebase.auth().createUserWithEmailAndPassword(email, passwordConfirmed)
+    .then(function(correct) {
+      alert("Se ha registrado correctamente");
+    })
+    .catch(function(error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      alert("Error, tu contraseña debe ser de mínimo 6 caracteres");
+    });
+  };
 
 
-document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("loginButton").addEventListener("click", login);
+document.getElementById("registerButton").addEventListener("click", register);
+document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
