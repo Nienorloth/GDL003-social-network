@@ -62,7 +62,7 @@ body,html {
   height: 15%;
   background-color: #5BD9CC;
 }
-/*Inicio - Modal registrar la contraseña*/
+/*Inicio - Modal registrar*/
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
@@ -71,7 +71,9 @@ input[type=text], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 12px;
 }
+
 
 input[type=submit] {
   width: 100%;
@@ -91,5 +93,5 @@ div {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-/*Fin- Modal registrar la contraseña*/  
+/*Fin- Modal registrar*/  
 
