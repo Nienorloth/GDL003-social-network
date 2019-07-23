@@ -4,7 +4,7 @@ body,html {
   padding: 0;
   width: 100%;
 }
-/*Beginning - Login Section*/
+/* Beginning - Login Section */
 .sociallogo {
   display: block;
   margin: auto;
@@ -52,8 +52,8 @@ body,html {
   padding: 7px;
   width: 73%;
 }
-/*End - Login Section*/
-/*Beginning - Register Modal*/
+/* End - Login Section */
+/* Beginning - Register Modal */
 .registerEmail,.registerPassword,.registerConfirmPassword,.registerVerificationCode {
   width: 100%;
   padding: 12px 20px;
@@ -83,7 +83,57 @@ body,html {
   background-color: #f2f2f2;
   padding: 20px;
 }
-/*End- Register Modal*/
+/* End- Register Modal */
+/* Estilo menu hamburguesa en timeline*/
+.topnav {
+  overflow: hidden;
+  background-color: #5BD9CC;
+  position: relative;
+  height: 12%;
+}
+
+.topnav #myLinks {
+  display: none;
+  background: #5BD9CC;
+  font-weight: bold;
+}
+
+.topnav a {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+.topnav a.icon {
+  background: #5BD9CC;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.topnav a:focus {
+  background-color: #ddd;
+  color: black;
+}
+
+.iconsShown {
+  float: left;
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+#profileIcon {
+  margin-top: 15px;
+  margin-right: 80px;
+}
+
+/*Estilo de cajas publicaciones*/
+.posts {
+  background-color: #E3E1DF;
+}
 /*Beginning- Timeline section*/
 .timeLine {
   display: none;

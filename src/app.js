@@ -8,7 +8,7 @@
       messagingSenderId: "363861063385",
       appId: "1:363861063385:web:6b38d8496fe78f6a"
   };
-  /*Initialize Firebase*/
+  /* Initialize Firebase */
   firebase.initializeApp(firebaseConfig);
 
   /* */
@@ -52,7 +52,31 @@
     });
   };
 
+  /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+  const mobileMenu =  () => {
+    const icons = document.getElementById("myLinks");
+    const topNav = document.querySelector(".topnav");
+    const barsBack = document.querySelector(".icon");
+    const profile = document.getElementById("profileIcon");
+    const logo = document.getElementById("timelineLogo");
+  
+    if (icons.style.display === "block") {
+      icons.style.display = "none";
+      topNav.style.height = "12vh";
+      barsBack.style.backgroundColor="#5BD9CC";
+      profile.style.display = "block";
+      logo.style.display = "block";
+    } else {
+      icons.style.display = "block";
+      topNav.style.height = "29vh";
+      barsBack.style.backgroundColor="#DDD";
+      profile.style.display = "none"
+      logo.style.display = "none";
+    }
+  }
+
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
+document.querySelector(".icon").addEventListener("click", mobileMenu);
