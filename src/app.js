@@ -8,7 +8,7 @@
       messagingSenderId: "363861063385",
       appId: "1:363861063385:web:6b38d8496fe78f6a"
   };
-  /*Initialize Firebase*/
+  /* Initialize Firebase */
   firebase.initializeApp(firebaseConfig);
 
   /* */
