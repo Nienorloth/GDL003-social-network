@@ -85,7 +85,7 @@ body,html {
 }
 /* End- Register Modal */
 
-/* timeline menu style start*/
+/* Beginning Timeline menu style */
 .topnav {
   overflow: hidden;
   background-color: #5BD9CC;
@@ -135,16 +135,10 @@ body,html {
 .posts {
   background-color: #E3E1DF;
 }
-/*Beginning- Timeline section*/
 .timeLine {
   display: none;
   height: 100%;
   width: 100%;
   background-color: #FFFFFF;
 }
-.timeLineHeader {
-  width: 100%;
-  height: 15%;
-  background-color: #5BD9CC;
-}
-/*End- Timeline section*/
+/* End- Timeline menu style */
