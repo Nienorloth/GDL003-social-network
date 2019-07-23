@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
     <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/x-icon" href="Images/socialicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
-    <!--First page with login button and register button-->
+    <!--First page with login option and register option-->
     <section id="loginPage" class="loginPage">
       <img class="sociallogo" src="Images/logo.gif" alt="Logo">
       <form class="loginform" method="post">
@@ -50,10 +50,25 @@
           </div>
     </section>
     <!--Second page for the Timeline section-->
-    <section id="timeLine" class="timeLine">
-      <header class="timeLineHeader">
+    <section id="timeLine" class="timeLine"> 
+      <header class="topnav">
+        <!-- Navigation links (hidden by default) -->
+        <section id="myLinks">
+          <a href="#profile"><img src="Images/icon-user.png">  Perfil de usuario</a>  
+          <a href="#friends"><img src="Images/icon-add-user.png">  Contactos</a>
+          <a href="#settings"><img src="Images/icon-settings.png">  Configuración</a>
+        </section>
+        <img class="iconsShown" id="profileIcon" src="Images/icon-user.png">
+        <img class="iconsShown" id="timelineLogo" src="Images/sociallogo.png" alt="Logo" width="60">
+          <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+          <a  class="icon">
+            <img src="Images/icon-menu.png">
+          </a>  
       </header>
-    </section>
+      <section id="createPost" class="posts">
+
+      </section>
+    </section>           
 
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
