@@ -84,7 +84,8 @@ body,html {
   padding: 20px;
 }
 /* End- Register Modal */
-/* Estilo menu hamburguesa en timeline*/
+
+/* Beginning Timeline menu style */
 .topnav {
   overflow: hidden;
   background-color: #5BD9CC;
@@ -130,15 +131,14 @@ body,html {
   margin-right: 80px;
 }
 
-/*Estilo de cajas publicaciones*/
+/*Posts box style*/
 .posts {
   background-color: #E3E1DF;
 }
-/*Beginning- Timeline section*/
 .timeLine {
   display: none;
   height: 100%;
   width: 100%;
   background-color: #FFFFFF;
 }
-/*End- Timeline section*/
+/* End- Timeline menu style */
