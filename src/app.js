@@ -59,7 +59,7 @@
     const barsBack = document.querySelector(".icon");
     const profile = document.getElementById("profileIcon");
     const logo = document.getElementById("timelineLogo");
-  
+
     if (icons.style.display === "block") {
       icons.style.display = "none";
       topNav.style.height = "12vh";
