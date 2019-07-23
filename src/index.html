@@ -22,9 +22,37 @@
         <button type="button" id="registerButton" class="registerButton">Registrar nueva cuenta</button>
       </form>
     </section>
+    <!--Modal section for register option-->
+    <section id="registerModal" class="registerModal">
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+              <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div class="w3-form">
+                    <form>
+                      <label for="registerEmail">Correo electrónico:</label>
+                      <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+
+                      <label for="registerPassword">Ingrese contraseña:</label>
+                      <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="Ingrese su contraseña...">
+
+                      <label for="registerConfirmPassword">Confirme contraseña:</label>
+                      <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="Confirme su contraseña...">
+
+                      <label for="registerVerificationCode">Ingrese código de verificación:</label>
+                      <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
+
+                      <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+    </section>
+    <!--Second page for the Timeline section-->
     <section id="timeLine" class="timeLine"> 
       <header class="topnav">
-  <!-- Navigation links (hidden by default) -->
+        <!-- Navigation links (hidden by default) -->
         <section id="myLinks">
           <a href="#profile"><img src="Images/icon-user.png">  Perfil de usuario</a>  
           <a href="#friends"><img src="Images/icon-add-user.png">  Contactos</a>
@@ -41,6 +69,7 @@
 
       </section>
     </section>           
+
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
