@@ -6,8 +6,9 @@
     <title>Social Network</title>
     <link rel="stylesheet" href="style.css"/>
     <link rel="shortcut icon" type="image/x-icon" href="Images/socialicon.ico">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
   </head>
   <body>
     <!--First page with login option and register option-->
@@ -23,33 +24,33 @@
       </form>
     </section>
     <!--Modal section for register option-->
-    <section id="registerModal" class="registerModal">
-        <div id="id01" class="w3-modal">
-            <div class="w3-modal-content">
-              <div class="w3-container">
-                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <div class="w3-form">
-                    <form>
-                      <label for="registerEmail">Correo electrónico:</label>
-                      <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+   <section id="registerModal" class="registerModal">
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <div class="w3-form">
+                <form>
+                  <label for="registerEmail">Correo electrónico:</label>
+                  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
 
-                      <label for="registerPassword">Ingrese contraseña:</label>
-                      <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="Ingrese su contraseña...">
+                  <label for="registerPassword">Ingrese contraseña:</label>
+                  <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="Ingrese su contraseña...">
 
-                      <label for="registerConfirmPassword">Confirme contraseña:</label>
-                      <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="Confirme su contraseña...">
+                  <label for="registerConfirmPassword">Confirme contraseña:</label>
+                  <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="Confirme su contraseña...">
 
-                      <label for="registerVerificationCode">Ingrese código de verificación:</label>
-                      <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
+                  <label for="registerVerificationCode">Ingrese código de verificación:</label>
+                  <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
 
-                      <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
-                    </form>
-                  </div>
+                  <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
+                </form>
               </div>
-            </div>
           </div>
-    </section>
-    <!--Second page for the Timeline section-->
+        </div>
+      </div>
+</section>
+<!--Hamburger menu for time line start-->
     <section id="timeLine" class="timeLine"> 
       <header class="topnav">
         <!-- Navigation links (hidden by default) -->
@@ -66,10 +67,10 @@
           </a>  
       </header>
       <section id="createPost" class="posts">
-
+        <p>your post here</p>
       </section>
-    </section>           
-
+    </section>   
+    <!--End of hamburger menu-->        
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
