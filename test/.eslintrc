@@ -5,19 +5,19 @@
     "node": true,
     "jest": true
   },
-  
+
   "parserOptions": {
     "ecmaVersion": 6
   },
-  
+
   "extends": "eslint:recommended",
   "globals": {
-   
+
   },
-  
+
   "rules": {
     "no-console": 0,
     "semi": 2
-    
+
   }
 }

@@ -52,28 +52,28 @@ firebase.auth().createUserWithEmailAndPassword(email, passwordConfirmed)
 });
 };
 
-/* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
-const mobileMenu =  () => {
-const icons = document.getElementById("myLinks");
-const topNav = document.querySelector(".topnav");
-const barsBack = document.querySelector(".icon");
-const profile = document.getElementById("profileIcon");
-const logo = document.getElementById("timelineLogo");
+  /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+  const mobileMenu =  () => {
+    const icons = document.getElementById("myLinks");
+    const topNav = document.querySelector(".topnav");
+    const barsBack = document.querySelector(".icon");
+    const profile = document.getElementById("profileIcon");
+    const logo = document.getElementById("timelineLogo");
 
-if (icons.style.display === "block") {
-  icons.style.display = "none";
-  topNav.style.height = "12vh";
-  barsBack.style.backgroundColor="#5BD9CC";
-  profile.style.display = "block";
-  logo.style.display = "block";
-} else {
-  icons.style.display = "block";
-  topNav.style.height = "29vh";
-  barsBack.style.backgroundColor="#DDD";
-  profile.style.display = "none"
-  logo.style.display = "none";
-}
-}
+    if (icons.style.display === "block") {
+      icons.style.display = "none";
+      topNav.style.height = "12vh";
+      barsBack.style.backgroundColor="#5BD9CC";
+      profile.style.display = "block";
+      logo.style.display = "block";
+    } else {
+      icons.style.display = "block";
+      topNav.style.height = "29vh";
+      barsBack.style.backgroundColor="#DDD";
+      profile.style.display = "none"
+      logo.style.display = "none";
+    }
+  }
 
 
 document.getElementById("loginButton").addEventListener("click", login);
