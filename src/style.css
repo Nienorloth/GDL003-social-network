@@ -93,8 +93,13 @@ body,html {
   background-color: #f2f2f2;
   padding: 20px;
 }
+.registerPassword:invalid,.registerConfirmPassword:invalid {
+  border: 1px solid #F24141;
+}
+.registerPassword:valid,.registerConfirmPassword:valid {
+  border: 1px solid #008000;
+}
 /* End- Register Modal */
-
 /* Beginning Timeline menu style */
 .topnav {
   overflow: hidden;
@@ -147,8 +152,7 @@ body,html {
   padding: 10%;
 }
 /* End- Timeline menu style */
-
-/*Posts box style*/
+/* Posts box style */
 .posts, .publishedPosts {
   background-color: #E3E1DF;
   margin: 0% 8% 0% 8%;
@@ -187,7 +191,7 @@ border-style: double;
 #postButton {
 background-color: #F28816;
 color: white;
-border-radius: 3px; 
+border-radius: 3px;
 border-width: 2px;
 border-style: double;
 }
@@ -198,4 +202,4 @@ display: inline;
   margin-left: 8%;
   margin-right: 65%;
 }
-/*End timeline post box style*/
+/* End timeline post box style */

@@ -11,74 +11,82 @@ let firebaseConfig = {
 /* Initialize Firebase */
 firebase.initializeApp(firebaseConfig);
 
-/* */
+/* Beginning-login function to access to the timeline section */
 const login = () => {
-let email = document.getElementById("email-input").value;
-let password = document.getElementById("password-input").value;
-let loginError = document.getElementById("loginError");
-if (email.length === 0 || password.length === 0) {
-  loginError.innerHTML = "⚠️ Debe completar todos los campos";
-} else {
-  loginError.innerHTML = "";
-  firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(function(correct) {
-    document.getElementById("timeLine").style.display="block";
-    document.getElementById("loginPage").style.display="none";
-  })
-  .catch(function(error) {
-    let errorCode = error.code;
-    let errorMessage = error.message;
-    console.log(error);
-    if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
-      loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
-    }
-  });
-}
+  let email = document.getElementById("email-input").value;
+  let password = document.getElementById("password-input").value;
+  let loginError = document.getElementById("loginError");
+  if (email.length === 0 || password.length === 0) {
+    loginError.innerHTML = "⚠️ Debe completar todos los campos";
+  } else {
+    loginError.innerHTML = "";
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(function(correct) {
+      document.getElementById("timeLine").style.display="block";
+      document.getElementById("loginPage").style.display="none";
+    })
+    .catch(function(error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(error);
+      if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
+        loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
+      }
+    });
+  }
 };
+/* End-login function to access to the timeline section */
 
+/* Beginning-Register function to open register modal */
 const register = () => {
-loginError.innerHTML = "";
-registerError.innerHTML = "";
-document.getElementById('id01').style.display="block";
-let email = document.getElementById("email-input").value="";
-let password = document.getElementById("password-input").value="";
-let registeredEmail = document.getElementById("registerEmail").value="";
-let registeredPassword = document.getElementById("registerPassword").value="";
-let confirmedPassword = document.getElementById("registerConfirmPassword").value="";
-let verificationCode = document.getElementById("registerVerificationCode").value="";
-};
-
-const registerConfirmed = () => {
-let registeredEmail = document.getElementById("registerEmail").value;
-let registeredPassword = document.getElementById("registerPassword").value;
-let confirmedPassword = document.getElementById("registerConfirmPassword").value;
-let verificationCode = document.getElementById("registerVerificationCode").value;
-let registerError = document.getElementById("registerError");
-if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
-  registerError.innerHTML = "⚠️ Debe llenar todos los campos";
-} else if (registeredPassword != confirmedPassword) {
-  registerError.innerHTML = "⚠️ La contraseña no coincide";
-} else {
+  loginError.innerHTML = "";
   registerError.innerHTML = "";
-  firebase.auth().createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
-  .then(function(correct) {
-    alert("Se ha registrado correctamente, por favor inicie sesión");
-    document.getElementById('id01').style.display="none";
-  })
-  .catch(function(error) {
-    let errorCode = error.code;
-    let errorMessage = error.message;
-    console.log(error);
-    if (errorCode === "auth/email-already-in-use") {
-      registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
-    } else if (errorCode === "auth/invalid-email") {
-      registerError.innerHTML = "⚠️ Formato inválido. Verifica tu correo electrónico";
-    }
-  });
-}
+  document.getElementById('id01').style.display="block";
+  let email = document.getElementById("email-input").value="";
+  let password = document.getElementById("password-input").value="";
+  let registeredEmail = document.getElementById("registerEmail").value="";
+  let registeredPassword = document.getElementById("registerPassword").value="";
+  let confirmedPassword = document.getElementById("registerConfirmPassword").value="";
+  let verificationCode = document.getElementById("registerVerificationCode").value="";
 };
+/* End-Register function to open register modal */
 
-  /* Toggle between showing and hiding the navigation menu links when the user clicks on the mobile menu / bar icon */
+/* Beginning-Register function to create new user account */
+const registerConfirmed = () => {
+  let registeredEmail = document.getElementById("registerEmail").value;
+  let registeredPassword = document.getElementById("registerPassword").value;
+  let confirmedPassword = document.getElementById("registerConfirmPassword").value;
+  let verificationCode = document.getElementById("registerVerificationCode").value;
+  let registerError = document.getElementById("registerError");
+  let registerModal = document.getElementById("w3-form");
+  if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+    registerError.innerHTML = "⚠️ Debe llenar todos los campos";
+  } else if (registeredPassword != confirmedPassword) {
+    registerError.innerHTML = "⚠️ La contraseña no coincide";
+  } else {
+    registerError.innerHTML = "";
+    firebase.auth().createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
+    .then(function(correct) {
+      registerModal.innerHTML = "";
+      registerModal.innerHTML = "Su cuenta se ha registrado correctamente, por favor inicie sesión.";
+    })
+    .catch(function(error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(error);
+      if (errorCode === "auth/email-already-in-use") {
+        registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
+      } else if (errorCode === "auth/invalid-email") {
+        registerError.innerHTML = "⚠️ Formato inválido. Verifica tu correo electrónico";
+      } else if (errorCode === "auth/weak-password") {
+        registerError.innerHTML = "⚠️ Tu contraseña debe contener al menos 6 caracteres";
+      }
+    });
+  }
+};
+/* End-Register function to create new user account */
+
+/* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
   const mobileMenu =  () => {
     const icons = document.getElementById("myLinks");
     const topNav = document.querySelector(".topnav");
@@ -100,9 +108,10 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
       profile.style.display = "none";
       logo.style.display = "none";
     }
-  }
+  };
+/* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-/*Inicio-Función para guardar los datos del usuario*/
+/* Beginning-Function to save the user data */
 function guardarDatos(user){
   let users = {
     uid:user.uid,
@@ -112,8 +121,8 @@ function guardarDatos(user){
   }
   firebase.database().ref("prueba/" + user.uid)
   .set(users)
-}
- /*Fin-Función para guardar los datos del usuario*/
+};
+ /* End-Function to save the user data */
 
 
 
