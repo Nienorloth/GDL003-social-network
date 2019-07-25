@@ -78,7 +78,7 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
 }
 };
 
-  /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+  /* Toggle between showing and hiding the navigation menu links when the user clicks on the mobile menu / bar icon */
   const mobileMenu =  () => {
     const icons = document.getElementById("myLinks");
     const topNav = document.querySelector(".topnav");
@@ -94,9 +94,9 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
       logo.style.display = "block";
     } else {
       icons.style.display = "block";
-      topNav.style.height = "28vh";
+      topNav.style.height = "30vh";
       barsBack.style.backgroundColor="#DDD";
-      profile.style.display = "none"
+      profile.style.display = "none";
       logo.style.display = "none";
     }
   }
@@ -114,7 +114,11 @@ function guardarDatos(user){
 }
  /*Fin-Función para guardar los datos del usuario*/
 
+
+
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
+//document.getElementById("profileButton").addEventListener("click", );
+//document.getElementById("port").addEventListener("click", );

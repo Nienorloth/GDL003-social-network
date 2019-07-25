@@ -131,9 +131,9 @@ body,html {
 }
 
 .iconsShown {
-  float: left;
-  margin-left: 20px;
+  margin-left: 37px;
   margin-top: 5px;
+  display: inline;
 }
 
 #profileIcon {
@@ -146,6 +146,12 @@ body,html {
   height: 100%;
   width: 100%;
   background-color: #FFFFFF;
+}
+
+#port {
+  width: 45%;
+  display: inline;
+  padding: 10%;
 }
 /* End- Timeline menu style */
 
@@ -197,4 +203,4 @@ display: inline;
   margin-left: 8%;
   margin-right: 65%;
 }
-
+/*End timeline post box style*/
