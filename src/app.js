@@ -94,7 +94,7 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
       logo.style.display = "block";
     } else {
       icons.style.display = "block";
-      topNav.style.height = "29vh";
+      topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
       profile.style.display = "none"
       logo.style.display = "none";
