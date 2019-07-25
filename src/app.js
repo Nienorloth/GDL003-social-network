@@ -15,41 +15,67 @@ firebase.initializeApp(firebaseConfig);
 const login = () => {
 let email = document.getElementById("email-input").value;
 let password = document.getElementById("password-input").value;
-firebase.auth().signInWithEmailAndPassword(email, password)
-.then(function(correct) {
-  alert("Está registrado, puede ingresar");
-})
-.catch(function(error) {
-  let errorCode = error.code;
-  let errorMessage = error.message;
-  alert("Usuario no existe, favor de registrarse");
-});
-document.getElementById("loginPage").style.display="none";
-document.getElementById("timeLine").style.display="block";
+let loginError = document.getElementById("loginError");
+if (email.length === 0 || password.length === 0) {
+  loginError.innerHTML = "⚠️ Debe completar todos los campos";
+} else {
+  loginError.innerHTML = "";
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then(function(correct) {
+    document.getElementById("timeLine").style.display="block";
+    document.getElementById("loginPage").style.display="none";
+  })
+  .catch(function(error) {
+    let errorCode = error.code;
+    let errorMessage = error.message;
+    console.log(error);
+    if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
+      loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
+    }
+  });
+}
 };
 
 const register = () => {
+loginError.innerHTML = "";
+registerError.innerHTML = "";
 document.getElementById('id01').style.display="block";
-let email = document.getElementById("registerEmail").value="";
-let password = document.getElementById("registerPassword").value="";
-let passwordConfirmed = document.getElementById("registerConfirmPassword").value="";
+let email = document.getElementById("email-input").value="";
+let password = document.getElementById("password-input").value="";
+let registeredEmail = document.getElementById("registerEmail").value="";
+let registeredPassword = document.getElementById("registerPassword").value="";
+let confirmedPassword = document.getElementById("registerConfirmPassword").value="";
 let verificationCode = document.getElementById("registerVerificationCode").value="";
 };
 
 const registerConfirmed = () => {
-document.getElementById('id01').style.display="none";
-let email = document.getElementById("registerEmail").value;
-let passwordConfirmed = document.getElementById("registerConfirmPassword").value;
+let registeredEmail = document.getElementById("registerEmail").value;
+let registeredPassword = document.getElementById("registerPassword").value;
+let confirmedPassword = document.getElementById("registerConfirmPassword").value;
 let verificationCode = document.getElementById("registerVerificationCode").value;
-firebase.auth().createUserWithEmailAndPassword(email, passwordConfirmed)
-.then(function(correct) {
-  alert("Se ha registrado correctamente");
-})
-.catch(function(error) {
-  let errorCode = error.code;
-  let errorMessage = error.message;
-  alert("Error, tu contraseña debe ser de mínimo 6 caracteres");
-});
+let registerError = document.getElementById("registerError");
+if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+  registerError.innerHTML = "⚠️ Debe llenar todos los campos";
+} else if (registeredPassword != confirmedPassword) {
+  registerError.innerHTML = "⚠️ La contraseña no coincide";
+} else {
+  registerError.innerHTML = "";
+  firebase.auth().createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
+  .then(function(correct) {
+    alert("Se ha registrado correctamente, por favor inicie sesión");
+    document.getElementById('id01').style.display="none";
+  })
+  .catch(function(error) {
+    let errorCode = error.code;
+    let errorMessage = error.message;
+    console.log(error);
+    if (errorCode === "auth/email-already-in-use") {
+      registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
+    } else if (errorCode === "auth/invalid-email") {
+      registerError.innerHTML = "⚠️ Formato inválido. Verifica tu correo electrónico";
+    }
+  });
+}
 };
 
   /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */

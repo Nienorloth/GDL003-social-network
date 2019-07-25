@@ -8,7 +8,7 @@ body,html {
 .sociallogo {
   display: block;
   margin: auto;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   width: 60%;
 }
 .loginPage {
@@ -34,13 +34,23 @@ body,html {
   background: #F2EFE9;
   border: 1px solid #000000;
   border-radius: 5px;
+  display: flex;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  height: 25px;
-  margin-bottom: 30px;
-  margin-top: 5px;
-  padding: 5px;
+  height: 35px;
+  margin-bottom: 25px;
+  margin-top: 8px;
+  padding: 8px;
   width: 95%;
+}
+.loginError,.registerError {
+  color: #F24141;
+  box-sizing: content-box;
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 .loginButton,.registerButton {
   background: #5BD9CC;
