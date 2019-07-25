@@ -102,9 +102,9 @@ const registerConfirmed = () => {
       logo.style.display = "block";
     } else {
       icons.style.display = "block";
-      topNav.style.height = "28vh";
+      topNav.style.height = "30vh";
       barsBack.style.backgroundColor="#DDD";
-      profile.style.display = "none"
+      profile.style.display = "none";
       logo.style.display = "none";
     }
   };
@@ -123,7 +123,11 @@ function guardarDatos(user){
 };
  /* End-Function to save the user data */
 
+
+
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
+//document.getElementById("profileButton").addEventListener("click", );
+//document.getElementById("port").addEventListener("click", );
