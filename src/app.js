@@ -83,18 +83,19 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
     const icons = document.getElementById("myLinks");
     const topNav = document.querySelector(".topnav");
     const barsBack = document.querySelector(".icon");
-    const profile = document.getElementById("profileIcon");
+    const profile = document.getElementById("port");
     const logo = document.getElementById("timelineLogo");
 
     if (icons.style.display === "block") {
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "block";
-      logo.style.display = "block";
+      profile.style.display = "inline";
+      logo.style.display = "inline";
+
     } else {
       icons.style.display = "block";
-      topNav.style.height = "30vh";
+      topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
       profile.style.display = "none";
       logo.style.display = "none";
