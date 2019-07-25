@@ -101,6 +101,18 @@ if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmed
     }
   }
 
+/*Inicio-Función para guardar los datos del usuario*/
+function guardarDatos(user){
+  let users = {
+    uid:user.uid,
+    name:user.displayName,
+    email:user.email,
+    photo: user.photoURL
+  }
+  firebase.database().ref("prueba/" + user.uid)
+  .set(users)
+}
+ /*Fin-Función para guardar los datos del usuario*/
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", register);
