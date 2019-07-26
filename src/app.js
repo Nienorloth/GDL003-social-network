@@ -132,22 +132,57 @@ function guardarDatos(user){
 };
  /* End-Function to save the user data */
 
+ // Beginning-Function to edit/update real-time 
  document.addEventListener("DOMContentLoaded", event => {
 
     const app = firebase.app();
-    console.log(app);
     const db = firebase.firestore();
     const myPost = db.collection("posts").doc("firstpost");
 
-    myPost.get()
-      .then(doc => {
+    myPost.onSnapshot(doc => {
           const data = doc.data();
-
+         document.getElementById("pubPosts").innerHTML = data.title + `<br>`;
       })
-
  });
+ 
+ const updatePost = (e) => {
+  const db = firebase.firestore();
+  const myPost = db.collection("posts").doc("firstpost");
+  myPost.update({title: e.target.value})
+ }
+//End-Function to edit/update real-time 
+
+//Beggining-Function to save post on db
+const createPost = () => {
+  const db = firebase.firestore();
+  const toPost = document.getElementById("toPost");
+
+  db.collection("posts").add({
+       text: toPost.value,
+       date: new Date()
+})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+}
+//End-Function to save post on db
 
 
+/*Beginning-Function to show publised posts
+document.getElementById("timelinePosted").innerHTML += 
+`<section class="publishedPosts">
+    <p>${}</p>
+  </section> 
+  <section class="postIcons">
+  <img id="like" src="Images/like.png" alt="editar" width="20">
+  <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
+  <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
+</section>
+`
+*/
 
  /* Beginning-Log out function to close user session */
  const logOut = () => {
@@ -164,6 +199,6 @@ document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
+document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
-//document.getElementById("profileButton").addEventListener("click", );
 //document.getElementById("port").addEventListener("click", );

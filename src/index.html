@@ -69,8 +69,8 @@
           <a  class="icon"><img src="Images/icon-menu.png"></a>
         </header>
         <!--End of mobile menu-->
-        <section id="createPost" class="posts">
-        <p> Escribe una publicación...</p>
+        <section id="createPost" >
+        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
       </section>
       <section class="postButtons">
         <select id="privacyButton">
@@ -81,7 +81,7 @@
       </section>
       <section class="timelinePosted">
         <section class="publishedPosts">
-          <p id="pubPosts">Tu publicación</p>
+          <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
         </section>
           <section class="postIcons">
             <img id="like" src="Images/like.png" alt="editar" width="20">
