@@ -97,7 +97,7 @@ body,html {
   border: 1px solid #F24141;
 }
 .registerPassword:valid,.registerConfirmPassword:valid {
-  border: 1px solid #c1b7b6;
+  border: 1px solid #5BD9CC;
 }
 .registerCorrectMessage {
   text-align: center;
@@ -177,8 +177,10 @@ padding: 2%;
 #createPost{
   font-size: 15px;
 }
-#createPost p {
+#createPost textarea {
   padding: 2%;
+  width: 84%;
+  margin-top: 4%;
 }
 .postButtons {
   position: right;

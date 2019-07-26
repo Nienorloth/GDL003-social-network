@@ -1,3 +1,18 @@
+
+/* Make a variable with each of the Firebase tools */
+const app = firebase.app();
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* Listen when auth status changes */
+auth.onAuthStateChanged(user => {
+  if (user) {
+    console.log("Usuario inició sesión", user);
+  } else {
+    console.log("Usuario cerró sesión");
+  }
+});
+
 /* Beginning-login function to access to the timeline section */
 const login = () => {
   let email = document.getElementById("email-input").value;
@@ -7,39 +22,41 @@ const login = () => {
     loginError.innerHTML = "⚠️ Debe completar todos los campos";
   } else {
     loginError.innerHTML = "";
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function(correct) {
+    auth.signInWithEmailAndPassword(email, password)
+    .then(correct => {
+      loginForm.reset();
       document.getElementById("timeLine").style.display="block";
       document.getElementById("loginPage").style.display="none";
     })
-    .catch(function(error) {
+    .catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
-      console.log(error);
-      if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
+      if (errorCode === "auth/user-not-found") {
         loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
+      } else if (errorCode === "auth/invalid-email") {
+        loginError.innerHTML = "⚠️ Formato inválido. Verifique su correo electrónico";
+      } else if (errorCode === "auth/wrong-password") {
+        loginError.innerHTML = "⚠️ Contraseña incorrecta. Favor de verificar sus datos";
       }
     });
   }
 };
 /* End-login function to access to the timeline section */
 
-/* Beginning-Register function to open register modal */
-const register = () => {
+/* Beginning-Sign up function to open sign up modal and reset input values */
+const signUp = () => {
+  const loginForm = document.getElementById("loginForm");
+  const signUpForm = document.getElementById("signupForm");
+  loginForm.reset();
+  signUpForm.reset();
   loginError.innerHTML = "";
   registerError.innerHTML = "";
   document.getElementById('id01').style.display="block";
-  let email = document.getElementById("email-input").value="";
-  let password = document.getElementById("password-input").value="";
-  let registeredEmail = document.getElementById("registerEmail").value="";
-  let registeredPassword = document.getElementById("registerPassword").value="";
-  let confirmedPassword = document.getElementById("registerConfirmPassword").value="";
-  let verificationCode = document.getElementById("registerVerificationCode").value="";
 };
-/* End-Register function to open register modal */
+/* End-Sign up function to open sign up modal and reset input values */
 
-/* Beginning-Register function to create new user account */
-const registerConfirmed = () => {
+/* Beginning-Sign up function to create new user account */
+const confirmedSignUp = () => {
   let registeredEmail = document.getElementById("registerEmail").value;
   let registeredPassword = document.getElementById("registerPassword").value;
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
@@ -52,15 +69,18 @@ const registerConfirmed = () => {
     registerError.innerHTML = "⚠️ La contraseña no coincide";
   } else {
     registerError.innerHTML = "";
-    firebase.auth().createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
-    .then(function(correct) {
-      registerModal.innerHTML = "";
-      registerModal.innerHTML = "<section class='registerCorrectMessage'><p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p><img src='Images/greenCheck.png' alt='Creación de usuario correcta' class='correctRegisterImage'/></section>";
+    auth.createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
+    .then(correct => {
+      registerModal.innerHTML = `
+      <section class="registerCorrectMessage">
+      <p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p>
+      <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
+      </section>
+      `;
     })
-    .catch(function(error) {
+    .catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
-      console.log(error);
       if (errorCode === "auth/email-already-in-use") {
         registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
       } else if (errorCode === "auth/invalid-email") {
@@ -71,7 +91,7 @@ const registerConfirmed = () => {
     });
   }
 };
-/* End-Register function to create new user account */
+/* End-Sign up function to create new user account */
 
 /* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
   const mobileMenu =  () => {
@@ -99,32 +119,84 @@ const registerConfirmed = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
+ // Beginning-Function to edit/update real-time 
  document.addEventListener("DOMContentLoaded", event => {
 
     const app = firebase.app();
-    console.log(app);
     const db = firebase.firestore();
     const myPost = db.collection("posts").doc("firstpost");
 
-    myPost.get()
-      .then(doc => {
+    myPost.onSnapshot(doc => {
           const data = doc.data();
-         
+         document.getElementById("pubPosts").innerHTML = data.title + `<br>`;
       })
-
  });
+ 
+ const updatePost = (e) => {
+  const db = firebase.firestore();
+  const myPost = db.collection("posts").doc("firstpost");
+  myPost.update({title: e.target.value})
+ }
+//End-Function to edit/update real-time 
 
+//Beggining-Function to save post on db
+const createPost = () => {
+  const db = firebase.firestore();
+  const toPost = document.getElementById("toPost");
+
+  db.collection("posts").add({
+       text: toPost.value,
+       date: new Date()
+})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+}
+//End-Function to save post on db
+
+
+/*Beginning-Function to show publised posts
+document.getElementById("timelinePosted").innerHTML += 
+`<section class="publishedPosts">
+    <p>${}</p>
+  </section> 
+  <section class="postIcons">
+  <img id="like" src="Images/like.png" alt="editar" width="20">
+  <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
+  <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
+</section>
+`
+*/
+
+/* Beginning-Edit profile user function */
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = "<section class='registerCorrectMessage'><p>Seleccione foto de usuario.</p><img src='Images/photo.png'/></section>";
   /*<input type='file' name= 'fichero' values = '' id='fichero' class='hidden'<img src='Images/photo.png'/> */
 };
+/* End-Edit profile user function */
+
+/* Beginning-Log out function to close user session */
+const logOut = () => {
+  auth.signOut().then(() => {
+    document.getElementById("timeLine").style.display="none";
+    document.getElementById("loginPage").style.display="block";
+    loginError.innerHTML = `
+    <span style='color:#5BD9CC';>&#10004; Ha cerrado sesión correctamente</span>`;
+  });
+};
+/* End-Log out function to close user session */
 
 
 document.getElementById("loginButton").addEventListener("click", login);
-document.getElementById("registerButton").addEventListener("click", register);
-document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
+document.getElementById("registerButton").addEventListener("click", signUp);
+document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("profileButton").addEventListener("click", profileUser);
+document.getElementById("postButton").addEventListener("click", createPost);
+document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("port").addEventListener("click", );
