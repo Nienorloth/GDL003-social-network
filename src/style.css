@@ -99,6 +99,12 @@ body,html {
 .registerPassword:valid,.registerConfirmPassword:valid {
   border: 1px solid #008000;
 }
+.registerCorrectMessage {
+  text-align: center;
+}
+.correctRegisterImage {
+  width: 30%;
+}
 /* End- Register Modal */
 /* Beginning Timeline menu style */
 .topnav {
