@@ -68,7 +68,7 @@ const registerConfirmed = () => {
     firebase.auth().createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
     .then(function(correct) {
       registerModal.innerHTML = "";
-      registerModal.innerHTML = "Su cuenta se ha registrado correctamente, por favor inicie sesión.";
+      registerModal.innerHTML = "<section class='registerCorrectMessage'><p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p><img src='Images/greenCheck.png' alt='Creación de usuario correcta' class='correctRegisterImage'/></section>";
     })
     .catch(function(error) {
       let errorCode = error.code;
