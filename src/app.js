@@ -1,16 +1,3 @@
-/* Your web app's Firebase configuration */
-let firebaseConfig = {
-  apiKey: "AIzaSyCG8x2oftKT02S9pAZ0kKprJgQbzulwTmI",
-  authDomain: "comunidadescolar.firebaseapp.com",
-  databaseURL: "https://comunidadescolar.firebaseio.com",
-  projectId: "comunidadescolar",
-  storageBucket: "",
-  messagingSenderId: "363861063385",
-  appId: "1:363861063385:web:6b38d8496fe78f6a"
-};
-/* Initialize Firebase */
-firebase.initializeApp(firebaseConfig);
-
 /* Beginning-login function to access to the timeline section */
 const login = () => {
   let email = document.getElementById("email-input").value;
@@ -112,18 +99,16 @@ const registerConfirmed = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-/* Beginning-Function to save the user data */
-function guardarDatos(user){
+/* Beginning-Function to save the user data*/
+function saveData(user){
   let users = {
     uid:user.uid,
-    name:user.displayName,
     email:user.email,
-    photo: user.photoURL
   }
   firebase.database().ref("prueba/" + user.uid)
   .set(users)
 };
- /* End-Function to save the user data */
+  /*End-Function to save the user data */
 
  document.addEventListener("DOMContentLoaded", event => {
 

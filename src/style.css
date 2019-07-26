@@ -97,7 +97,7 @@ body,html {
   border: 1px solid #F24141;
 }
 .registerPassword:valid,.registerConfirmPassword:valid {
-  border: 1px solid #008000;
+  border: 1px solid #c1b7b6;
 }
 .registerCorrectMessage {
   text-align: center;
@@ -121,7 +121,7 @@ body,html {
   height: 51%;
 }
 .topnav a {
-  color: white;
+  /*color: white;*/
   padding: 14px 20px;
   text-decoration: none;
   font-size: 15px;
