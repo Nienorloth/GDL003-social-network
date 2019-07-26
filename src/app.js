@@ -107,6 +107,7 @@ const registerConfirmed = () => {
       barsBack.style.backgroundColor="#DDD";
       profile.style.display = "none";
       logo.style.display = "none";
+      icons.style.height= "28vh";
     }
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
@@ -124,6 +125,20 @@ function guardarDatos(user){
 };
  /* End-Function to save the user data */
 
+ document.addEventListener("DOMContentLoaded", event => {
+
+    const app = firebase.app();
+    console.log(app);
+    const db = firebase.firestore();
+    const myPost = db.collection("posts").doc("firstpost");
+
+    myPost.get()
+      .then(doc => {
+          const data = doc.data();
+         
+      })
+
+ });
 
 
 document.getElementById("loginButton").addEventListener("click", login);

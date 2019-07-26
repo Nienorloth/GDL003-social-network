@@ -105,12 +105,14 @@ body,html {
   overflow: hidden;
   background-color: #5BD9CC;
   position: relative;
-  height: 12%;
 }
 .topnav #myLinks {
   display: none;
   background: #5BD9CC;
   font-weight: bold;
+}
+#settingsButton {
+  height: 51%;
 }
 .topnav a {
   color: white;
@@ -145,7 +147,6 @@ body,html {
   width: 100%;
   background-color: #FFFFFF;
 }
-
 #port {
   width: 45%;
   display: inline;
