@@ -119,19 +119,6 @@ const confirmedSignUp = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-/* Beginning-Function to save the user data */
-function guardarDatos(user){
-  let users = {
-    uid:user.uid,
-    name:user.displayName,
-    email:user.email,
-    photo: user.photoURL
-  }
-  firebase.database().ref("prueba/" + user.uid)
-  .set(users)
-};
- /* End-Function to save the user data */
-
  // Beginning-Function to edit/update real-time 
  document.addEventListener("DOMContentLoaded", event => {
 
@@ -184,21 +171,32 @@ document.getElementById("timelinePosted").innerHTML +=
 `
 */
 
- /* Beginning-Log out function to close user session */
- const logOut = () => {
-   auth.signOut().then(() => {
-     document.getElementById("timeLine").style.display="none";
-     document.getElementById("loginPage").style.display="block";
-     loginError.innerHTML = `
-     <span style='color:#5BD9CC';>&#10004; Ha cerrado sesión correctamente</span>`;
-   });
- };
+/* Beginning-Edit profile user function */
+const profileUser =  () => {
+  document.getElementById('id01').style.display="block";
+  let  profileModal= document.getElementById("w3-form");
+  profileModal.innerHTML = "<section class='registerCorrectMessage'><p>Seleccione foto de usuario.</p><img src='Images/photo.png'/></section>";
+  /*<input type='file' name= 'fichero' values = '' id='fichero' class='hidden'<img src='Images/photo.png'/> */
+};
+/* End-Edit profile user function */
+
+/* Beginning-Log out function to close user session */
+const logOut = () => {
+  auth.signOut().then(() => {
+    document.getElementById("timeLine").style.display="none";
+    document.getElementById("loginPage").style.display="block";
+    loginError.innerHTML = `
+    <span style='color:#5BD9CC';>&#10004; Ha cerrado sesión correctamente</span>`;
+  });
+};
 /* End-Log out function to close user session */
+
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
+document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("port").addEventListener("click", );

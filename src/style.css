@@ -121,7 +121,7 @@ body,html {
   height: 51%;
 }
 .topnav a {
-  color: white;
+  /*color: white;*/
   padding: 14px 20px;
   text-decoration: none;
   font-size: 15px;

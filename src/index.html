@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" type="image/x-icon" href="Images/socialicon.ico">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-  </head>
-  <body>
+</head>
+
+<body>
     <!--Beginning First page with login option and register option-->
     <section id="loginPage" class="loginPage">
       <img class="sociallogo" src="Images/logo.gif" alt="Logo">
@@ -24,7 +26,8 @@
       </form>
     </section>
     <!--End First page with login option and register option-->
-    <!--Beginning Modal section for register option-->
+
+    <!--Start-Beginning Modal section for register option-->
     <section id="registerModal" class="registerModal">
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
@@ -35,24 +38,24 @@
                       <span id="registerError" class="registerError" aria-live="polite"></span>
                       <label for="registerEmail">Correo electrónico:</label>
                       <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+                            <label for="registerPassword">Ingrese contraseña:</label>
+                            <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
 
-                      <label for="registerPassword">Ingrese contraseña:</label>
-                      <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
+                            <label for="registerConfirmPassword">Confirme contraseña:</label>
+                            <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
 
-                      <label for="registerConfirmPassword">Confirme contraseña:</label>
-                      <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
+                            <label for="registerVerificationCode">Ingrese código de verificación:</label>
+                            <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
 
-                      <label for="registerVerificationCode">Ingrese código de verificación:</label>
-                      <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
-
-                      <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
-                    </form>
+                            <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
     </section>
-    <!--End Modal section for register option-->
+    <!--End- Modal section for register option-->
+
     <!--Beginning Second page Timeline section-->
     <section id="timeLine" class="timeLine">
          <!--Beginning of mobile menu-->
@@ -63,34 +66,35 @@
              <a href="#" id="contactsButton"><img src="Images/icon-add-user.png">  Contactos</a>
              <a href="#" id="settingsButton"><img src="Images/icon-settings.png">  Cerrar sesión</a>
             </section>
-            <a href="#profile" id="port"><img src="Images/icon-user.png"></a>
+            <a href="#profile" id="port"><img src="Images/icon-user.png" class="hidden">
             <img class="iconsShown" id="timelineLogo" src="Images/sociallogo.png" alt="Logo" width="60">
             <!-- "mobile menu" / "Bar icon" to toggle the navigation links -->
-          <a  class="icon"><img src="Images/icon-menu.png"></a>
+            <a class="icon"><img src="Images/icon-menu.png"></a>
         </header>
         <!--End of mobile menu-->
+           
         <section id="createPost" >
-        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
-      </section>
-      <section class="postButtons">
-        <select id="privacyButton">
-          <option id="friendsPost" value="friends">Amigos</option>
-          <option id ="publicPost" value="public">Público</option>
-        </select>
-        <button id="postButton">Publicar</button>
-      </section>
-      <section class="timelinePosted">
-        <section class="publishedPosts">
-          <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
-        </section>
-          <section class="postIcons">
-            <img id="like" src="Images/like.png" alt="editar" width="20">
-            <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-            <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-          </section>
-      </section>
-    </section>
-    <!--End Second page Timeline section-->
+          <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
+           </section>
+           <section class="postButtons">
+             <select id="privacyButton">
+               <option id="friendsPost" value="friends">Amigos</option>
+               <option id ="publicPost" value="public">Público</option>
+             </select>
+             <button id="postButton">Publicar</button>
+           </section>
+           <section class="timelinePosted">
+            <section class="publishedPosts">
+             <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
+             </section>
+             <section class="postIcons">
+              <img id="like" src="Images/like.png" alt="editar" width="20">
+              <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
+              <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
+             </section>
+           </section>
+          </section> 
+        <!--End Second page Timeline section-->
 
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -101,5 +105,6 @@
     <script src="connection.js"></script>
     <script src="app.js"></script>
     <script src="main.js"></script>
-  </body>
+</body>
+
 </html>
