@@ -91,21 +91,23 @@ const registerConfirmed = () => {
     const icons = document.getElementById("myLinks");
     const topNav = document.querySelector(".topnav");
     const barsBack = document.querySelector(".icon");
-    const profile = document.getElementById("profileIcon");
+    const profile = document.getElementById("port");
     const logo = document.getElementById("timelineLogo");
 
     if (icons.style.display === "block") {
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "block";
-      logo.style.display = "block";
+      profile.style.display = "inline";
+      logo.style.display = "inline";
+
     } else {
       icons.style.display = "block";
-      topNav.style.height = "30vh";
+      topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
       profile.style.display = "none";
       logo.style.display = "none";
+      icons.style.height= "28vh";
     }
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
@@ -123,6 +125,20 @@ function guardarDatos(user){
 };
  /* End-Function to save the user data */
 
+ document.addEventListener("DOMContentLoaded", event => {
+
+    const app = firebase.app();
+    console.log(app);
+    const db = firebase.firestore();
+    const myPost = db.collection("posts").doc("firstpost");
+
+    myPost.get()
+      .then(doc => {
+          const data = doc.data();
+         
+      })
+
+ });
 
 
 document.getElementById("loginButton").addEventListener("click", login);

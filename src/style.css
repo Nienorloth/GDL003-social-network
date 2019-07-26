@@ -111,15 +111,15 @@ body,html {
   overflow: hidden;
   background-color: #5BD9CC;
   position: relative;
-  height: 12%;
 }
-
 .topnav #myLinks {
   display: none;
   background: #5BD9CC;
   font-weight: bold;
 }
-
+#settingsButton {
+  height: 51%;
+}
 .topnav a {
   color: white;
   padding: 14px 20px;
@@ -127,7 +127,6 @@ body,html {
   font-size: 15px;
   display: block;
 }
-
 .topnav a.icon {
   background: #5BD9CC;
   display: block;
@@ -135,30 +134,25 @@ body,html {
   right: 0;
   top: 0;
 }
-
 .topnav a:focus {
   background-color: #ddd;
   color: black;
 }
-
 .iconsShown {
   margin-left: 37px;
   margin-top: 5px;
   display: inline;
 }
-
 #profileIcon {
   margin-top: 15px;
   margin-right: 80px;
 }
-
 .timeLine {
   display: none;
   height: 100%;
   width: 100%;
   background-color: #FFFFFF;
 }
-
 #port {
   width: 45%;
   display: inline;
@@ -172,17 +166,20 @@ body,html {
   height: 20%;
   float: center;
 }
-
 .publishedPosts {
   margin: 10% 8% 0% 8%;
   font-size: 15px;
   height: 50%;
 }
-
+.publishedPosts p {
+padding: 2%;
+}
 #createPost{
   font-size: 15px;
 }
-
+#createPost p {
+  padding: 2%;
+}
 .postButtons {
   position: right;
   font-size: 10px;
@@ -190,7 +187,6 @@ body,html {
   float: right;
   margin: 0% 8% 2% 8%;
 }
-
 #privacyButton {
 background-color: #2A2740;
 color: white;
