@@ -99,17 +99,6 @@ const registerConfirmed = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-/* Beginning-Function to save the user data*/
-function saveData(user){
-  let users = {
-    uid:user.uid,
-    email:user.email,
-  }
-  firebase.database().ref("prueba/" + user.uid)
-  .set(users)
-};
-  /*End-Function to save the user data */
-
  document.addEventListener("DOMContentLoaded", event => {
 
     const app = firebase.app();
@@ -125,10 +114,17 @@ function saveData(user){
 
  });
 
+const profileUser =  () => {
+  document.getElementById('id01').style.display="block";
+  let  profileModal= document.getElementById("w3-form");
+  profileModal.innerHTML = "<section class='registerCorrectMessage'><p>Seleccione foto de usuario.</p><img src='Images/photo.png'/></section>";
+  /*<input type='file' name= 'fichero' values = '' id='fichero' class='hidden'<img src='Images/photo.png'/> */
+};
+
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", register);
 document.getElementById("registerConfirm").addEventListener("click", registerConfirmed);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
-//document.getElementById("profileButton").addEventListener("click", );
+document.getElementById("profileButton").addEventListener("click", profileUser);
 //document.getElementById("port").addEventListener("click", );
