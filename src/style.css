@@ -171,8 +171,10 @@ padding: 2%;
 #createPost{
   font-size: 15px;
 }
-#createPost p {
+#createPost textarea {
   padding: 2%;
+  width: 84%;
+  margin-top: 4%;
 }
 .postButtons {
   position: right;
