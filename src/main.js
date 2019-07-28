@@ -3,12 +3,28 @@
 
 let fichero;
 let storageRef;
+let fotoUsuarioRef;
 
  const inicializar = () => {
  fichero = document.getElementById("fichero");
  fichero.addEventListener("change", subirImagenAFirebase, false);
 
 storageRef = firebase.storage().ref();
+fotoUsuarioRef = firebase.database().ref().child("fotousuario");
+
+mostrarImagenDeFirebase();
+
+}
+
+const mostrarImagenDeFirebase = () =>{
+    fotoUsuarioRef.on("value", function(snapshot){
+        let datos = snapshot.val();
+        let result = "";
+        for( let key in datos){
+            result += '<img src = "' + datos[key].url + '"/>';
+        }
+        document.getElementById("imagenFirebase").innerHTML = result;
+    })
 }
 
 const subirImagenAFirebase = () => {
@@ -34,9 +50,13 @@ uploadTask.on('state_changed',
     alert("Hubo un error.")
   }, function() {
     
-     var downloadURL = uploadTask.snapshot.downloadURL;
-      alert("Se subio la imagen con url" + downloadURL);
+     let downloadURL = uploadTask.snapshot.downloadURL;
+     crearNodoFotoUsuario(imagenAsubir.name,downloadURL);
+     //alert("Se subio la imagen con url" + downloadURL);
     
   });
 }
  
+const crearNodoFotoUsuario  = (nombreImagen, downloadURL) => {
+    fotoUsuarioRef.push({ nombre : nombreImagen, url: downloadURL});
+}
