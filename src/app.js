@@ -175,8 +175,8 @@ document.getElementById("timelinePosted").innerHTML +=
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  profileModal.innerHTML = "<section class='registerCorrectMessage'><p>Seleccione foto de usuario.</p><img src='Images/photo.png'/></section>";
-  /*<input type='file' name= 'fichero' values = '' id='fichero' class='hidden'<img src='Images/photo.png'/> */
+  profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'><img src = 'Images/photo.png' class='imagen-reponsive' alt='descargar'></label></section>";
+ 
 };
 /* End-Edit profile user function */
 
@@ -191,6 +191,7 @@ const logOut = () => {
 };
 /* End-Log out function to close user session */
 
+/* */
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
