@@ -3,13 +3,18 @@
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
     console.log("Usuario inició sesión", user);
+    document.getElementById("timeLine").style.display="block";
+    document.getElementById("loginPage").style.display="none";
   } else {
     console.log("Usuario cerró sesión");
+    document.getElementById("timeLine").style.display="none";
+    document.getElementById("loginPage").style.display="block";
   }
 });
 
@@ -25,12 +30,9 @@ const login = () => {
     auth.signInWithEmailAndPassword(email, password)
     .then(correct => {
       loginForm.reset();
-      document.getElementById("timeLine").style.display="block";
-      document.getElementById("loginPage").style.display="none";
     })
     .catch(error => {
       let errorCode = error.code;
-      let errorMessage = error.message;
       if (errorCode === "auth/user-not-found") {
         loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
       } else if (errorCode === "auth/invalid-email") {
@@ -58,12 +60,13 @@ const signUp = () => {
 /* Beginning-Sign up function to create new user account */
 const confirmedSignUp = () => {
   let registeredEmail = document.getElementById("registerEmail").value;
+  let registeredName = document.getElementById("registerName").value;
   let registeredPassword = document.getElementById("registerPassword").value;
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
   let verificationCode = document.getElementById("registerVerificationCode").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
-  if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
     registerError.innerHTML = "⚠️ La contraseña no coincide";
@@ -80,13 +83,12 @@ const confirmedSignUp = () => {
     })
     .catch(error => {
       let errorCode = error.code;
-      let errorMessage = error.message;
       if (errorCode === "auth/email-already-in-use") {
         registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
       } else if (errorCode === "auth/invalid-email") {
-        registerError.innerHTML = "⚠️ Formato inválido. Verifica tu correo electrónico";
+        registerError.innerHTML = "⚠️ Formato inválido. Verifique su correo electrónico";
       } else if (errorCode === "auth/weak-password") {
-        registerError.innerHTML = "⚠️ Tu contraseña debe contener al menos 6 caracteres";
+        registerError.innerHTML = "⚠️ Su contraseña debe contener al menos 6 caracteres";
       }
     });
   }
@@ -119,7 +121,7 @@ const confirmedSignUp = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
- // Beginning-Function to edit/update real-time 
+ // Beginning-Function to edit/update real-time
  document.addEventListener("DOMContentLoaded", event => {
 
     const app = firebase.app();
@@ -131,13 +133,13 @@ const confirmedSignUp = () => {
          document.getElementById("pubPosts").innerHTML = data.title + `<br>`;
       })
  });
- 
+
  const updatePost = (e) => {
   const db = firebase.firestore();
   const myPost = db.collection("posts").doc("firstpost");
   myPost.update({title: e.target.value})
  }
-//End-Function to edit/update real-time 
+//End-Function to edit/update real-time
 
 //Beggining-Function to save post on db
 const createPost = () => {
@@ -159,10 +161,10 @@ const createPost = () => {
 
 
 /*Beginning-Function to show publised posts
-document.getElementById("timelinePosted").innerHTML += 
+document.getElementById("timelinePosted").innerHTML +=
 `<section class="publishedPosts">
     <p>${}</p>
-  </section> 
+  </section>
   <section class="postIcons">
   <img id="like" src="Images/like.png" alt="editar" width="20">
   <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
@@ -183,8 +185,6 @@ const profileUser =  () => {
 /* Beginning-Log out function to close user session */
 const logOut = () => {
   auth.signOut().then(() => {
-    document.getElementById("timeLine").style.display="none";
-    document.getElementById("loginPage").style.display="block";
     loginError.innerHTML = `
     <span style='color:#5BD9CC';>&#10004; Ha cerrado sesión correctamente</span>`;
   });
