@@ -173,20 +173,14 @@ document.getElementById("timelinePosted").innerHTML +=
 `
 */
 
-/* Beginning-Edit profile user function
+/* Beginning-Edit profile user function*/
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'></label></section>";
-  //<img src = 'Images/photo.png' class='imagen-reponsive' alt='descargar'>
- 
-
-
-
-};
- End-Edit profile user function */
- fichero.addEventListener('change', function(e){
-    for (let i = 0; i<e.target.files.length; i++){
+  
+  fichero.addEventListener('change', function(e){
+    for (let i = 0; i < e.target.files.length; i++){
       let imageFile = e.target.files[i];
       let storageRef = firebase.storage().ref("fotoperfil/" + imageFile.name);
       let uploadTask = storageRef.put(imageFile);
@@ -219,6 +213,12 @@ const profileUser =  () => {
 
 
 
+};
+ 
+ 
+/*End-Edit profile user function */
+
+
 /* Beginning-Log out function to close user session */
 const logOut = () => {
   auth.signOut().then(() => {
@@ -236,7 +236,7 @@ document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
-/*document.getElementById("profileButton").addEventListener("click", profileUser);*/
+document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("port").addEventListener("click", );
