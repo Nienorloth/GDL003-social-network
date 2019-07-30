@@ -177,7 +177,22 @@ document.getElementById("timelinePosted").innerHTML +=
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'></label></section>";
+  profileModal.innerHTML = `
+  <section class='profileUser'>
+  <h4>Seleccione foto de usuario.</h4>
+  <div class ="profileUserImage">
+  <img  class = 'imageUser' id='imageUser' src='Images/user.png'>
+  </div>
+  <div class= profileUserName>
+  <label class='btn btn-file'>
+  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
+  </label>
+  <label for="registerNamel">Nombre:</label>
+  <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
+  <label for="registerEmail">Correo electrónico:</label>
+  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+  </div>                          
+</section>`
   
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
