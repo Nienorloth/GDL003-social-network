@@ -26,7 +26,7 @@ const login = () => {
     .then(correct => {
       loginForm.reset();
       document.getElementById("timeLine").style.display="block";
-      document.getElementById("loginPage").style.display="none";
+      document.getElementById("loginPage").style.display="none";      
     })
     .catch(error => {
       let errorCode = error.code;
@@ -132,32 +132,14 @@ function guardarDatos(user){
 };
  /* End-Function to save the user data */
 
- // Beginning-Function to edit/update real-time 
- document.addEventListener("DOMContentLoaded", event => {
-
-    const app = firebase.app();
-    const db = firebase.firestore();
-    const myPost = db.collection("posts").doc("firstpost");
-
-    myPost.onSnapshot(doc => {
-          const data = doc.data();
-         document.getElementById("pubPosts").innerHTML = data.title + `<br>`;
-      })
- });
- 
- const updatePost = (e) => {
-  const db = firebase.firestore();
-  const myPost = db.collection("posts").doc("firstpost");
-  myPost.update({title: e.target.value})
- }
-//End-Function to edit/update real-time 
-
 //Beggining-Function to save post on db
+
+let posts = db.collection("posts");
+
 const createPost = () => {
-  const db = firebase.firestore();
   const toPost = document.getElementById("toPost");
 
-  db.collection("posts").add({
+  posts.add({
        text: toPost.value,
        date: new Date()
 })
@@ -167,22 +149,89 @@ const createPost = () => {
 .catch(function(error) {
     console.error("Error adding document: ", error);
 });
+
+toPost.value="";
 }
 //End-Function to save post on db
 
+//Beggining-Function to show posts
+  const publishPost = (doc) => {
+    document.getElementById("timelinePosted").innerHTML+=
+    `<section class="publishedPosts">
+    <p id="${ doc.id }post" class="pubPost">${ doc.data().text }</p>
+      <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="500" style="display:none"></input>
+      <input id="${ doc.id }submit" style="display:none" type="submit" value="Guardar cambios">
+    </section> 
+    <section class="postIcons">
+    <img id="like" src="Images/like.png" alt="editar" width="20">
+    <img id=${ doc.id } class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
+    <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
+    </section>`   
 
-/*Beginning-Function to show publised posts
-document.getElementById("timelinePosted").innerHTML += 
-`<section class="publishedPosts">
-    <p>${}</p>
-  </section> 
-  <section class="postIcons">
-  <img id="like" src="Images/like.png" alt="editar" width="20">
-  <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-  <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-</section>
-`
-*/
+    //Edit buttons functionality
+
+    let editButtons = document.querySelectorAll(".editButton");
+    editButtons.forEach(editButton => {
+      editButton.addEventListener("click", () => {
+
+        //show edit input and submit button
+        let editInput = document.getElementById(editButton.id + "input");
+        let inputSub = document.getElementById(editButton.id + "submit"); 
+        let postToEdit = document.getElementById(editButton.id + "post"); 
+
+        editInput.style.display="block";
+        inputSub.style.display="block";
+        postToEdit.style.display="none";
+        inputSub.addEventListener("click", () => {
+          editInput.style.display="none";
+          inputSub.style.display="none";
+          postToEdit.style.display="block";
+          updatePost();
+          });
+      });
+
+   // Beginning-Function to edit/update real-time 
+
+//   document.addEventListener("DOMContentLoaded", event => {
+//     let myPost = db.collection("posts").doc(editButton.id);
+    
+//   myPost.onSnapshot(doc => {
+//         const data = doc.data();
+//        document.querySelector(".pubPost").innerHTML = data.text;
+//     })
+// }); 
+const updatePost = () => {
+
+  let myPost = posts.doc(editButton.id);
+  console.log(myPost);
+  let editPostInput = document.getElementById(editButton.id + "input");
+  myPost.set({
+    text: editPostInput.value,
+    date: new Date()
+  });
+}
+      
+});
+}  
+//End-Function to edit/update real-time 
+
+  // posts.orderBy("date","desc").get().then((snapshot) => {
+    //   snapshot.docs.forEach(doc => {
+      //       console.log(doc.data());
+      //       publishPost(doc);
+      //   })  
+      // });
+      posts.orderBy("date", "desc").onSnapshot(function(doc){
+        document.getElementById("timelinePosted").innerHTML = "";
+        const array = doc.docs;
+        array.forEach(element => {
+          publishPost(element)
+        });
+      })
+
+
+  //End-Function to show published posts   
+
 
  /* Beginning-Log out function to close user session */
  const logOut = () => {
@@ -201,4 +250,3 @@ document.getElementById("registerConfirm").addEventListener("click", confirmedSi
 document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
-//document.getElementById("port").addEventListener("click", );

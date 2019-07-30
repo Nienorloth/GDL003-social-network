@@ -69,8 +69,9 @@
           <a  class="icon"><img src="Images/icon-menu.png"></a>
         </header>
         <!--End of mobile menu-->
+        <!--Beginning Second page Timeline section-->
         <section id="createPost" >
-        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
+        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts"> </textarea>
       </section>
       <section class="postButtons">
         <select id="privacyButton">
@@ -79,15 +80,7 @@
         </select>
         <button id="postButton">Publicar</button>
       </section>
-      <section class="timelinePosted">
-        <section class="publishedPosts">
-          <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
-        </section>
-          <section class="postIcons">
-            <img id="like" src="Images/like.png" alt="editar" width="20">
-            <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-            <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-          </section>
+      <section id="timelinePosted">
       </section>
     </section>
     <!--End Second page Timeline section-->

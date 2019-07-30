@@ -160,7 +160,7 @@ body,html {
 }
 /* End- Timeline menu style */
 /* Posts box style */
-.posts, .publishedPosts {
+.posts, .publishedPosts, .edit {
   background-color: #E3E1DF;
   margin: 0% 8% 0% 8%;
   height: 20%;
@@ -169,7 +169,13 @@ body,html {
 .publishedPosts {
   margin: 10% 8% 0% 8%;
   font-size: 15px;
-  height: 50%;
+  height: 20%;
+  float: center;
+}
+.edit {
+  width: 100%;
+  margin: 0%;
+  height: 60%;
 }
 .publishedPosts p {
 padding: 2%;
