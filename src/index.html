@@ -13,7 +13,7 @@
 
 <body>
     <!--Beginning First page with login option and register option-->
-    <section id="loginPage" class="loginPage">
+    <section id="loginPage" class="loginPage" style="display:none;">
       <img class="sociallogo" src="Images/logo.gif" alt="Logo">
       <form id="loginForm" class="loginform" method="post">
         <span id="loginError" class="loginError" aria-live="polite"></span>
@@ -27,30 +27,34 @@
     </section>
     <!--End First page with login option and register option-->
 
-    <!--Start-Beginning Modal section for register option-->
+    <!--Beginning Modal section for register option-->
     <section id="registerModal" class="registerModal">
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
               <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div id="w3-form" class="w3-form">
-                    <form id="signupForm">
-                      <span id="registerError" class="registerError" aria-live="polite"></span>
-                      <label for="registerEmail">Correo electrónico:</label>
-                      <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
-                            <label for="registerPassword">Ingrese contraseña:</label>
-                            <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
+                  <form id="signupForm">
+                    <span id="registerError" class="registerError" aria-live="polite"></span>
+                    <label for="registerEmail">Correo electrónico:</label>
+                    <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
 
-                            <label for="registerConfirmPassword">Confirme contraseña:</label>
-                            <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
+                    <label for="registerName">Nombre de usuario:</label>
+                    <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
 
-                            <label for="registerVerificationCode">Ingrese código de verificación:</label>
-                            <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
+                    <label for="registerPassword">Ingrese contraseña:</label>
+                    <input type="password" id="registerPassword" class="registerPassword" name="registerPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
 
-                            <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
-                        </form>
-                    </div>
+                    <label for="registerConfirmPassword">Confirme contraseña:</label>
+                    <input type="password" id="registerConfirmPassword" class="registerConfirmPassword" name="registerConfirmPassword" placeholder="De 6 a 10 caracteres" minlength="6" maxlength="10">
+
+                    <label for="registerVerificationCode">Ingrese código de verificación:</label>
+                    <input type="text" id="registerVerificationCode" class="registerVerificationCode" name="registerVerificationCode" placeholder="Código de verificación...">
+
+                    <button type="button" id="registerConfirm" class="registerConfirm">Registrar</button>
+                  </form>
                 </div>
+              </div>
             </div>
         </div>
     </section>
@@ -73,30 +77,23 @@
             <a class="icon"><img src="Images/icon-menu.png"></a>
         </header>
         <!--End of mobile menu-->
-
+           
+        <!--Beginning Post section-->
         <section id="createPost" >
-          <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
-           </section>
-           <section class="postButtons">
-             <select id="privacyButton">
-               <option id="friendsPost" value="friends">Amigos</option>
-               <option id ="publicPost" value="public">Público</option>
-             </select>
-             <button id="postButton">Publicar</button>
-           </section>
-           <section class="timelinePosted">
-            <section class="publishedPosts">
-             <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
-             </section>
-             <section class="postIcons">
-              <img id="like" src="Images/like.png" alt="editar" width="20">
-              <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-              <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-             </section>
-           </section>
-          </section>
-        <!--End Second page Timeline section-->
-        
+        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts"> </textarea>
+        </section>
+        <section class="postButtons">
+          <select id="privacyButton">
+            <option id="friendsPost" value="friends">Amigos</option>
+            <option id ="publicPost" value="public">Público</option>
+          </select>
+          <button id="postButton">Publicar</button>
+        </section>
+        <section id="timelinePosted">
+        </section>
+        <!--End Post section-->
+    </section>
+    <!--End Second page Timeline section-->
 
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
