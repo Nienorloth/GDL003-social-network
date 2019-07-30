@@ -27,7 +27,7 @@
     </section>
     <!--End First page with login option and register option-->
 
-    <!--Start-Beginning Modal section for register option-->
+    <!--Beginning Modal section for register option-->
     <section id="registerModal" class="registerModal">
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
@@ -76,29 +76,23 @@
             <a class="icon"><img src="Images/icon-menu.png"></a>
         </header>
         <!--End of mobile menu-->
-
+           
+        <!--Beginning Post section-->
         <section id="createPost" >
-          <textarea id="toPost" placeholder="Escribe una publicación..." class="posts" onchange="updatePost(event)" > </textarea>
-           </section>
-           <section class="postButtons">
-             <select id="privacyButton">
-               <option id="friendsPost" value="friends">Amigos</option>
-               <option id ="publicPost" value="public">Público</option>
-             </select>
-             <button id="postButton">Publicar</button>
-           </section>
-           <section class="timelinePosted">
-            <section class="publishedPosts">
-             <p onchange="updatePost(event)" id="pubPosts">Tu publicación</p>
-             </section>
-             <section class="postIcons">
-              <img id="like" src="Images/like.png" alt="editar" width="20">
-              <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-              <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-             </section>
-           </section>
-          </section>
-        <!--End Second page Timeline section-->
+        <textarea id="toPost" placeholder="Escribe una publicación..." class="posts"> </textarea>
+        </section>
+        <section class="postButtons">
+          <select id="privacyButton">
+            <option id="friendsPost" value="friends">Amigos</option>
+            <option id ="publicPost" value="public">Público</option>
+          </select>
+          <button id="postButton">Publicar</button>
+        </section>
+        <section id="timelinePosted">
+        </section>
+        <!--End Post section-->
+    </section>
+    <!--End Second page Timeline section-->
 
     <!--Here are the links for the JavaScripts files-->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
