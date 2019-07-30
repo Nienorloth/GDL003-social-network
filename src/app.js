@@ -10,8 +10,12 @@ const database = firebase.database();
 auth.onAuthStateChanged(user => {
   if (user) {
     console.log("Usuario inició sesión", user);
+    document.getElementById("timeLine").style.display="block";
+    document.getElementById("loginPage").style.display="none";
   } else {
     console.log("Usuario cerró sesión");
+    document.getElementById("timeLine").style.display="none";
+    document.getElementById("loginPage").style.display="block";
   }
 });
 
@@ -27,12 +31,9 @@ const login = () => {
     auth.signInWithEmailAndPassword(email, password)
     .then(correct => {
       loginForm.reset();
-      document.getElementById("timeLine").style.display="block";
-      document.getElementById("loginPage").style.display="none";
     })
     .catch(error => {
       let errorCode = error.code;
-      let errorMessage = error.message;
       if (errorCode === "auth/user-not-found") {
         loginError.innerHTML = "⚠️ Usuario no existe. Favor de verificar sus datos";
       } else if (errorCode === "auth/invalid-email") {
@@ -60,12 +61,13 @@ const signUp = () => {
 /* Beginning-Sign up function to create new user account */
 const confirmedSignUp = () => {
   let registeredEmail = document.getElementById("registerEmail").value;
+  let registeredName = document.getElementById("registerName").value;
   let registeredPassword = document.getElementById("registerPassword").value;
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
   let verificationCode = document.getElementById("registerVerificationCode").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
-  if (registeredEmail.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
     registerError.innerHTML = "⚠️ La contraseña no coincide";
@@ -82,13 +84,12 @@ const confirmedSignUp = () => {
     })
     .catch(error => {
       let errorCode = error.code;
-      let errorMessage = error.message;
       if (errorCode === "auth/email-already-in-use") {
         registerError.innerHTML = "⚠️ Ya existe una cuenta con ese correo electrónico";
       } else if (errorCode === "auth/invalid-email") {
-        registerError.innerHTML = "⚠️ Formato inválido. Verifica tu correo electrónico";
+        registerError.innerHTML = "⚠️ Formato inválido. Verifique su correo electrónico";
       } else if (errorCode === "auth/weak-password") {
-        registerError.innerHTML = "⚠️ Tu contraseña debe contener al menos 6 caracteres";
+        registerError.innerHTML = "⚠️ Su contraseña debe contener al menos 6 caracteres";
       }
     });
   }
@@ -121,32 +122,27 @@ const confirmedSignUp = () => {
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
- // Beginning-Function to edit/update real-time 
- document.addEventListener("DOMContentLoaded", event => {
-
-    const app = firebase.app();
-    const db = firebase.firestore();
-    const myPost = db.collection("posts").doc("firstpost");
-
-    myPost.onSnapshot(doc => {
-          const data = doc.data();
-         document.getElementById("pubPosts").innerHTML = data.title + `<br>`;
-      })
- });
- 
- const updatePost = (e) => {
-  const db = firebase.firestore();
-  const myPost = db.collection("posts").doc("firstpost");
-  myPost.update({title: e.target.value})
- }
-//End-Function to edit/update real-time 
+/* Beginning-Function to save the user data */
+function guardarDatos(user){
+  let users = {
+    uid:user.uid,
+    name:user.displayName,
+    email:user.email,
+    photo: user.photoURL
+  }
+  firebase.database().ref("prueba/" + user.uid)
+  .set(users)
+};
+ /* End-Function to save the user data */
 
 //Beggining-Function to save post on db
+
+let posts = db.collection("posts");
+
 const createPost = () => {
-  const db = firebase.firestore();
   const toPost = document.getElementById("toPost");
 
-  db.collection("posts").add({
+  posts.add({
        text: toPost.value,
        date: new Date()
 })
@@ -156,22 +152,88 @@ const createPost = () => {
 .catch(function(error) {
     console.error("Error adding document: ", error);
 });
+
+toPost.value="";
 }
 //End-Function to save post on db
 
+//Beggining-Function to show posts
+  const publishPost = (doc) => {
+    document.getElementById("timelinePosted").innerHTML+=
+    `<section class="publishedPosts">
+    <p id="${ doc.id }post" class="pubPost">${ doc.data().text }</p>
+      <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="500" style="display:none"></input>
+      <input id="${ doc.id }submit" style="display:none" type="submit" value="Guardar cambios">
+    </section> 
+    <section class="postIcons">
+    <img id="like" src="Images/like.png" alt="editar" width="20">
+    <img id=${ doc.id } class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
+    <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
+    </section>`   
 
-/*Beginning-Function to show publised posts
-document.getElementById("timelinePosted").innerHTML += 
-`<section class="publishedPosts">
-    <p>${}</p>
-  </section> 
-  <section class="postIcons">
-  <img id="like" src="Images/like.png" alt="editar" width="20">
-  <img id="edit" src="Images/icon-edit.png" alt="editar" width="20">
-  <img id="delete" src="Images/icon-garbage.png"alt="eliminar" width="20">
-</section>
-`
-*/
+    //Edit buttons functionality
+
+    let editButtons = document.querySelectorAll(".editButton");
+    editButtons.forEach(editButton => {
+      editButton.addEventListener("click", () => {
+
+        //show edit input and submit button
+        let editInput = document.getElementById(editButton.id + "input");
+        let inputSub = document.getElementById(editButton.id + "submit"); 
+        let postToEdit = document.getElementById(editButton.id + "post"); 
+
+        editInput.style.display="block";
+        inputSub.style.display="block";
+        postToEdit.style.display="none";
+        inputSub.addEventListener("click", () => {
+          editInput.style.display="none";
+          inputSub.style.display="none";
+          postToEdit.style.display="block";
+          updatePost();
+          });
+      });
+
+   // Beginning-Function to edit/update real-time 
+
+//   document.addEventListener("DOMContentLoaded", event => {
+//     let myPost = db.collection("posts").doc(editButton.id);
+    
+//   myPost.onSnapshot(doc => {
+//         const data = doc.data();
+//        document.querySelector(".pubPost").innerHTML = data.text;
+//     })
+// }); 
+const updatePost = () => {
+
+  let myPost = posts.doc(editButton.id);
+  console.log(myPost);
+  let editPostInput = document.getElementById(editButton.id + "input");
+  myPost.set({
+    text: editPostInput.value,
+    date: new Date()
+  });
+}
+      
+});
+}  
+//End-Function to edit/update real-time 
+
+  // posts.orderBy("date","desc").get().then((snapshot) => {
+    //   snapshot.docs.forEach(doc => {
+      //       console.log(doc.data());
+      //       publishPost(doc);
+      //   })  
+      // });
+      posts.orderBy("date", "desc").onSnapshot(function(doc){
+        document.getElementById("timelinePosted").innerHTML = "";
+        const array = doc.docs;
+        array.forEach(element => {
+          publishPost(element)
+        });
+      })
+
+
+  //End-Function to show published posts   
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
@@ -225,27 +287,17 @@ const profileUser =  () => {
         });
     }
  });
-
-
-
 };
- 
- 
 /*End-Edit profile user function */
-
 
 /* Beginning-Log out function to close user session */
 const logOut = () => {
   auth.signOut().then(() => {
-    document.getElementById("timeLine").style.display="none";
-    document.getElementById("loginPage").style.display="block";
     loginError.innerHTML = `
     <span style='color:#5BD9CC';>&#10004; Ha cerrado sesión correctamente</span>`;
   });
 };
 /* End-Log out function to close user session */
-
-/* */
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
@@ -254,4 +306,3 @@ document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
-//document.getElementById("port").addEventListener("click", );
