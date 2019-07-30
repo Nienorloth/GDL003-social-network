@@ -3,6 +3,8 @@
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
+const database = firebase.database();
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
@@ -171,14 +173,51 @@ document.getElementById("timelinePosted").innerHTML +=
 `
 */
 
-/* Beginning-Edit profile user function */
+/* Beginning-Edit profile user function
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'><img src = 'Images/photo.png' class='imagen-reponsive' alt='descargar'></label></section>";
+  profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'></label></section>";
+  //<img src = 'Images/photo.png' class='imagen-reponsive' alt='descargar'>
  
+
+
+
 };
-/* End-Edit profile user function */
+ End-Edit profile user function */
+ fichero.addEventListener('change', function(e){
+    for (let i = 0; i<e.target.files.length; i++){
+      let imageFile = e.target.files[i];
+      let storageRef = firebase.storage().ref("fotoperfil/" + imageFile.name);
+      let uploadTask = storageRef.put(imageFile);
+
+      uploadTask.on('state_changed', 
+      
+      function progress(snapshot){
+
+         let progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;    
+        
+         console.log('Upload is ' + progress + '% done');
+
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: 
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: 
+              console.log('Upload is running');
+              break;
+          }
+        }, function(error) {
+          
+        }, function() {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            console.log('File available at', downloadURL);
+          });
+        });
+    }
+ });
+
+
 
 /* Beginning-Log out function to close user session */
 const logOut = () => {
@@ -197,7 +236,7 @@ document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
-document.getElementById("profileButton").addEventListener("click", profileUser);
+/*document.getElementById("profileButton").addEventListener("click", profileUser);*/
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("port").addEventListener("click", );
