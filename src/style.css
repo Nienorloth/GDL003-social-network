@@ -64,10 +64,10 @@ body,html {
 }
 /* End - Login Section */
 /* Beginning - Register Modal */
-.registerEmail,.registerPassword,.registerConfirmPassword,.registerVerificationCode {
+.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.registerVerificationCode {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 6px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -121,7 +121,7 @@ body,html {
   height: 51%;
 }
 .topnav a {
-  color: white;
+  /*color: white;*/
   padding: 14px 20px;
   text-decoration: none;
   font-size: 15px;
