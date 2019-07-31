@@ -232,6 +232,7 @@ const updatePost = () => {
 
 });
 }
+
 //End-Function to edit/update real-time
 
   // posts.orderBy("date","desc").get().then((snapshot) => {
@@ -252,7 +253,7 @@ const updatePost = () => {
   //End-Function to show published posts
 
 /*Beggining- Function to count I like*/
-let canvas;
+/*let canvas;
 let like;
 var button;
 
@@ -281,10 +282,10 @@ ref.push(data);
   let ref = database.ref("posts");
   ref.push(data);
 };
-*/
+
 const increaseLike = () => {
   like++;
-}
+}*/
 
 /*End- Function to count I like*/
 
@@ -292,7 +293,7 @@ const increaseLike = () => {
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  
+
   profileModal.innerHTML = `
   <section class='profileUser'>
   <h4>Seleccione foto de usuario.</h4>
@@ -302,14 +303,13 @@ const profileUser =  () => {
   <div class= profileUserName>
   <button id = 'files' onclick="document.getElementById('file').click(): return false;>Subir foto"</button>
   <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
-  </label>
   <label for="registerNamel">Nombre:</label>
   <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
   <label for="registerEmail">Correo electrónico:</label>
   <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
-  </div>                          
-</section>`
-  
+  </div>
+</section>`;
+
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
       let imageFile = e.target.files[i];
@@ -355,7 +355,6 @@ const logOut = () => {
       barsBack.style.backgroundColor="#5BD9CC";
       profile.style.display = "inline";
       logo.style.display = "inline";
-
   });
 };
 /* End-Log out function to close user session */
