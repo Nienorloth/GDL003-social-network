@@ -235,6 +235,43 @@ const updatePost = () => {
 
   //End-Function to show published posts   
 
+/*Beggining- Function to count I like*/
+let canvas;
+let like;
+var button;
+
+const setUp = () =>{
+
+  canvas = createCanvas(100,100);
+  like = 0;
+  button = createButton('click');
+  button.mousePressed(increaseLike);
+
+
+}
+let ref = database.ref('comunidadescolar');
+
+let data = {
+  post: doc.data().text,
+  score: 1
+}
+ref.push(data);
+
+/*const submitLike = () => {
+ let data = {
+   like : like,
+ }
+  console.log(data);
+  let ref = database.ref("posts");
+  ref.push(data);
+};
+*/
+const increaseLike = () => {
+  like++;
+}
+
+/*End- Function to count I like*/
+
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
@@ -246,7 +283,7 @@ const profileUser =  () => {
   <img  class = 'imageUser' id='imageUser' src='Images/user.png'>
   </div>
   <div class= profileUserName>
-  <label class='btn btn-file'>
+  <button id = 'files' onclick="document.getElementById('file').click(): return false;>Subir foto"</button>
   <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
   </label>
   <label for="registerNamel">Nombre:</label>
@@ -306,3 +343,4 @@ document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
+//document.getElementById("").addEventListener("click",sumitLike);
