@@ -160,7 +160,7 @@ body,html {
 }
 /* End- Timeline menu style */
 /* Posts box style */
-.posts, .publishedPosts, .edit {
+.posts, .publishedPosts {
   background-color: #E3E1DF;
   margin: 0% 8% 0% 8%;
   height: 20%;
@@ -169,12 +169,7 @@ body,html {
 .publishedPosts {
   margin: 10% 8% 0% 8%;
   font-size: 15px;
-  height: 20%;
-  float: center;
-}
-.edit {
-  margin-left: 8%;
-  height: 60%;
+  height: 50%;
 }
 .publishedPosts p {
 padding: 2%;
@@ -202,17 +197,12 @@ padding: 1%;
 border-width: 2px;
 border-style: double;
 }
-#postButton, .submit {
+#postButton {
 background-color: #F28816;
 color: white;
 border-radius: 3px;
 border-width: 2px;
 border-style: double;
-}
-.submit {
-  font-size: 12px;
-  margin-left: 8%;
-  margin-top: 1.5%;
 }
 .postIcons {
 display: inline;
