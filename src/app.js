@@ -179,14 +179,14 @@ toPost.value="";
     // console.log("fecha " postDate);
 
     document.getElementById("timelinePosted").innerHTML+=
-     `<section class="publishedPosts">
-        <p id="${ doc.id }post" class="pubPost">${ doc.data().text }</p>
+     `<section id="${ doc.id }post" class="publishedPosts">
+        <p  class="pubPost">${ doc.data().text }</p>
         <footer>
           <p>${ doc.data().date }</p>
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="500" style="display:none"></input>
+        <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
