@@ -251,12 +251,65 @@ const updatePost = () => {
 
   //End-Function to show published posts
 
+/*Beggining- Function to count I like*/
+let canvas;
+let like;
+var button;
+
+const setUp = () =>{
+
+  canvas = createCanvas(100,100);
+  like = 0;
+  button = createButton('click');
+  button.mousePressed(increaseLike);
+
+
+}
+let ref = database.ref('comunidadescolar');
+
+let data = {
+  post: doc.data().text,
+  score: 1
+}
+ref.push(data);
+
+/*const submitLike = () => {
+ let data = {
+   like : like,
+ }
+  console.log(data);
+  let ref = database.ref("posts");
+  ref.push(data);
+};
+*/
+const increaseLike = () => {
+  like++;
+}
+
+/*End- Function to count I like*/
+
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  profileModal.innerHTML = "<section class='profileUser'><p>Seleccione foto de usuario.</p><label class='btn btn-file'><input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'></label></section>";
-
+  
+  profileModal.innerHTML = `
+  <section class='profileUser'>
+  <h4>Seleccione foto de usuario.</h4>
+  <div class ="profileUserImage">
+  <img  class = 'imageUser' id='imageUser' src='Images/user.png'>
+  </div>
+  <div class= profileUserName>
+  <button id = 'files' onclick="document.getElementById('file').click(): return false;>Subir foto"</button>
+  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
+  </label>
+  <label for="registerNamel">Nombre:</label>
+  <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
+  <label for="registerEmail">Correo electrónico:</label>
+  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+  </div>                          
+</section>`
+  
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
       let imageFile = e.target.files[i];
@@ -314,3 +367,4 @@ document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("settingsButton").addEventListener("click", logOut);
+//document.getElementById("").addEventListener("click",sumitLike);

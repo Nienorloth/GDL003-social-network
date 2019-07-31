@@ -212,3 +212,9 @@ display: inline;
   margin-right: 65%;
 }
 /* End timeline post box style */
+
+/* Start - Modal profile user */
+.profileUserImage{
+  text-align: center;
+}
+/* End - Modal profile user*/
