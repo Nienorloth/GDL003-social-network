@@ -255,6 +255,7 @@ const updatePost = () => {
 
 });
 }
+
 //End-Function to edit/update real-time
 
   // posts.orderBy("date","desc").get().then((snapshot) => {
@@ -275,7 +276,7 @@ const updatePost = () => {
   //End-Function to show published posts
 
 /*Beggining- Function to count I like*/
-let canvas;
+/*let canvas;
 let like;
 var button;
 
@@ -296,7 +297,7 @@ let data = {
 }
 ref.push(data);
 
-/*const submitLike = () => {
+const submitLike = () => {
  let data = {
    like : like,
  }
@@ -304,34 +305,32 @@ ref.push(data);
   let ref = database.ref("posts");
   ref.push(data);
 };
-*/
+
 const increaseLike = () => {
   like++;
-}
+}*/
 
 /*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
+  //<input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-  
   profileModal.innerHTML = `
   <section class='profileUser'>
-  <h4>Seleccione foto de usuario.</h4>
+  <h4>Editar perfil de usuario.</h4>
   <div class ="profileUserImage">
-  <img  class = 'imageUser' id='imageUser' src='Images/user.png'>
-  </div>
-  <div class= profileUserName>
-  <button id = 'files' onclick="document.getElementById('file').click(): return false;>Subir foto"</button>
-  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
+  <label class='btn btn-file'>
+  <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
   </label>
+  </div>
   <label for="registerNamel">Nombre:</label>
   <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
   <label for="registerEmail">Correo electrónico:</label>
-  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
-  </div>                          
-</section>`
+  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">                       
+  <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
+  </section>`
   
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
@@ -367,6 +366,19 @@ const profileUser =  () => {
 };
 /*End-Edit profile user function */
 
+/*Beginning - Function add contacts */
+const addContacts =  () =>{
+  document.getElementById('id01').style.display="block";
+  let  contactsModal= document.getElementById("w3-form");
+  contactsModal.innerHTML = `
+  <section class='profileUser'>
+  <h4>Agregar nuevos contactos.</h4>
+  </section>`
+
+}
+
+/*End-Function add contacts */
+
 /* Beginning-Log out function to close user session */
 const logOut = () => {
   auth.signOut().then(() => {
@@ -378,7 +390,6 @@ const logOut = () => {
       barsBack.style.backgroundColor="#5BD9CC";
       profile.style.display = "inline";
       logo.style.display = "inline";
-
   });
 };
 /* End-Log out function to close user session */
@@ -387,7 +398,8 @@ document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
-document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
+document.getElementById("profileButton").addEventListener("click", profileUser);
+document.getElementById("contactsButton").addEventListener("click",addContacts);
 document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("").addEventListener("click",sumitLike);

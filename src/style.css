@@ -64,7 +64,7 @@ body,html {
 }
 /* End - Login Section */
 /* Beginning - Register Modal */
-.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.registerVerificationCode {
+.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.registerVerificationCode,.acceptButton {
   width: 100%;
   padding: 12px 20px;
   margin: 6px 0;
@@ -74,7 +74,7 @@ body,html {
   box-sizing: border-box;
   font-size: 12px;
 }
-.registerConfirm {
+.registerConfirm,.acceptButton{
   width: 100%;
   background-color: #5BD9CC;
   color: rgb(12, 0, 0);
@@ -84,7 +84,7 @@ body,html {
   border-radius: 4px;
   cursor: pointer;
 }
-.registerConfirm:hover {
+.registerConfirm:hover,.acceptButton:hover {
   background-color: #2A2740;
   color: #FFFF;
 }
@@ -221,13 +221,13 @@ padding: 2%;
 .postIcons {
 display: inline;
 }
-#like {
+.likeButton {
   margin-left: 8%;
   margin-right: 65%;
 }
 /* End timeline post box style */
 
-/* Start - Modal profile user */
+/* Start - Modal profile user*/ 
 .profileUserImage{
   text-align: center;
 }
