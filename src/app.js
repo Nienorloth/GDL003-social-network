@@ -178,8 +178,8 @@ toPost.value="";
       <input id="${ doc.id }submit" style="display:none" type="submit" value="Guardar cambios">
     </section>
     <section class="postIcons">
-    <img id="like" src="Images/like.png" alt="editar" width="20">
-    <img id=${ doc.id } class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
+    <img id="${ doc.id }" class="likeButton" src="Images/like.png" alt="editar" width="20">
+    <img id="${ doc.id }" class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
     <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
     </section>`
 
@@ -201,10 +201,10 @@ toPost.value="";
         postToEdit.style.display="none";
         iconsSect.style.display="none";
         inputSub.addEventListener("click", () => {
-          editInput.style.display="none";
-          inputSub.style.display="none";
-          postToEdit.style.display="block";
-          iconsSect.style.display="block";
+        editInput.style.display="none";
+        inputSub.style.display="none";
+        postToEdit.style.display="block";
+        iconsSect.style.display="block";
           updatePost();
           });
       });
@@ -274,7 +274,7 @@ let data = {
 }
 ref.push(data);
 
-/*const submitLike = () => {
+const submitLike = () => {
  let data = {
    like : like,
  }
@@ -291,25 +291,24 @@ const increaseLike = () => {
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
+  //<input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
-
   profileModal.innerHTML = `
   <section class='profileUser'>
-  <h4>Seleccione foto de usuario.</h4>
+  <h4>Editar perfil de usuario.</h4>
   <div class ="profileUserImage">
-  <img  class = 'imageUser' id='imageUser' src='Images/user.png'>
+  <label class='btn btn-file'>
+  <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
+  </label>
   </div>
-  <div class= profileUserName>
-  <button id = 'files' onclick="document.getElementById('file').click(): return false;>Subir foto"</button>
-  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
   <label for="registerNamel">Nombre:</label>
   <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
   <label for="registerEmail">Correo electrónico:</label>
-  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
-  </div>
-</section>`;
-
+  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">                       
+  <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
+  </section>`
+  
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
       let imageFile = e.target.files[i];
@@ -344,6 +343,19 @@ const profileUser =  () => {
 };
 /*End-Edit profile user function */
 
+/*Beginning - Function add contacts */
+const addContacts =  () =>{
+  document.getElementById('id01').style.display="block";
+  let  contactsModal= document.getElementById("w3-form");
+  contactsModal.innerHTML = `
+  <section class='profileUser'>
+  <h4>Agregar nuevos contactos.</h4>
+  </section>`
+
+}
+
+/*End-Function add contacts */
+
 /* Beginning-Log out function to close user session */
 const logOut = () => {
   auth.signOut().then(() => {
@@ -363,7 +375,8 @@ document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
-document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("postButton").addEventListener("click", createPost);
+document.getElementById("profileButton").addEventListener("click", profileUser);
+document.getElementById("contactsButton").addEventListener("click",addContacts);
 document.getElementById("settingsButton").addEventListener("click", logOut);
 //document.getElementById("").addEventListener("click",sumitLike);
