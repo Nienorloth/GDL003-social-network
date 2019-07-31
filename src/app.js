@@ -232,6 +232,7 @@ const updatePost = () => {
 
 });
 }
+
 //End-Function to edit/update real-time
 
   // posts.orderBy("date","desc").get().then((snapshot) => {
@@ -366,7 +367,6 @@ const logOut = () => {
       barsBack.style.backgroundColor="#5BD9CC";
       profile.style.display = "inline";
       logo.style.display = "inline";
-
   });
 };
 /* End-Log out function to close user session */
