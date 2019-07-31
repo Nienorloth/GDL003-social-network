@@ -143,14 +143,14 @@ let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 
 const createPost = () => {
-  let registerModal = document.getElementById("w3-form");
+  let postModal = document.getElementById("w3-form");
   if (toPost.value.length === 0) {
-  registerModal.innerHTML =
-  `<section class="registerCorrectMessage">
-      <p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p>
-      <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
+  document.getElementById("id01").style.display="block";
+  postModal.innerHTML =
+  `<section class="enterContent">
+      <p>⚠️Agrega contenido para publicar</p>
       </section>
-      `;
+      `
   } else {
 
   posts.add({
@@ -171,17 +171,30 @@ toPost.value="";
 
 //Beggining-Function to show posts
   const publishPost = (doc) => {
+    // let postDate = doc.data().date.toJSON(undefined, {
+    //   day: "numeric",
+    //   month: "short",
+    //   year: "numeric"
+    // });
+    // console.log("fecha " postDate);
+
     document.getElementById("timelinePosted").innerHTML+=
-    `<section class="publishedPosts">
-    <p id="${ doc.id }post" class="pubPost">${ doc.data().text }</p>
-      <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="500" style="display:none"></input>
-      <input id="${ doc.id }submit" style="display:none" type="submit" value="Guardar cambios">
-    </section>
-    <section class="postIcons">
-    <img id="like" src="Images/like.png" alt="editar" width="20">
-    <img id=${ doc.id } class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
-    <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
-    </section>`
+     `<section class="publishedPosts">
+        <p id="${ doc.id }post" class="pubPost">${ doc.data().text }</p>
+        <footer>
+          <p>${ doc.data().date }</p>
+        </footer>
+      </section>
+      <section>
+        <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="500" style="display:none"></input>
+        <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
+        <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
+      </section>
+      <section id="${doc.id}icons" class="postIcons">
+        <img id="like" src="Images/like.png" alt="like" width="20">
+        <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
+        <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
+      </section>`
 
     //Edit buttons functionality
 
@@ -195,18 +208,28 @@ toPost.value="";
         let inputSub = document.getElementById(editButton.id + "submit");
         let postToEdit = document.getElementById(editButton.id + "post");
         let iconsSect = document.getElementById(editButton.id + "icons");
+        let cancelButton = document.getElementById(editButton.id + "cancel");
 
+        cancelButton.style.display="inline";
         editInput.style.display="block";
-        inputSub.style.display="block";
+        inputSub.style.display="inline";
         postToEdit.style.display="none";
         iconsSect.style.display="none";
         inputSub.addEventListener("click", () => {
           editInput.style.display="none";
           inputSub.style.display="none";
+          cancelButton.style.display="none";
           postToEdit.style.display="block";
           iconsSect.style.display="block";
           updatePost();
           });
+        cancelButton.addEventListener("click", () => {
+          editInput.style.display="none";
+          inputSub.style.display="none";
+          cancelButton.style.display="none";  
+          postToEdit.style.display="block";
+          iconsSect.style.display="block";
+        })
       });
 
    // Beginning-Function to edit/update real-time

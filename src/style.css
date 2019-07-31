@@ -189,23 +189,27 @@ padding: 2%;
 }
 .postButtons {
   position: right;
-  font-size: 10px;
+  font-size: 12px;
   padding: 1%;
   float: right;
   margin: 0% 8% 2% 8%;
 }
-#privacyButton {
-background-color: #2A2740;
-color: white;
-border-radius: 3px;
-padding: 1%;
-border-width: 2px;
-border-style: double;
+#privacyButton, .cancel {
+  background-color: #2A2740;
+  color: white;
+  border-radius: 4px;
+  padding: 1%;
+  border-width: 2px;
+  border-style: double;
+}
+.cancel {
+  font-size: 12px;
+  padding: .5%;
 }
 #postButton, .submit {
 background-color: #F28816;
 color: white;
-border-radius: 3px;
+border-radius: 4px;
 border-width: 2px;
 border-style: double;
 }
