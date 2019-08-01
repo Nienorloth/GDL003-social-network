@@ -154,8 +154,11 @@ const createPost = () => {
   } else {
 
   posts.add({
+      // user: auth.user.uid,
        text: toPost.value,
-       date: new Date()
+       date: new Date(),
+       day: new Date().toLocaleDateString(),
+       hour: new Date().toLocaleTimeString()
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -171,18 +174,13 @@ toPost.value="";
 
 //Beggining-Function to show posts
   const publishPost = (doc) => {
-    // let postDate = doc.data().date.toJSON(undefined, {
-    //   day: "numeric",
-    //   month: "short",
-    //   year: "numeric"
-    // });
-    // console.log("fecha " postDate);
+
 
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
         <p  class="pubPost">${ doc.data().text }</p>
         <footer>
-          <p>${ doc.data().date }</p>
+          <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
         </footer>
       </section>
       <section>
@@ -249,7 +247,9 @@ const updatePost = () => {
   let editPostInput = document.getElementById(editButton.id + "input");
   myPost.set({
     text: editPostInput.value,
-    date: new Date()
+    date: new Date(),
+    day: new Date().toLocaleDateString(),
+    hour: new Date().toLocaleTimeString()
   });
 }
 

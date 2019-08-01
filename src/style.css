@@ -171,13 +171,14 @@ body,html {
   font-size: 15px;
   height: 20%;
   float: center;
+  padding: 1%;
 }
 .edit {
   margin-left: 8%;
   height: 60%;
 }
-.publishedPosts p {
-padding: 2%;
+ .date {
+  margin-bottom: 0px;
 }
 #createPost{
   font-size: 15px;
