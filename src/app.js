@@ -191,7 +191,7 @@ toPost.value="";
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
       <section id="${doc.id}icons" class="postIcons">
-        <img id="like" src="Images/like.png" alt="like" width="20">
+        <img id="${ doc.id }" class="likeButton" src="Images/like.png" alt="editar" width="20">
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
@@ -226,7 +226,7 @@ toPost.value="";
         cancelButton.addEventListener("click", () => {
           editInput.style.display="none";
           inputSub.style.display="none";
-          cancelButton.style.display="none";  
+          cancelButton.style.display="none";
           postToEdit.style.display="block";
           iconsSect.style.display="block";
         })
@@ -328,10 +328,10 @@ const profileUser =  () => {
   <label for="registerNamel">Nombre:</label>
   <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
   <label for="registerEmail">Correo electrónico:</label>
-  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">                       
+  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
   <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
   </section>`
-  
+
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
       let imageFile = e.target.files[i];
