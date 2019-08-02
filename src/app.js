@@ -97,15 +97,14 @@ const confirmedSignUp = () => {
 };
 /* End-Sign up function to create new user account */
 
+/* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 const icons = document.getElementById("myLinks");
 const topNav = document.querySelector(".topnav");
 const barsBack = document.querySelector(".icon");
 const profile = document.getElementById("port");
 const logo = document.getElementById("timelineLogo");
 
-/* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
   const mobileMenu =  () => {
-
     if (icons.style.display === "block") {
       icons.style.display = "none";
       topNav.style.height = "12vh";
@@ -135,7 +134,7 @@ function guardarDatos(user){
   firebase.database().ref("prueba/" + user.uid)
   .set(users)
 };
- /* End-Function to save the user data */
+/* End-Function to save the user data */
 
 //Beggining-Function to save post on db
 
@@ -154,9 +153,13 @@ const createPost = () => {
   } else {
 
   posts.add({
+      // user: auth.user.uid,
        text: toPost.value,
        date: new Date(),
-       likes: new Date()
+       likes: new Date(),
+       day: new Date().toLocaleDateString(),
+       hour: new Date().toLocaleTimeString()
+
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -172,18 +175,13 @@ toPost.value="";
 
 //Beggining-Function to show posts
   const publishPost = (doc) => {
-    // let postDate = doc.data().date.toJSON(undefined, {
-    //   day: "numeric",
-    //   month: "short",
-    //   year: "numeric"
-    // });
-    // console.log("fecha " postDate);
+
 
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
         <p  class="pubPost">${ doc.data().text }</p>
         <footer>
-          <p>${ doc.data().date }</p>
+          <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
         </footer>
       </section>
       <section>
@@ -234,6 +232,46 @@ toPost.value="";
         })
       });
 
+
+    /*Begining-Delete post function*/
+    let deleteButtons = document.querySelectorAll(".deleteButton");
+    deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener("click", () => {
+        console.log(doc.data().date);
+        //Creating and showing delete Modal
+        document.getElementById('id01').style.display="block";
+        let deleteModal = document.getElementById("w3-form");
+        deleteModal.innerHTML = `
+        <section class="deleteConfirmationMessage">
+        <p>¿Seguro que desea eliminar la publicación?</p>
+        <button type="button" id="${ doc.id }accept" class="deleteAcceptButton">Aceptar</button>
+        <button type="button" id="${ doc.id }cancel" class="deleteCancelButton">Cancelar</button>
+        </section>
+        `;
+        //Adding functionality to the Accept and Cancel modal buttons
+        let deleteAccept = document.getElementById(deleteButton.id + "accept");
+        let deleteCancel = document.getElementById(deleteButton.id + "cancel");
+        /*deleteAccept.addEventListener("click", () => {
+          deletePost();
+        });*/
+        deleteCancel.addEventListener("click", () => {
+          document.getElementById('id01').style.display="none";
+        });
+      });
+    });
+    const deletePost = () => {
+      let myDeletedPost = posts.doc(deleteButton.id);
+      console.log(myDeletedPost);
+      let deletePostInput = document.getElementById(deleteButton.id + "input");
+      posts.doc("DC").delete().then(function() {
+        console.log("La publicación ");
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+    };
+    /*End-Delete post function*/
+
+
    // Beginning-Function to edit/update real-time
 
 //   document.addEventListener("DOMContentLoaded", event => {
@@ -251,7 +289,9 @@ const updatePost = () => {
   let editPostInput = document.getElementById(editButton.id + "input");
   myPost.set({
     text: editPostInput.value,
-    date: new Date()
+    date: new Date(),
+    day: new Date().toLocaleDateString(),
+    hour: new Date().toLocaleTimeString()
   });
 }
 
