@@ -94,7 +94,7 @@ const confirmedSignUp = () => {
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
       `
-    });   
+      });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -140,14 +140,15 @@ const logo = document.getElementById("timelineLogo");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
-  
+
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
   `<section class="enterContent">
-      <p>⚠️Agrega contenido para publicar</p>
+      <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
+  
   } else { 
     let postName = localStorage.getItem("postName");
   posts.add({
@@ -168,7 +169,7 @@ const createPost = () => {
 
 toPost.value="";
 }
-}
+};
 //End-Function to save post on db
 
 let userName = "";
@@ -204,7 +205,7 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
- 
+
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -256,12 +257,9 @@ const updatePost = () => {
 }
 
 });
-}
+};
 
-
-
-  //End-Function to show published posts
-
+ //End-Function to show published posts
 
 
 /*Beggining- Function to count I like
@@ -272,7 +270,6 @@ const updatePost = () => {
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
  }
- 
 End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
@@ -295,7 +292,6 @@ const profileUser =  () => {
   </section>`
 
    
-
   document.getElementById("acceptButton").addEventListener("click", () => {
     let userName = document.getElementById("registerName").value;
    localStorage.setItem("postName", userName);
