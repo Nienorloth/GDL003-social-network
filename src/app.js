@@ -124,23 +124,11 @@ const logo = document.getElementById("timelineLogo");
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-/* Beginning-Function to save the user data */
-function guardarDatos(user){
-  let users = {
-    uid:user.uid,
-    name:user.displayName,
-    email:user.email,
-    photo: user.photoURL
-  }
-  firebase.database().ref("prueba/" + user.uid)
-  .set(users)
-};
- /* End-Function to save the user data */
-
 //Beggining-Function to save post on db
 
 let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
+const toLike = document.getElementById("toLike");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
@@ -156,7 +144,7 @@ const createPost = () => {
   posts.add({
        text: toPost.value,
        date: new Date(),
-       likes: new Date()
+       likes: likesCounter.value
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -166,6 +154,7 @@ const createPost = () => {
 });
 
 toPost.value="";
+likesCounter.value="";
 }
 }
 //End-Function to save post on db
@@ -234,16 +223,6 @@ toPost.value="";
         })
       });
 
-   // Beginning-Function to edit/update real-time
-
-//   document.addEventListener("DOMContentLoaded", event => {
-//     let myPost = db.collection("posts").doc(editButton.id);
-
-//   myPost.onSnapshot(doc => {
-//         const data = doc.data();
-//        document.querySelector(".pubPost").innerHTML = data.text;
-//     })
-// });
 const updatePost = () => {
 
   let myPost = posts.doc(editButton.id);
@@ -279,13 +258,16 @@ const updatePost = () => {
 
 /*Beggining- Function to count I like*/
 
-    let likesCounter = 0;
+let likeButton = document.querySelectorAll(".likeButton");
 
-    const clickLikes =() => {
+  const countLikes = () => {
+    let likesCounter = 0;
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
- }
- 
+  
+}
+   
+
 /*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
