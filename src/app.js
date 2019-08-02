@@ -5,15 +5,18 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 const database = firebase.database();
+let logedUser = "";
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
+    logedUser = user;
     console.log("Usuario inició sesión", user);
     document.getElementById("timeLine").style.display="block";
     document.getElementById("loginPage").style.display="none";
     toPost.value= "";
   } else {
+    logedUser= "Visitante";
     console.log("Usuario cerró sesión");
     document.getElementById("timeLine").style.display="none";
     document.getElementById("loginPage").style.display="block";
@@ -76,12 +79,18 @@ const confirmedSignUp = () => {
     registerError.innerHTML = "";
     auth.createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
     .then(correct => {
+      return db.collection("users").doc(correct.user.uid).set({
+        name: registeredName,
+        email: registeredEmail,
+        uid: correct.user.uid
+      }).then(() => {
       registerModal.innerHTML = `
       <section class="registerCorrectMessage">
       <p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p>
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
-      `;
+      `
+    });   
     })
     .catch(error => {
       let errorCode = error.code;
@@ -131,18 +140,20 @@ function guardarDatos(user){
     email:user.email,
     photo: user.photoURL
   }
-  firebase.database().ref("prueba/" + user.uid)
+  firebase.firestore().ref("prueba/" + user.uid)
   .set(users)
 };
 /* End-Function to save the user data */
 
 //Beggining-Function to save post on db
 
+let usersColl = db.collection("users");
 let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
+  
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
@@ -150,10 +161,9 @@ const createPost = () => {
       <p>⚠️Agrega contenido para publicar</p>
       </section>
       `
-  } else {
-
+  } else { 
+   
   posts.add({
-      // user: auth.user.uid,
        text: toPost.value,
        date: new Date(),
        day: new Date().toLocaleDateString(),
@@ -171,19 +181,21 @@ toPost.value="";
 }
 //End-Function to save post on db
 
+let userName = "";
+
 //Beggining-Function to show posts
   const publishPost = (doc) => {
-
-
+   
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
+        <p id="name" class="pubPost">${ userName }  dice:</p>
         <p  class="pubPost">${ doc.data().text }</p>
         <footer>
           <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
+        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
@@ -192,7 +204,7 @@ toPost.value="";
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
-
+    
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -306,9 +318,12 @@ const updatePost = () => {
       posts.orderBy("date", "desc").onSnapshot(function(doc){
         document.getElementById("timelinePosted").innerHTML = "";
         const array = doc.docs;
+        usersColl.doc(logedUser.uid).get().then(doc => {  
+        userName = doc.data().name;
         array.forEach(element => {
           publishPost(element)
         });
+        })
       })
 
 
