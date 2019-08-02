@@ -90,7 +90,7 @@ const confirmedSignUp = () => {
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
       `
-    });   
+      });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -153,16 +153,16 @@ const toPost = document.getElementById("toPost");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
-  
+
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
   `<section class="enterContent">
-      <p>⚠️Agrega contenido para publicar</p>
+      <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
-  } else { 
-   
+  } else {
+
   posts.add({
        text: toPost.value,
        date: new Date(),
@@ -180,14 +180,14 @@ const createPost = () => {
 
 toPost.value="";
 }
-}
+};
 //End-Function to save post on db
 
 let userName = "";
 
 //Beggining-Function to show posts
   const publishPost = (doc) => {
-   
+
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
         <p id="name" class="pubPost">${ userName }  dice:</p>
@@ -207,7 +207,7 @@ let userName = "";
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
- 
+
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -255,7 +255,7 @@ let userName = "";
         let deleteModal = document.getElementById("w3-form");
         deleteModal.innerHTML = `
         <section class="deleteConfirmationMessage">
-        <p>¿Seguro que desea eliminar la publicación?</p>
+        <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
         <button type="button" id="${ doc.id }accept" class="deleteAcceptButton">Aceptar</button>
         <button type="button" id="${ doc.id }cancel" class="deleteCancelButton">Cancelar</button>
         </section>
@@ -263,9 +263,9 @@ let userName = "";
         //Adding functionality to the Accept and Cancel modal buttons
         let deleteAccept = document.getElementById(deleteButton.id + "accept");
         let deleteCancel = document.getElementById(deleteButton.id + "cancel");
-        /*deleteAccept.addEventListener("click", () => {
+        deleteAccept.addEventListener("click", () => {
           deletePost();
-        });*/
+        });
         deleteCancel.addEventListener("click", () => {
           document.getElementById('id01').style.display="none";
         });
@@ -275,10 +275,10 @@ let userName = "";
       let myDeletedPost = posts.doc(deleteButton.id);
       console.log(myDeletedPost);
       let deletePostInput = document.getElementById(deleteButton.id + "input");
-      posts.doc("DC").delete().then(function() {
-        console.log("La publicación ");
+      posts.doc("posts").delete().then(function() {
+        console.log("La publicación se ha eliminado correctamente");
       }).catch(function(error) {
-        console.error("Error removing document: ", error);
+        console.error("Error eliminando publicación", error);
       });
     };
     /*End-Delete post function*/
@@ -308,7 +308,7 @@ const updatePost = () => {
 }
 
 });
-}
+};
 
 //End-Function to edit/update real-time
 
@@ -321,7 +321,7 @@ const updatePost = () => {
       posts.orderBy("date", "desc").onSnapshot(function(doc){
         document.getElementById("timelinePosted").innerHTML = "";
         const array = doc.docs;
-        usersColl.doc(logedUser.uid).get().then(doc => {  
+        usersColl.doc(logedUser.uid).get().then(doc => {
         userName = doc.data().name;
         array.forEach(element => {
           publishPost(element)
@@ -340,7 +340,7 @@ const updatePost = () => {
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
  }
- 
+
 /*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
