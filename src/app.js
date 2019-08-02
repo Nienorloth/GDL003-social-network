@@ -156,8 +156,10 @@ const createPost = () => {
       // user: auth.user.uid,
        text: toPost.value,
        date: new Date(),
+       likes: new Date(),
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
+
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -188,11 +190,12 @@ toPost.value="";
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
       <section id="${doc.id}icons" class="postIcons">
-        <img id="${ doc.id }" class="likeButton" src="Images/like.png" alt="editar" width="20">
+        <img id="${ doc.id }" class="likeButton" onClick="clickLikes()" src="Images/like.png" alt="like" width="20">
+        <span class = "likesCounter"><a id="likesCounter">0</a></span>
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
-
+ 
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -315,40 +318,14 @@ const updatePost = () => {
   //End-Function to show published posts
 
 /*Beggining- Function to count I like*/
-/*let canvas;
-let like;
-var button;
 
-const setUp = () =>{
+    let likesCounter = 0;
 
-  canvas = createCanvas(100,100);
-  like = 0;
-  button = createButton('click');
-  button.mousePressed(increaseLike);
-
-
-}
-let ref = database.ref('comunidadescolar');
-
-let data = {
-  post: doc.data().text,
-  score: 1
-}
-ref.push(data);
-
-const submitLike = () => {
- let data = {
-   like : like,
+    const clickLikes =() => {
+      likesCounter += 1;
+        document.getElementById("likesCounter").innerHTML = likesCounter;
  }
-  console.log(data);
-  let ref = database.ref("posts");
-  ref.push(data);
-};
-
-const increaseLike = () => {
-  like++;
-}*/
-
+ 
 /*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
@@ -441,4 +418,3 @@ document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("profileButton").addEventListener("click", profileUser);
 document.getElementById("contactsButton").addEventListener("click",addContacts);
 document.getElementById("settingsButton").addEventListener("click", logOut);
-//document.getElementById("").addEventListener("click",sumitLike);
