@@ -166,12 +166,18 @@ body,html {
   height: 20%;
   float: center;
 }
+#timelinePosted {
+  margin-top: 10%;
+}
 .publishedPosts {
-  margin: 10% 8% 0% 8%;
+  margin: 8% 8% 0% 8%;
   font-size: 15px;
   height: 20%;
   float: center;
-  padding: 1%;
+  padding: 0% 2% 2% 2%
+}
+#name {
+  padding-top: 7px;
 }
 .edit {
   margin-left: 8%;
