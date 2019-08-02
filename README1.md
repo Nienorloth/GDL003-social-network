@@ -29,7 +29,7 @@
 ### Historia de usuario 1
   El usuario requiere poder crear una cuenta con su e-mail, una contraseña y un código de verificación para posteriormente iniciar sesión.
   - DoD:
-    - Pantalla de registro con campos para ingresar correo, contraseña, confirmación de contraseña, código de verificación y botón de enviar.
+    - Pantalla de registro con campos para ingresar correo, nombre de usuario, contraseña, confirmación de contraseña, código de verificación y botón de enviar.
     - Función para registrar los datos en Firebase.
     - Notificación/Alerta de cuenta creada exitosamente.
     - Validaciones de error de todos los campos.
@@ -46,7 +46,7 @@ El usuario requiere editar su información personal en el perfil de usuario para
   - DoD:
     - Pantalla de perfil de usuario.
     - Función para subir una imagen a Firebase.
-    - Función para ingresar su nombre en Firebase.
+    - Función para mostrar su correo y nombre de usuario.
     - Botón para regresar a la pantalla principal.
     - Validaciones de error de todos los campos.
 
@@ -58,8 +58,8 @@ El usuario requiere poder hacer publicaciones y que se muestren en un muro para 
     - Función para ingresar publicaciones en Firebase.
     - Función para traer las publicaciones de Firebase e imprimirlas en html.
     - Ordenar las publicaciones por fecha.
-    - Botón/emoji de reacción hacia las publicaciones.
-    - Función para contar las reacciones e imprimirlas en html.
+    - Añadir nombre de usuario en cada publicación.
+    - Añadir fecha/hora en cada publicación.
     - Validación de error del campo de texto (que no este vacío).
 
 ### Historia de usuario 5
@@ -79,12 +79,19 @@ El usuario requiere editar publicaciones.
     - Mensaje de confirmación.
 
 ### Historia de usuario 7
+El usuario requiere poder reaccionar a cada publicación.
+  - DoD:
+    - Botón/emoji de reacción hacia las publicaciones.
+    - Función para contar las reacciones e imprimirlas en html.
+    - Función para agregar el conteo en Firebase y ligarlo con el usuario y con la publicación.
+
+### Historia de usuario 8
 El usuario requiere poder definir la privacidad de sus publicaciones.
   - DoD:
     - Lista desplegable con opción de privado y amigos.
     - Función para ocultar o desocultar publicaciones.
 
-### Historia de usuario 8
+### Historia de usuario 9
 El usuario requiere poder agregar y eliminar amigos.
 DoD: La aplicación permite que se agreguen y se eliminen amigos, pidiendo confirmación para eliminarlos.
   - DoD:
@@ -139,4 +146,5 @@ Los [Resultados](https://es.surveymonkey.com/results/SM-7RTXL22L7/) fueron los s
 - Cierre de sesión: [Video tutorial de YouTube](https://www.youtube.com/watch?v=eS-yU_6aKEE&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=6).
 - Perfil de usuario: [Documentacion de Firebase](https://firebase.google.com/docs/storage/web/upload-files?hl=es-419#full_example) y [Video tutorial de YouTube](https://www.youtube.com/watch?v=i3WdUCvCQSU).
 - Publicación de posts/comentarios: [Video tutorial de YouTube](https://www.youtube.com/watch?v=cb8H_hp10rc&list=PL4cUxeGkcC9itfjle0ji1xOZ2cjRGY_WB&index=7).
-- Creación de reglas de seguridad: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/security/rules-structure) y [Video tutorial de YouTube](https://www.youtube.com/watch?v=d0RK2bpRVgo&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=10).
+- Eliminar publicaciones: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=es-419) y [Video tutorial de YouTube](https://www.youtube.com/watch?v=UZqXcoqC95E&list=PL4cUxeGkcC9itfjle0ji1xOZ2cjRGY_WB&index=5).
+- Creación de reglas de seguridad: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/security/rules-structure), [Video tutorial de YouTube](https://www.youtube.com/watch?v=d0RK2bpRVgo&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=10), [Video tutorial de YouTube](https://www.youtube.com/watch?v=rgBDotX_65Q&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=12).

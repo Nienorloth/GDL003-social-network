@@ -5,15 +5,18 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 const database = firebase.database();
+let logedUser = "";
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
+    logedUser = user;
     console.log("Usuario inició sesión", user);
     document.getElementById("timeLine").style.display="block";
     document.getElementById("loginPage").style.display="none";
     toPost.value= "";
   } else {
+    logedUser= "Visitante";
     console.log("Usuario cerró sesión");
     document.getElementById("timeLine").style.display="none";
     document.getElementById("loginPage").style.display="block";
@@ -76,12 +79,18 @@ const confirmedSignUp = () => {
     registerError.innerHTML = "";
     auth.createUserWithEmailAndPassword(registeredEmail, confirmedPassword)
     .then(correct => {
+      return db.collection("users").doc(correct.user.uid).set({
+        name: registeredName,
+        email: registeredEmail,
+        uid: correct.user.uid
+      }).then(() => {
       registerModal.innerHTML = `
       <section class="registerCorrectMessage">
       <p>Su cuenta se ha registrado correctamente, por favor inicie sesión.</p>
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
-      `;
+      `
+      });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -97,15 +106,14 @@ const confirmedSignUp = () => {
 };
 /* End-Sign up function to create new user account */
 
+/* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 const icons = document.getElementById("myLinks");
 const topNav = document.querySelector(".topnav");
 const barsBack = document.querySelector(".icon");
 const profile = document.getElementById("port");
 const logo = document.getElementById("timelineLogo");
 
-/* Beginning-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
   const mobileMenu =  () => {
-
     if (icons.style.display === "block") {
       icons.style.display = "none";
       topNav.style.height = "12vh";
@@ -124,19 +132,37 @@ const logo = document.getElementById("timelineLogo");
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
+<<<<<<< HEAD
+=======
+/* Beginning-Function to save the user data */
+function guardarDatos(user){
+  let users = {
+    uid:user.uid,
+    name:user.displayName,
+    email:user.email,
+    photo: user.photoURL
+  }
+  firebase.firestore().ref("prueba/" + user.uid)
+  .set(users)
+};
+/* End-Function to save the user data */
+
+>>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 //Beggining-Function to save post on db
 
+let usersColl = db.collection("users");
 let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 const toLike = document.getElementById("toLike");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
+
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
   `<section class="enterContent">
-      <p>⚠️Agrega contenido para publicar</p>
+      <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
   } else {
@@ -144,7 +170,14 @@ const createPost = () => {
   posts.add({
        text: toPost.value,
        date: new Date(),
+<<<<<<< HEAD
        likes: likesCounter.value
+=======
+       likes: new Date(),
+       day: new Date().toLocaleDateString(),
+       hour: new Date().toLocaleTimeString()
+
+>>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -156,27 +189,24 @@ const createPost = () => {
 toPost.value="";
 likesCounter.value="";
 }
-}
+};
 //End-Function to save post on db
+
+let userName = "";
 
 //Beggining-Function to show posts
   const publishPost = (doc) => {
-    // let postDate = doc.data().date.toJSON(undefined, {
-    //   day: "numeric",
-    //   month: "short",
-    //   year: "numeric"
-    // });
-    // console.log("fecha " postDate);
 
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
+        <p id="name" class="pubPost">${ userName }  dice:</p>
         <p  class="pubPost">${ doc.data().text }</p>
         <footer>
-          <p>${ doc.data().date }</p>
+          <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
+        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
@@ -186,7 +216,7 @@ likesCounter.value="";
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
- 
+
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -223,6 +253,59 @@ likesCounter.value="";
         })
       });
 
+<<<<<<< HEAD
+=======
+
+    /*Begining-Delete post function*/
+    let deleteButtons = document.querySelectorAll(".deleteButton");
+    deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener("click", () => {
+        console.log(doc.data().date);
+        //Creating and showing delete Modal
+        document.getElementById('id01').style.display="block";
+        let deleteModal = document.getElementById("w3-form");
+        deleteModal.innerHTML = `
+        <section class="deleteConfirmationMessage">
+        <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
+        <button type="button" id="${ doc.id }accept" class="deleteAcceptButton">Aceptar</button>
+        <button type="button" id="${ doc.id }cancel" class="deleteCancelButton">Cancelar</button>
+        </section>
+        `;
+        //Adding functionality to the Accept and Cancel modal buttons
+        let deleteAccept = document.getElementById(deleteButton.id + "accept");
+        let deleteCancel = document.getElementById(deleteButton.id + "cancel");
+        deleteAccept.addEventListener("click", () => {
+          deletePost();
+        });
+        deleteCancel.addEventListener("click", () => {
+          document.getElementById('id01').style.display="none";
+        });
+      });
+    });
+    const deletePost = () => {
+      let myDeletedPost = posts.doc(deleteButton.id);
+      console.log(myDeletedPost);
+      let deletePostInput = document.getElementById(deleteButton.id + "input");
+      posts.doc("posts").delete().then(function() {
+        console.log("La publicación se ha eliminado correctamente");
+      }).catch(function(error) {
+        console.error("Error eliminando publicación", error);
+      });
+    };
+    /*End-Delete post function*/
+
+
+   // Beginning-Function to edit/update real-time
+
+//   document.addEventListener("DOMContentLoaded", event => {
+//     let myPost = db.collection("posts").doc(editButton.id);
+
+//   myPost.onSnapshot(doc => {
+//         const data = doc.data();
+//        document.querySelector(".pubPost").innerHTML = data.text;
+//     })
+// });
+>>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 const updatePost = () => {
 
   let myPost = posts.doc(editButton.id);
@@ -230,12 +313,14 @@ const updatePost = () => {
   let editPostInput = document.getElementById(editButton.id + "input");
   myPost.set({
     text: editPostInput.value,
-    date: new Date()
+    date: new Date(),
+    day: new Date().toLocaleDateString(),
+    hour: new Date().toLocaleTimeString()
   });
 }
 
 });
-}
+};
 
 //End-Function to edit/update real-time
 
@@ -248,9 +333,12 @@ const updatePost = () => {
       posts.orderBy("date", "desc").onSnapshot(function(doc){
         document.getElementById("timelinePosted").innerHTML = "";
         const array = doc.docs;
+        usersColl.doc(logedUser.uid).get().then(doc => {
+        userName = doc.data().name;
         array.forEach(element => {
           publishPost(element)
         });
+        })
       })
 
 
@@ -264,9 +352,13 @@ let likeButton = document.querySelectorAll(".likeButton");
     let likesCounter = 0;
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
+<<<<<<< HEAD
   
 }
    
+=======
+ }
+>>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 
 /*End- Function to count I like*/
 

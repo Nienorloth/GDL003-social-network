@@ -74,7 +74,7 @@ body,html {
   box-sizing: border-box;
   font-size: 12px;
 }
-.registerConfirm,.acceptButton{
+.registerConfirm,.acceptButton,.deleteAcceptButton,.deleteCancelButton{
   width: 100%;
   background-color: #5BD9CC;
   color: rgb(12, 0, 0);
@@ -84,7 +84,7 @@ body,html {
   border-radius: 4px;
   cursor: pointer;
 }
-.registerConfirm:hover,.acceptButton:hover {
+.registerConfirm:hover,.acceptButton:hover,.deleteAcceptButton:hover,.deleteCancelButton:hover {
   background-color: #2A2740;
   color: #FFFF;
 }
@@ -99,10 +99,10 @@ body,html {
 .registerPassword:valid,.registerConfirmPassword:valid {
   border: 1px solid #5BD9CC;
 }
-.registerCorrectMessage {
+.registerCorrectMessage,.deleteConfirmationMessage {
   text-align: center;
 }
-.correctRegisterImage {
+.correctRegisterImage,.correctDeletingImage {
   width: 30%;
 }
 /* End- Register Modal */
@@ -166,18 +166,25 @@ body,html {
   height: 20%;
   float: center;
 }
+#timelinePosted {
+  margin-top: 10%;
+}
 .publishedPosts {
-  margin: 10% 8% 0% 8%;
+  margin: 8% 8% 0% 8%;
   font-size: 15px;
   height: 20%;
   float: center;
+  padding: 0% 2% 2% 2%
+}
+#name {
+  padding-top: 7px;
 }
 .edit {
   margin-left: 8%;
   height: 60%;
 }
-.publishedPosts p {
-padding: 2%;
+ .date {
+  margin-bottom: 0px;
 }
 #createPost{
   font-size: 15px;
@@ -231,7 +238,7 @@ display: inline;
 }
 /* End timeline post box style */
 
-/* Start - Modal profile user*/ 
+/* Start - Modal profile user*/
 .profileUserImage{
   text-align: center;
 }
