@@ -138,6 +138,12 @@ const logo = document.getElementById("timelineLogo");
 
 //Beggining-Function to save post on db
 
+let usersColl = db.collection("users");
+let posts = db.collection("posts");
+const toPost = document.getElementById("toPost");
+const toLike = document.getElementById("toLike");
+
+//Beggining-Function to save post on db
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
 
@@ -148,13 +154,13 @@ const createPost = () => {
       <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
-  
   } else { 
     let postName = localStorage.getItem("postName");
   posts.add({
        name: postName,
        text: toPost.value,
        date: new Date(),
+       //likes: likesCounter.value
        likes: new Date(),
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
@@ -168,6 +174,7 @@ const createPost = () => {
 });
 
 toPost.value="";
+likesCounter.value="";
 }
 };
 //End-Function to save post on db
@@ -261,15 +268,15 @@ const updatePost = () => {
 
  //End-Function to show published posts
 
-
 /*Beggining- Function to count I like
 
-    let likesCounter = 0;
+let likeButton = document.querySelectorAll(".likeButton");
 
-    const clickLikes =() => {
+  const countLikes = () => {
+    let likesCounter = 0;
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
- }
+    }
 End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
