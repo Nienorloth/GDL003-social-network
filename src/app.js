@@ -5,7 +5,11 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 const database = firebase.database();
+let usersColl = db.collection("users");
+let posts = db.collection("posts");
+const toPost = document.getElementById("toPost");
 let logedUser = "";
+let postUser = "";
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
@@ -132,22 +136,6 @@ const logo = document.getElementById("timelineLogo");
   };
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
-<<<<<<< HEAD
-=======
-/* Beginning-Function to save the user data */
-function guardarDatos(user){
-  let users = {
-    uid:user.uid,
-    name:user.displayName,
-    email:user.email,
-    photo: user.photoURL
-  }
-  firebase.firestore().ref("prueba/" + user.uid)
-  .set(users)
-};
-/* End-Function to save the user data */
-
->>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 //Beggining-Function to save post on db
 
 let usersColl = db.collection("users");
@@ -155,6 +143,7 @@ let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 const toLike = document.getElementById("toLike");
 
+//Beggining-Function to save post on db
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
 
@@ -165,19 +154,17 @@ const createPost = () => {
       <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
-  } else {
-
+  } else { 
+    let postName = localStorage.getItem("postName");
   posts.add({
+       name: postName,
        text: toPost.value,
        date: new Date(),
-<<<<<<< HEAD
-       likes: likesCounter.value
-=======
+       //likes: likesCounter.value
        likes: new Date(),
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
 
->>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -193,13 +180,22 @@ likesCounter.value="";
 //End-Function to save post on db
 
 let userName = "";
+let array = "";
+
+posts.orderBy("date", "desc").onSnapshot(function(doc){
+  document.getElementById("timelinePosted").innerHTML = "";
+  array = doc.docs;
+  usersColl.doc(logedUser.uid).get().then(doc => {  
+    publishPost();
+  });
+  })
 
 //Beggining-Function to show posts
-  const publishPost = (doc) => {
-
+  const publishPost = () => {
+   array.forEach(doc => {
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
-        <p id="name" class="pubPost">${ userName }  dice:</p>
+        <p id="name" class="pubPost">${ doc.data().name }  dice:</p>
         <p  class="pubPost">${ doc.data().text }</p>
         <footer>
           <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
@@ -252,60 +248,8 @@ let userName = "";
           iconsSect.style.display="block";
         })
       });
-
-<<<<<<< HEAD
-=======
-
-    /*Begining-Delete post function*/
-    let deleteButtons = document.querySelectorAll(".deleteButton");
-    deleteButtons.forEach(deleteButton => {
-      deleteButton.addEventListener("click", () => {
-        console.log(doc.data().date);
-        //Creating and showing delete Modal
-        document.getElementById('id01').style.display="block";
-        let deleteModal = document.getElementById("w3-form");
-        deleteModal.innerHTML = `
-        <section class="deleteConfirmationMessage">
-        <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
-        <button type="button" id="${ doc.id }accept" class="deleteAcceptButton">Aceptar</button>
-        <button type="button" id="${ doc.id }cancel" class="deleteCancelButton">Cancelar</button>
-        </section>
-        `;
-        //Adding functionality to the Accept and Cancel modal buttons
-        let deleteAccept = document.getElementById(deleteButton.id + "accept");
-        let deleteCancel = document.getElementById(deleteButton.id + "cancel");
-        deleteAccept.addEventListener("click", () => {
-          deletePost();
-        });
-        deleteCancel.addEventListener("click", () => {
-          document.getElementById('id01').style.display="none";
-        });
-      });
     });
-    const deletePost = () => {
-      let myDeletedPost = posts.doc(deleteButton.id);
-      console.log(myDeletedPost);
-      let deletePostInput = document.getElementById(deleteButton.id + "input");
-      posts.doc("posts").delete().then(function() {
-        console.log("La publicación se ha eliminado correctamente");
-      }).catch(function(error) {
-        console.error("Error eliminando publicación", error);
-      });
-    };
-    /*End-Delete post function*/
 
-
-   // Beginning-Function to edit/update real-time
-
-//   document.addEventListener("DOMContentLoaded", event => {
-//     let myPost = db.collection("posts").doc(editButton.id);
-
-//   myPost.onSnapshot(doc => {
-//         const data = doc.data();
-//        document.querySelector(".pubPost").innerHTML = data.text;
-//     })
-// });
->>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
 const updatePost = () => {
 
   let myPost = posts.doc(editButton.id);
@@ -322,29 +266,9 @@ const updatePost = () => {
 });
 };
 
-//End-Function to edit/update real-time
+ //End-Function to show published posts
 
-  // posts.orderBy("date","desc").get().then((snapshot) => {
-    //   snapshot.docs.forEach(doc => {
-      //       console.log(doc.data());
-      //       publishPost(doc);
-      //   })
-      // });
-      posts.orderBy("date", "desc").onSnapshot(function(doc){
-        document.getElementById("timelinePosted").innerHTML = "";
-        const array = doc.docs;
-        usersColl.doc(logedUser.uid).get().then(doc => {
-        userName = doc.data().name;
-        array.forEach(element => {
-          publishPost(element)
-        });
-        })
-      })
-
-
-  //End-Function to show published posts
-
-/*Beggining- Function to count I like*/
+/*Beggining- Function to count I like
 
 let likeButton = document.querySelectorAll(".likeButton");
 
@@ -352,19 +276,12 @@ let likeButton = document.querySelectorAll(".likeButton");
     let likesCounter = 0;
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
-<<<<<<< HEAD
-  
-}
-   
-=======
- }
->>>>>>> 4c05471bdeb1a050c7a8a6307ae0d9296ad1ac29
-
-/*End- Function to count I like*/
+    }
+End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-  //<input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
+  
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
@@ -372,15 +289,43 @@ const profileUser =  () => {
   <h4>Editar perfil de usuario.</h4>
   <div class ="profileUserImage">
   <label class='btn btn-file'>
+  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
   <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
   </label>
   </div>
   <label for="registerNamel">Nombre:</label>
-  <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre ..."  required>
-  <label for="registerEmail">Correo electrónico:</label>
-  <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
+  <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
   <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
   </section>`
+
+   
+  document.getElementById("acceptButton").addEventListener("click", () => {
+    let userName = document.getElementById("registerName").value;
+   localStorage.setItem("postName", userName);
+    let postName = localStorage.getItem("postName");
+    db.collection("users").doc(logedUser.uid).set({ 
+      name: postName,
+      email: logedUser.email,
+      uid: logedUser.uid
+    }).then(() => {
+      profileModal.innerHTML = `
+      <section class='profileUser'>
+      <h4>Editar perfil de usuario.</h4>
+      <div class ="profileUserImage">
+      <label class='btn btn-file'>
+      <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
+      <span>${logedUser.name}</span>
+      </label>
+      </div>
+      <label for="registerNamel">Nombre:</label>
+      <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
+      <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
+      </section>`
+      postUser = logedUser.name;
+    });
+
+  });
+  
 
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
