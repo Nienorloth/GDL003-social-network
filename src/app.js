@@ -1,5 +1,5 @@
 
-/* Make a variable with each of the Firebase tools */
+/* Make a variable with each of the Firebase tools and universal variables */
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -11,7 +11,7 @@ const toPost = document.getElementById("toPost");
 let logedUser = "";
 let postUser = "";
 
-/* Listen when auth status changes */
+/* Listen when user auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
     logedUser = user;
@@ -137,13 +137,8 @@ const logo = document.getElementById("timelineLogo");
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
 //Beggining-Function to save post on db
-
-let usersColl = db.collection("users");
-let posts = db.collection("posts");
-const toPost = document.getElementById("toPost");
 const toLike = document.getElementById("toLike");
 
-//Beggining-Function to save post on db
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
 
@@ -154,7 +149,7 @@ const createPost = () => {
       <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
-  } else { 
+  } else {
     let postName = localStorage.getItem("postName");
   posts.add({
        name: postName,
@@ -185,7 +180,7 @@ let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
-  usersColl.doc(logedUser.uid).get().then(doc => {  
+  usersColl.doc(logedUser.uid).get().then(doc => {
     publishPost();
   });
   })
@@ -281,7 +276,7 @@ End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-  
+
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
@@ -298,12 +293,12 @@ const profileUser =  () => {
   <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
   </section>`
 
-   
+
   document.getElementById("acceptButton").addEventListener("click", () => {
     let userName = document.getElementById("registerName").value;
    localStorage.setItem("postName", userName);
     let postName = localStorage.getItem("postName");
-    db.collection("users").doc(logedUser.uid).set({ 
+    db.collection("users").doc(logedUser.uid).set({
       name: postName,
       email: logedUser.email,
       uid: logedUser.uid
@@ -325,7 +320,7 @@ const profileUser =  () => {
     });
 
   });
-  
+
 
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
@@ -370,8 +365,7 @@ const addContacts =  () =>{
   <h4>Agregar nuevos contactos.</h4>
   </section>`
 
-}
-
+};
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */

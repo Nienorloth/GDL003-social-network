@@ -8,7 +8,7 @@ deleteButtons.forEach(deleteButton => {
     let deleteModal = document.getElementById("w3-form");
     deleteModal.innerHTML = `
     <section class="deleteConfirmationMessage">
-    <p>¿Seguro que desea eliminar la publicación?</p>
+    <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
     <button type="button" id="${ doc.id }accept" class="deleteAcceptButton">Aceptar</button>
     <button type="button" id="${ doc.id }cancel" class="deleteCancelButton">Cancelar</button>
     </section>
@@ -16,9 +16,9 @@ deleteButtons.forEach(deleteButton => {
     //Adding functionality to the Accept and Cancel modal buttons
     let deleteAccept = document.getElementById(deleteButton.id + "accept");
     let deleteCancel = document.getElementById(deleteButton.id + "cancel");
-    /*deleteAccept.addEventListener("click", () => {
+    deleteAccept.addEventListener("click", () => {
       deletePost();
-    });*/
+    });
     deleteCancel.addEventListener("click", () => {
       document.getElementById('id01').style.display="none";
     });
@@ -28,11 +28,10 @@ const deletePost = () => {
   let myDeletedPost = posts.doc(deleteButton.id);
   console.log(myDeletedPost);
   let deletePostInput = document.getElementById(deleteButton.id + "input");
-  posts.doc("DC").delete().then(function() {
-    console.log("La publicación ");
+  posts.doc("posts").delete().then(function() {
+    console.log("La publicación se ha eliminado correctamente");
   }).catch(function(error) {
-    console.error("Error removing document: ", error);
+    console.error("Error eliminando publicación", error);
   });
 };
 /*End-Delete post function*/
-
