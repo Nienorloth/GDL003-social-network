@@ -17,7 +17,7 @@
 ---
 
 ## ¿Qué necesidades satisface Comunidad escolar?
-- Registro privado solo para padres de familia autorizados mediante un código de verificación y validación de correo electrónico.
+- Registro privado solo para padres de familia autorizados mediante validación de correo electrónico.
 - Consulta de manera rápida y oportuna a través de cualquier dispositivo electrónico.
 - Contacto directo con los profesores, personal docente y padres de familia.
 - Plataforma intuitiva para consultar, organizar, comunicar y planear actividades/asuntos escolares.
@@ -44,10 +44,9 @@
 ### Historia de usuario 3
 El usuario requiere editar su información personal en el perfil de usuario para poder establecer su identidad.
   - DoD:
-    - Pantalla de perfil de usuario.
+    - Pantalla/modal de perfil de usuario.
     - Función para subir una imagen a Firebase.
     - Función para mostrar su correo y nombre de usuario.
-    - Botón para regresar a la pantalla principal.
     - Validaciones de error de todos los campos.
 
 ### Historia de usuario 4
@@ -66,8 +65,8 @@ El usuario requiere poder hacer publicaciones y que se muestren en un muro para 
 El usuario requiere poder eliminar publicaciones de su muro.
   - DoD:
     - Función para eliminar publicaciones de Firebase.
-    - Función para eliminar publicaciones del muro.
-    - Mensaje de confirmación.
+    - Función para eliminar publicaciones solo del usuario activo.
+    - Mensajes de confirmación antes de eliminar.
     - Botones de aceptar y cancelar.
 
 ### Historia de usuario 6
@@ -92,8 +91,7 @@ El usuario requiere poder definir la privacidad de sus publicaciones.
     - Función para ocultar o desocultar publicaciones.
 
 ### Historia de usuario 9
-El usuario requiere poder agregar y eliminar amigos.
-DoD: La aplicación permite que se agreguen y se eliminen amigos, pidiendo confirmación para eliminarlos.
+El usuario requiere poder buscar otros usarios para poder enviar mensajes directos a través de un chat.
   - DoD:
     - Pantalla para ver y agregar amigos.
     - Función para almacenar amigos/contactos en Firebase según el ID de usuario.
@@ -147,4 +145,5 @@ Los [Resultados](https://es.surveymonkey.com/results/SM-7RTXL22L7/) fueron los s
 - Perfil de usuario: [Documentacion de Firebase](https://firebase.google.com/docs/storage/web/upload-files?hl=es-419#full_example) y [Video tutorial de YouTube](https://www.youtube.com/watch?v=i3WdUCvCQSU).
 - Publicación de posts/comentarios: [Video tutorial de YouTube](https://www.youtube.com/watch?v=cb8H_hp10rc&list=PL4cUxeGkcC9itfjle0ji1xOZ2cjRGY_WB&index=7).
 - Eliminar publicaciones: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=es-419) y [Video tutorial de YouTube](https://www.youtube.com/watch?v=UZqXcoqC95E&list=PL4cUxeGkcC9itfjle0ji1xOZ2cjRGY_WB&index=5).
-- Creación de reglas de seguridad: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/security/rules-structure), [Video tutorial de YouTube](https://www.youtube.com/watch?v=d0RK2bpRVgo&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=10), [Video tutorial de YouTube](https://www.youtube.com/watch?v=rgBDotX_65Q&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=12).
+- Creación de perfil de usuario: [Video tutorial de YouTube](https://www.youtube.com/watch?v=qWy9ylc3f9U&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=15).
+- Creación de reglas de seguridad: [Documentacion de Firebase](https://firebase.google.com/docs/firestore/security/rules-structure), [Video tutorial de YouTube](https://www.youtube.com/watch?v=d0RK2bpRVgo&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=10), [Video tutorial de YouTube](https://www.youtube.com/watch?v=rgBDotX_65Q&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=12), [Video tutorial de YouTube](https://www.youtube.com/watch?v=B2E30lXp5EI&list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ&index=16).
