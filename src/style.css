@@ -252,7 +252,7 @@ display: inline;
 /* End - Modal profile user*/
 
 @media screen and (min-width: 1024px) {
-/*Beginning - time line*/ 
+/*Beginning - time line*/
 #toPost {
   float: center;
   font-size: 20px;
@@ -287,7 +287,7 @@ display: inline;
  width: 25px;
  margin-left: 10%;
  margin-top: 2%;
-} 
+}
 .likeButton:hover {
  width: 30px;
  cursor: pointer;
@@ -309,7 +309,7 @@ padding-top: 1%;
 }
 #menuIcon {
 display: none;
-} 
+}
 #profText {
 display: block;
 }
@@ -328,7 +328,7 @@ font-size: 17px;
 }
 #bigLogout:hover, #bigProfile:hover, #bigContacts:hover {
 background-color: #49ada4;
-color: black;  
+color: black;
 cursor: pointer;
 }
 #timelineLogo {
@@ -352,7 +352,7 @@ background-color: #12111c;
 cursor: pointer;
 }
 /* End - time line */
-  
+
 /* Beginning - Login Section */
 .sociallogo {
   margin-bottom: 10px;

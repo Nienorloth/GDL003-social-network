@@ -97,7 +97,7 @@ const confirmedSignUp = () => {
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
       `
-    });   
+    });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -140,7 +140,7 @@ const logo = document.getElementById("timelineLogo");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
-  
+
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
@@ -148,7 +148,7 @@ const createPost = () => {
       <p>⚠️Agrega contenido para publicar</p>
       </section>
       `
-  } else { 
+  } else {
     let postName = localStorage.getItem("postName");
   posts.add({
        name: postName,
@@ -177,7 +177,7 @@ let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
-  usersColl.doc(logedUser.uid).get().then(doc => {  
+  usersColl.doc(logedUser.uid).get().then(doc => {
     publishPost();
   });
   })
@@ -204,7 +204,7 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
- 
+
     //Edit buttons functionality
 
     let editButtons = document.querySelectorAll(".editButton");
@@ -271,12 +271,12 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
  }
- 
+
 End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-  
+
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
@@ -293,13 +293,13 @@ const profileUser =  () => {
   <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
   </section>`
 
-   
+
 
   document.getElementById("acceptButton").addEventListener("click", () => {
     let userName = document.getElementById("registerName").value;
    localStorage.setItem("postName", userName);
     let postName = localStorage.getItem("postName");
-    db.collection("users").doc(logedUser.uid).set({ 
+    db.collection("users").doc(logedUser.uid).set({
       name: postName,
       email: logedUser.email,
       uid: logedUser.uid
@@ -321,7 +321,7 @@ const profileUser =  () => {
     });
 
   });
-  
+
 
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
@@ -418,7 +418,7 @@ tablaBase.push({
 tablaBase.on("value", (snapshot) => {
   let chat = document.querySelector(".chat");
   chat.innerHTML="";
-  /*let plantilla = 
+  /*let plantilla =
  snapshot.forEach((e) => {
    let objeto = e.val();
     if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
