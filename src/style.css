@@ -64,7 +64,7 @@ body,html {
 }
 /* End - Login Section */
 /* Beginning - Register Modal */
-.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.registerVerificationCode,.acceptButton {
+.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.acceptButtonProfile,.editedName {
   width: 100%;
   padding: 12px 20px;
   margin: 6px 0;
@@ -74,7 +74,7 @@ body,html {
   box-sizing: border-box;
   font-size: 12px;
 }
-.registerConfirm,.acceptButton,.deleteAcceptButton,.deleteCancelButton{
+.registerConfirm,.acceptButtonProfile,.deleteAcceptButton,.deleteCancelButton{
   width: 100%;
   background-color: #5BD9CC;
   color: rgb(12, 0, 0);
@@ -84,7 +84,7 @@ body,html {
   border-radius: 4px;
   cursor: pointer;
 }
-.registerConfirm:hover,.acceptButton:hover,.deleteAcceptButton:hover,.deleteCancelButton:hover {
+.registerConfirm:hover,.acceptButtonProfile:hover,.deleteAcceptButton:hover,.deleteCancelButton:hover {
   background-color: #2A2740;
   color: #FFFF;
 }
@@ -99,7 +99,7 @@ body,html {
 .registerPassword:valid,.registerConfirmPassword:valid {
   border: 1px solid #5BD9CC;
 }
-.registerCorrectMessage,.deleteConfirmationMessage {
+.registerCorrectMessage,.enterContentMessage,.deleteConfirmationMessage,.deleteAcceptedMessage,.userProfileEditedMessage {
   text-align: center;
 }
 .correctRegisterImage,.correctDeletingImage {
@@ -236,14 +236,14 @@ display: inline;
   margin-left: 8%;
   margin-right: 65%;
 }
-.likesCounter{
+.likesCounter {
   margin-left: 8%;
   margin-right: 70%;
 }
 /* End timeline post box style */
 
 /* Start - Modal profile user*/
-.profileUserImage{
+.profileUserImage {
   text-align: center;
 }
 #bigLogout, #bigProfile, #editText, #bigContacts {

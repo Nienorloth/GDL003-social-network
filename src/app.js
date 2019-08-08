@@ -10,12 +10,17 @@ let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 let logedUser = "";
 let postUser = "";
+let userEmail = "";
+let userNameRegistered = "";
 
 /* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
     logedUser = user;
-    console.log("Usuario inició sesión", user);
+    db.collection("users").doc(user.uid).get().then(doc => {
+      userEmail = logedUser.email;
+      userNameRegistered = doc.data().name;
+    })
     document.getElementById("timeLine").style.display="block";
     document.getElementById("loginPage").style.display="none";
     toPost.value= "";
@@ -32,6 +37,7 @@ const login = () => {
   let email = document.getElementById("email-input").value;
   let password = document.getElementById("password-input").value;
   let loginError = document.getElementById("loginError");
+  let loginForm = document.getElementById("loginForm");
   if (email.length === 0 || password.length === 0) {
     loginError.innerHTML = "⚠️ Debe completar todos los campos";
   } else {
@@ -56,12 +62,12 @@ const login = () => {
 
 /* Beginning-Sign up function to open sign up modal and reset input values */
 const signUp = () => {
-  const loginForm = document.getElementById("loginForm");
-  const signUpForm = document.getElementById("signupForm");
-  loginForm.reset();
-  signUpForm.reset();
+  let loginForm = document.getElementById("loginForm");
+  let signUpForm = document.getElementById("signupForm");
   loginError.innerHTML = "";
   registerError.innerHTML = "";
+  loginForm.reset();
+  signUpForm.reset();
   document.getElementById('id01').style.display="block";
 };
 /* End-Sign up function to open sign up modal and reset input values */
@@ -72,13 +78,10 @@ const confirmedSignUp = () => {
   let registeredName = document.getElementById("registerName").value;
   let registeredPassword = document.getElementById("registerPassword").value;
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
-  let verificationCode = document.getElementById("registerVerificationCode").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
-  localStorage.setItem("postName", registeredName);
 
-
-  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
     registerError.innerHTML = "⚠️ La contraseña no coincide";
@@ -144,20 +147,18 @@ const createPost = () => {
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
-  `<section class="enterContent">
-      <p>⚠️Agrega contenido para publicar</p>
+  `<section class="enterContentMessage">
+      <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
   } else {
-    let postName = localStorage.getItem("postName");
   posts.add({
-       name: postName,
+       name: userNameRegistered,
        text: toPost.value,
        date: new Date(),
        likes: new Date(),
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
-
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -177,13 +178,11 @@ let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
-  usersColl.doc(logedUser.uid).get().then(doc => {
     publishPost();
-  });
-  })
+});
 
 //Beggining-Function to show posts
-  const publishPost = () => {
+const publishPost = () => {
    array.forEach(doc => {
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
@@ -251,17 +250,56 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
           day: new Date().toLocaleDateString(),
           hour: new Date().toLocaleTimeString()
         });
-      }
+      };
+      
+     /* Begining-Delete post function, identifying post ID */
+     let deleteButtons = document.querySelectorAll(".deleteButton");
+     for(let i = 0; i < deleteButtons.length; i++) {
+      deleteButtons[i].addEventListener('click', () => {
+        const postId = event.target.id;
+        //Creating and showing delete Modal
+        document.getElementById('id01').style.display="block";
+        let deleteModal = document.getElementById("w3-form");
+        deleteModal.innerHTML = `
+          <section class="deleteConfirmationMessage">
+          <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
+          <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
+          <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
+          </section>
+          `;
+          //Adding functionality to the Accept and Cancel modal buttons
+          let deleteAccept = document.getElementById("deleteAcceptButton");
+          let deleteCancel = document.getElementById("deleteCancelButton");
+          deleteAccept.addEventListener("click", () => {
+            deletePost(postId);
+          });
+          deleteCancel.addEventListener("click", () => {
+            document.getElementById('id01').style.display="none";
+          });
+        })
+      };
+      /* End-Delete post function, identifying post ID */
     });
+    };
+    //End-Function to show published posts
 
-
-
-});
-}
-
-  //End-Function to show published posts
-
-
+/* Begining-Delete post function */
+const deletePost = (id) => {
+   posts.doc(id).delete().then(function () {
+     //Creating and showing delete accepted Modal
+     document.getElementById('id01').style.display="block";
+     let deleteModal = document.getElementById("w3-form");
+     deleteModal.innerHTML = `
+     <section class="deleteAcceptedMessage">
+     <p> La publicación se ha eliminado </p>
+     <img src="Images/greenCheck.png" alt="Eiminación correcta" class="correctDeletingImage"/>
+     </section>
+     `;
+   }).catch(function (error) {
+     console.error("Error deleting post", error);
+   });
+ };
+/* End-Delete post function */
 
 /*Beggining- Function to count I like
 
@@ -276,52 +314,40 @@ End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
-  <section class='profileUser'>
-  <h4>Editar perfil de usuario.</h4>
+  <section class="profileUser">
   <div class ="profileUserImage">
-  <label class='btn btn-file'>
-  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
-  <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
+  <h4>Editar perfil de usuario</h4>
+  <label class="btn btn-file">
+  <input type ="file" name="fichero" values ="" id ="fichero" class ="hidden" style="display:none">
+  <img  class = "imageUser" id="imageUser" src="Images/user.png" style="text-align:center">
   </label>
   </div>
-  <label for="registerNamel">Nombre:</label>
-  <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
-  <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
-  </section>`
+  <p id="userProfileName"></p>
+  <p id="userProfileEmail"></p>
+  <label for="editedName">Editar nombre de usuario:</label>
+  <input type="text" id="editedName" class="editedName" placeholder="Ingrese nombre de usuario...">
+  <button type="button" id="acceptButtonProfile" class="acceptButtonProfile">Guardar</button>
+  </section>`;
+  document.getElementById("userProfileName").innerHTML = "Nombre: " + userNameRegistered;
+  document.getElementById("userProfileEmail").innerHTML = "Correo: " + userEmail;
 
-
-
-  document.getElementById("acceptButton").addEventListener("click", () => {
-    let userName = document.getElementById("registerName").value;
-   localStorage.setItem("postName", userName);
-    let postName = localStorage.getItem("postName");
+  document.getElementById("acceptButtonProfile").addEventListener("click", () => {
+    let userName = document.getElementById("editedName").value;
     db.collection("users").doc(logedUser.uid).set({
-      name: postName,
+      name: userName,
       email: logedUser.email,
       uid: logedUser.uid
     }).then(() => {
       profileModal.innerHTML = `
-      <section class='profileUser'>
-      <h4>Editar perfil de usuario.</h4>
-      <div class ="profileUserImage">
-      <label class='btn btn-file'>
-      <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
-      <span>${logedUser.name}</span>
-      </label>
-      </div>
-      <label for="registerNamel">Nombre:</label>
-      <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
-      <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
+      <section class='userProfileEditedMessage'>
+        <p>Sus datos se han actualizado correctamente.</p>
+        <img src="Images/greenCheck.png" alt="Actualización de datos de usuario correcta" class="correctRegisterImage"/>
       </section>`
-      postUser = logedUser.name;
     });
-
   });
-
 
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
@@ -367,7 +393,6 @@ const addContacts =  () =>{
   </section>`
 
 }
-
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */
@@ -428,7 +453,6 @@ tablaBase.on("value", (snapshot) => {
     }
  })*/
 })
-
 }
 
 document.getElementById("loginButton").addEventListener("click", login);
