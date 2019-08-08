@@ -155,8 +155,7 @@ const createPost = () => {
        name: postName,
        text: toPost.value,
        date: new Date(),
-       //likes: likesCounter.value
-       likes: new Date(),
+       likes: totalLikes,
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
 
@@ -169,7 +168,6 @@ const createPost = () => {
 });
 
 toPost.value="";
-likesCounter.value="";
 }
 };
 //End-Function to save post on db
@@ -202,7 +200,7 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
       <section id="${doc.id}icons" class="postIcons">
-        <img id="${ doc.id }" class="likeButton" onClick="clickLikes()" src="Images/like.png" alt="like" width="20">
+        <img id="${ doc.id }" class="likeButton"  src="Images/like.png" alt="like" width="20">
         <span class = "likesCounter"><a id="likesCounter">0</a></span>
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
@@ -263,16 +261,33 @@ const updatePost = () => {
 
  //End-Function to show published posts
 
-/*Beggining- Function to count I like
+/*Beggining- Function to count I like*/
 
-let likeButton = document.querySelectorAll(".likeButton");
+let likesButtons = document.querySelectorAll(".likeButton");
+likesButtons.forEach(likeButton => {
+  likeButton.addEventListener("click", () => {
+    let totalLike = document.getElementById(likeButton.id + "like");
 
-  const countLikes = () => {
-    let likesCounter = 0;
-      likesCounter += 1;
-        document.getElementById("likesCounter").innerHTML = likesCounter;
-    }
-End- Function to count I like*/
+
+  function countLike(ref) {
+    let myLike = posts.doc(likeButton.id);
+  console.log(myLike);
+    return ref.collection('post').get().then(snapshot => {
+        let totalLikes = 0;
+        snapshot.forEach(doc => {
+          totalLikes += doc.data().likes;
+        });
+
+        return totalLikes;
+    });
+}
+  
+  });
+});
+
+/*Beggining- Function to count I like*/
+
+/*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
