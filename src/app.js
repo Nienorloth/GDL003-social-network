@@ -1,5 +1,5 @@
 
-/* Make a variable with each of the Firebase tools and universal variables */
+/* Make a variable with each of the Firebase tools */
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -10,12 +10,17 @@ let posts = db.collection("posts");
 const toPost = document.getElementById("toPost");
 let logedUser = "";
 let postUser = "";
+let userEmail = "";
+let userNameRegistered = "";
 
-/* Listen when user auth status changes */
+/* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
     logedUser = user;
-    console.log("Usuario inició sesión", user);
+    db.collection("users").doc(user.uid).get().then(doc => {
+      userEmail = logedUser.email;
+      userNameRegistered = doc.data().name;
+    })
     document.getElementById("timeLine").style.display="block";
     document.getElementById("loginPage").style.display="none";
     toPost.value= "";
@@ -32,6 +37,7 @@ const login = () => {
   let email = document.getElementById("email-input").value;
   let password = document.getElementById("password-input").value;
   let loginError = document.getElementById("loginError");
+  let loginForm = document.getElementById("loginForm");
   if (email.length === 0 || password.length === 0) {
     loginError.innerHTML = "⚠️ Debe completar todos los campos";
   } else {
@@ -56,12 +62,12 @@ const login = () => {
 
 /* Beginning-Sign up function to open sign up modal and reset input values */
 const signUp = () => {
-  const loginForm = document.getElementById("loginForm");
-  const signUpForm = document.getElementById("signupForm");
-  loginForm.reset();
-  signUpForm.reset();
+  let loginForm = document.getElementById("loginForm");
+  let signUpForm = document.getElementById("signupForm");
   loginError.innerHTML = "";
   registerError.innerHTML = "";
+  loginForm.reset();
+  signUpForm.reset();
   document.getElementById('id01').style.display="block";
 };
 /* End-Sign up function to open sign up modal and reset input values */
@@ -72,10 +78,10 @@ const confirmedSignUp = () => {
   let registeredName = document.getElementById("registerName").value;
   let registeredPassword = document.getElementById("registerPassword").value;
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
-  let verificationCode = document.getElementById("registerVerificationCode").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
-  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
+
+  if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
     registerError.innerHTML = "⚠️ La contraseña no coincide";
@@ -94,7 +100,7 @@ const confirmedSignUp = () => {
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
       `
-      });
+    });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -114,7 +120,6 @@ const confirmedSignUp = () => {
 const icons = document.getElementById("myLinks");
 const topNav = document.querySelector(".topnav");
 const barsBack = document.querySelector(".icon");
-const profile = document.getElementById("port");
 const logo = document.getElementById("timelineLogo");
 
   const mobileMenu =  () => {
@@ -122,14 +127,12 @@ const logo = document.getElementById("timelineLogo");
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "inline";
       logo.style.display = "inline";
 
     } else {
       icons.style.display = "block";
       topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
-      profile.style.display = "none";
       logo.style.display = "none";
       icons.style.height= "28vh";
     }
@@ -137,7 +140,6 @@ const logo = document.getElementById("timelineLogo");
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
 //Beggining-Function to save post on db
-const toLike = document.getElementById("toLike");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
@@ -145,20 +147,18 @@ const createPost = () => {
   if (toPost.value.length === 0) {
   document.getElementById("id01").style.display="block";
   postModal.innerHTML =
-  `<section class="enterContent">
+  `<section class="enterContentMessage">
       <p>⚠️ Agrega contenido para publicar</p>
       </section>
       `
   } else {
-    let postName = localStorage.getItem("postName");
   posts.add({
-       name: postName,
+       name: userNameRegistered,
        text: toPost.value,
        date: new Date(),
        //likes: totalLikes,
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
-
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -169,7 +169,7 @@ const createPost = () => {
 
 toPost.value="";
 }
-};
+}
 //End-Function to save post on db
 
 let userName = "";
@@ -178,13 +178,11 @@ let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
-  usersColl.doc(logedUser.uid).get().then(doc => {
     publishPost();
-  });
-  })
+});
 
 //Beggining-Function to show posts
-  const publishPost = () => {
+const publishPost = () => {
    array.forEach(doc => {
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
@@ -195,7 +193,7 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
+        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="28" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
@@ -241,28 +239,69 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
           iconsSect.style.display="block";
         })
       });
+      const updatePost = () => {
+
+        let myPost = posts.doc(editButton.id);
+        console.log(myPost);
+        let editPostInput = document.getElementById(editButton.id + "input");
+        myPost.set({
+          text: editPostInput.value,
+          date: new Date(),
+          day: new Date().toLocaleDateString(),
+          hour: new Date().toLocaleTimeString()
+        });
+      };
+      
+     /* Begining-Delete post function, identifying post ID */
+     let deleteButtons = document.querySelectorAll(".deleteButton");
+     for(let i = 0; i < deleteButtons.length; i++) {
+      deleteButtons[i].addEventListener('click', () => {
+        const postId = event.target.id;
+        //Creating and showing delete Modal
+        document.getElementById('id01').style.display="block";
+        let deleteModal = document.getElementById("w3-form");
+        deleteModal.innerHTML = `
+          <section class="deleteConfirmationMessage">
+          <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
+          <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
+          <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
+          </section>
+          `;
+          //Adding functionality to the Accept and Cancel modal buttons
+          let deleteAccept = document.getElementById("deleteAcceptButton");
+          let deleteCancel = document.getElementById("deleteCancelButton");
+          deleteAccept.addEventListener("click", () => {
+            deletePost(postId);
+          });
+          deleteCancel.addEventListener("click", () => {
+            document.getElementById('id01').style.display="none";
+          });
+        })
+      };
+      /* End-Delete post function, identifying post ID */
     });
+    };
+    //End-Function to show published posts
 
-const updatePost = () => {
-
-  let myPost = posts.doc(editButton.id);
-  console.log(myPost);
-  let editPostInput = document.getElementById(editButton.id + "input");
-  myPost.set({
-    text: editPostInput.value,
-    date: new Date(),
-    day: new Date().toLocaleDateString(),
-    hour: new Date().toLocaleTimeString()
-  });
-}
-
-});
-};
-
- //End-Function to show published posts
+/* Begining-Delete post function */
+const deletePost = (id) => {
+   posts.doc(id).delete().then(function () {
+     //Creating and showing delete accepted Modal
+     document.getElementById('id01').style.display="block";
+     let deleteModal = document.getElementById("w3-form");
+     deleteModal.innerHTML = `
+     <section class="deleteAcceptedMessage">
+     <p> La publicación se ha eliminado </p>
+     <img src="Images/greenCheck.png" alt="Eiminación correcta" class="correctDeletingImage"/>
+     </section>
+     `;
+   }).catch(function (error) {
+     console.error("Error deleting post", error);
+   });
+ };
+/* End-Delete post function */
 
 /*Beggining- Function to count I like*/
-
 let likesButtons = document.querySelectorAll(".likeButton");
 likesButtons.forEach(likeButton => {
   likeButton.addEventListener("click", () => {
@@ -284,58 +323,44 @@ likesButtons.forEach(likeButton => {
   
   });
 });
-
-/*Beggining- Function to count I like*/
-
 /*End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
-  <section class='profileUser'>
-  <h4>Editar perfil de usuario.</h4>
+  <section class="profileUser">
   <div class ="profileUserImage">
-  <label class='btn btn-file'>
-  <input type = 'file' name= 'fichero' values = '' id = 'fichero' class = 'hidden'>
-  <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
+  <h4>Editar perfil de usuario</h4>
+  <label class="btn btn-file">
+  <input type ="file" name="fichero" values ="" id ="fichero" class ="hidden" style="display:none">
+  <img  class = "imageUser" id="imageUser" src="Images/user.png" style="text-align:center">
   </label>
   </div>
-  <label for="registerNamel">Nombre:</label>
-  <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
-  <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
-  </section>`
+  <p id="userProfileName"></p>
+  <p id="userProfileEmail"></p>
+  <label for="editedName">Editar nombre de usuario:</label>
+  <input type="text" id="editedName" class="editedName" placeholder="Ingrese nombre de usuario...">
+  <button type="button" id="acceptButtonProfile" class="acceptButtonProfile">Guardar</button>
+  </section>`;
+  document.getElementById("userProfileName").innerHTML = "Nombre: " + userNameRegistered;
+  document.getElementById("userProfileEmail").innerHTML = "Correo: " + userEmail;
 
-
-  document.getElementById("acceptButton").addEventListener("click", () => {
-    let userName = document.getElementById("registerName").value;
-   localStorage.setItem("postName", userName);
-    let postName = localStorage.getItem("postName");
+  document.getElementById("acceptButtonProfile").addEventListener("click", () => {
+    let userName = document.getElementById("editedName").value;
     db.collection("users").doc(logedUser.uid).set({
-      name: postName,
+      name: userName,
       email: logedUser.email,
       uid: logedUser.uid
     }).then(() => {
       profileModal.innerHTML = `
-      <section class='profileUser'>
-      <h4>Editar perfil de usuario.</h4>
-      <div class ="profileUserImage">
-      <label class='btn btn-file'>
-      <img  class = 'imageUser' id='imageUser' src='Images/user.png' style= 'text-align:center'>
-      <span>${logedUser.name}</span>
-      </label>
-      </div>
-      <label for="registerNamel">Nombre:</label>
-      <input type="text" id="registerName" class="registerName" name="registerName" placeholder="Ingrese Nombre de usuario...">
-      <button type="button" id="acceptButton" class="acceptButton">Aceptar</button>
+      <section class='userProfileEditedMessage'>
+        <p>Sus datos se han actualizado correctamente.</p>
+        <img src="Images/greenCheck.png" alt="Actualización de datos de usuario correcta" class="correctRegisterImage"/>
       </section>`
-      postUser = logedUser.name;
     });
-
   });
-
 
   fichero.addEventListener('change', function(e){
     for (let i = 0; i < e.target.files.length; i++){
@@ -377,10 +402,10 @@ const addContacts =  () =>{
   let  contactsModal= document.getElementById("w3-form");
   contactsModal.innerHTML = `
   <section class='profileUser'>
-  <h4>Agregar nuevos contactos.</h4>
+  <h4>Selecciona un contacto para enviar mensaje.</h4>
   </section>`
 
-};
+}
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */
@@ -398,11 +423,59 @@ const logOut = () => {
 };
 /* End-Log out function to close user session */
 
+//Beginning chat function
+const chatFunction = () => {
+let tablaBase = database.ref("chat");
+let postModal = document.getElementById("w3-form");
+document.getElementById("id01").style.display="block";
+  postModal.innerHTML =
+  `<section class="enterContent">
+      <label>Conversación privada con profesor asignado</label>
+      <p class="chat"></p>
+      <input type="text" id="mensaje" size="35" placeholder="Escribe aquí tu mensaje..."></input>
+      <input class="submit" value="Enviar" id="enviarMensaje"></input>
+      </section>
+      `
+
+document.getElementById("enviarMensaje").addEventListener("click", () => {
+let mensaje = document.getElementById("mensaje");
+let formatoFecha = new Date();
+let d = formatoFecha.getUTCDate();
+let m = formatoFecha.getMonth()+1;
+let y = formatoFecha.getFullYear();
+let h = formatoFecha.getHours();
+let min = formatoFecha.getMinutes();
+let fecha = d + "/" + m + "/" + y + "/" + h + ":" + min;
+
+tablaBase.push({
+ Nombre: postUser,
+ Mensaje: mensaje.value,
+ Fecha: fecha
+})
+});
+tablaBase.on("value", (snapshot) => {
+  let chat = document.querySelector(".chat");
+  chat.innerHTML="";
+  /*let plantilla =
+ snapshot.forEach((e) => {
+   let objeto = e.val();
+    if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
+    plantilla.clone().appendTo(chat);
+    chatplantilla.show(10);
+
+    }
+ })*/
+})
+}
+
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("profileButton").addEventListener("click", profileUser);
-document.getElementById("contactsButton").addEventListener("click",addContacts);
-document.getElementById("settingsButton").addEventListener("click", logOut);
+document.getElementById("bigProfile").addEventListener("click", profileUser);
+document.getElementById("contactsButton").addEventListener("click", chatFunction);
+document.getElementById("bigContacts").addEventListener("click", chatFunction);
+document.getElementById("bigLogout").addEventListener("click", logOut);
+document.getElementById("logoutButton").addEventListener("click", logOut);

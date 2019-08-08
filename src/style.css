@@ -64,7 +64,7 @@ body,html {
 }
 /* End - Login Section */
 /* Beginning - Register Modal */
-.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.registerVerificationCode,.acceptButton {
+.registerEmail,.registerName,.registerPassword,.registerConfirmPassword,.acceptButtonProfile,.editedName {
   width: 100%;
   padding: 12px 20px;
   margin: 6px 0;
@@ -74,7 +74,7 @@ body,html {
   box-sizing: border-box;
   font-size: 12px;
 }
-.registerConfirm,.acceptButton,.deleteAcceptButton,.deleteCancelButton{
+.registerConfirm,.acceptButtonProfile,.deleteAcceptButton,.deleteCancelButton{
   width: 100%;
   background-color: #5BD9CC;
   color: rgb(12, 0, 0);
@@ -84,7 +84,7 @@ body,html {
   border-radius: 4px;
   cursor: pointer;
 }
-.registerConfirm:hover,.acceptButton:hover,.deleteAcceptButton:hover,.deleteCancelButton:hover {
+.registerConfirm:hover,.acceptButtonProfile:hover,.deleteAcceptButton:hover,.deleteCancelButton:hover {
   background-color: #2A2740;
   color: #FFFF;
 }
@@ -99,7 +99,7 @@ body,html {
 .registerPassword:valid,.registerConfirmPassword:valid {
   border: 1px solid #5BD9CC;
 }
-.registerCorrectMessage,.deleteConfirmationMessage {
+.registerCorrectMessage,.enterContentMessage,.deleteConfirmationMessage,.deleteAcceptedMessage,.userProfileEditedMessage {
   text-align: center;
 }
 .correctRegisterImage,.correctDeletingImage {
@@ -169,6 +169,9 @@ body,html {
 #timelinePosted {
   margin-top: 10%;
 }
+.pubPost {
+  box-sizing: content-box;
+}
 .publishedPosts {
   margin: 8% 8% 0% 8%;
   font-size: 15px;
@@ -219,8 +222,9 @@ body,html {
   border-radius: 3px;
   border-width: 2px;
   border-style: double;
+  text-align: center;
   }
-  .submit {
+ .submit {
     font-size: 12px;
     margin-left: 8%;
     margin-top: 1.5%;
@@ -232,14 +236,143 @@ display: inline;
   margin-left: 8%;
   margin-right: 65%;
 }
-.likesCounter{
+.likesCounter {
   margin-left: 8%;
   margin-right: 70%;
 }
 /* End timeline post box style */
 
 /* Start - Modal profile user*/
-.profileUserImage{
+.profileUserImage {
   text-align: center;
 }
+#bigLogout, #bigProfile, #editText, #bigContacts {
+  display:none;
+}
 /* End - Modal profile user*/
+
+@media screen and (min-width: 1024px) {
+/*Beginning - time line*/
+#toPost {
+  float: center;
+  font-size: 20px;
+}
+#postButton {
+  font-size: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+#postButton:hover {
+ background-color: #c46d12;
+ cursor: pointer;
+}
+.editButton {
+  margin-right: -10px;
+  width: 25px;
+  margin-top: -5%;
+}
+.editButton:hover, .deleteButton:hover {
+  width: 45px;
+  padding: .5%;
+  cursor: pointer;
+}
+.deleteButton {
+  float: right;
+  margin-right: 10%;
+  width: 25px;
+  margin-top: -2.5%;
+}
+.likeButton {
+ width: 25px;
+ margin-left: 10%;
+ margin-top: 2%;
+}
+.likeButton:hover {
+ width: 30px;
+ cursor: pointer;
+}
+#likesCounter {
+ font-size: 20px;
+ margin-left: 3%;
+}
+.pubPost {
+font-size: 20px;
+margin-top: -2%;
+}
+.date {
+padding: -10%;
+margin-bottom: -1%;
+}
+#name {
+padding-top: 1%;
+}
+#menuIcon {
+display: none;
+}
+#profText {
+display: block;
+}
+#editText {
+display: block;
+color: black;
+}
+#bigLogout, #bigProfile, #bigContacts {
+display:inline;
+float: left;
+background-color: #5BD9CC;
+padding: 2%;
+border: none;
+border-radius: 5px;
+font-size: 17px;
+}
+#bigLogout:hover, #bigProfile:hover, #bigContacts:hover {
+background-color: #49ada4;
+color: black;
+cursor: pointer;
+}
+#timelineLogo {
+float: right;
+margin-right: 4%;
+width: 75px;
+}
+.edit {
+width: 59em;
+font-size: 20px;
+}
+.submit, .cancel {
+font-size: 20px;
+}
+.submit:hover {
+background-color: #c46d12;
+cursor: pointer;
+}
+.cancel:hover {
+background-color: #12111c;
+cursor: pointer;
+}
+/* End - time line */
+
+/* Beginning - Login Section */
+.sociallogo {
+  margin-bottom: 10px;
+  width: 20%;
+}
+.loginform {
+  width: 25%;
+}
+
+/* Beginning - Register Modal*/
+.w3-modal-content {
+  width: 450px;
+  }
+#signupForm {
+  width: 50%;
+  margin: auto;
+}
+/* End- Register Modal */
+
+#mensaje {
+  ;
+}
+}
