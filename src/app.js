@@ -1,5 +1,5 @@
 
-/* Make a variable with each of the Firebase tools and universal variables */
+/* Make a variable with each of the Firebase tools */
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -13,7 +13,7 @@ let postUser = "";
 let userEmail = "";
 let userNameRegistered = "";
 
-/* Listen when user auth status changes */
+/* Listen when auth status changes */
 auth.onAuthStateChanged(user => {
   if (user) {
     logedUser = user;
@@ -80,6 +80,7 @@ const confirmedSignUp = () => {
   let confirmedPassword = document.getElementById("registerConfirmPassword").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
+
   if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
@@ -99,7 +100,7 @@ const confirmedSignUp = () => {
       <img src="Images/greenCheck.png" alt="Creación de usuario correcta" class="correctRegisterImage"/>
       </section>
       `
-      });
+    });
     })
     .catch(error => {
       let errorCode = error.code;
@@ -119,7 +120,6 @@ const confirmedSignUp = () => {
 const icons = document.getElementById("myLinks");
 const topNav = document.querySelector(".topnav");
 const barsBack = document.querySelector(".icon");
-const profile = document.getElementById("port");
 const logo = document.getElementById("timelineLogo");
 
   const mobileMenu =  () => {
@@ -127,14 +127,12 @@ const logo = document.getElementById("timelineLogo");
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "inline";
       logo.style.display = "inline";
 
     } else {
       icons.style.display = "block";
       topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
-      profile.style.display = "none";
       logo.style.display = "none";
       icons.style.height= "28vh";
     }
@@ -142,7 +140,6 @@ const logo = document.getElementById("timelineLogo");
 /* End-Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 
 //Beggining-Function to save post on db
-const toLike = document.getElementById("toLike");
 
 const createPost = () => {
   let postModal = document.getElementById("w3-form");
@@ -159,11 +156,9 @@ const createPost = () => {
        name: userNameRegistered,
        text: toPost.value,
        date: new Date(),
-       //likes: likesCounter.value
        likes: new Date(),
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
-
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -173,9 +168,8 @@ const createPost = () => {
 });
 
 toPost.value="";
-likesCounter.value="";
 }
-};
+}
 //End-Function to save post on db
 
 let userName = "";
@@ -184,9 +178,7 @@ let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
-  //usersColl.doc(logedUser.uid).get().then(doc => {
     publishPost();
-  //});
 });
 
 //Beggining-Function to show posts
@@ -201,7 +193,7 @@ const publishPost = () => {
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
+        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="28" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
@@ -247,49 +239,49 @@ const publishPost = () => {
           iconsSect.style.display="block";
         })
       });
-    });
+      const updatePost = () => {
 
-  const updatePost = () => {
-    let myPost = posts.doc(editButton.id);
-    console.log(myPost);
-    let editPostInput = document.getElementById(editButton.id + "input");
-    myPost.set({
-      text: editPostInput.value,
-      date: new Date(),
-      day: new Date().toLocaleDateString(),
-      hour: new Date().toLocaleTimeString()
+        let myPost = posts.doc(editButton.id);
+        console.log(myPost);
+        let editPostInput = document.getElementById(editButton.id + "input");
+        myPost.set({
+          text: editPostInput.value,
+          date: new Date(),
+          day: new Date().toLocaleDateString(),
+          hour: new Date().toLocaleTimeString()
+        });
+      };
+      
+     /* Begining-Delete post function, identifying post ID */
+     let deleteButtons = document.querySelectorAll(".deleteButton");
+     for(let i = 0; i < deleteButtons.length; i++) {
+      deleteButtons[i].addEventListener('click', () => {
+        const postId = event.target.id;
+        //Creating and showing delete Modal
+        document.getElementById('id01').style.display="block";
+        let deleteModal = document.getElementById("w3-form");
+        deleteModal.innerHTML = `
+          <section class="deleteConfirmationMessage">
+          <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
+          <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
+          <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
+          </section>
+          `;
+          //Adding functionality to the Accept and Cancel modal buttons
+          let deleteAccept = document.getElementById("deleteAcceptButton");
+          let deleteCancel = document.getElementById("deleteCancelButton");
+          deleteAccept.addEventListener("click", () => {
+            deletePost(postId);
+          });
+          deleteCancel.addEventListener("click", () => {
+            document.getElementById('id01').style.display="none";
+          });
+        })
+      };
+      /* End-Delete post function, identifying post ID */
     });
-};
-  /* Begining-Delete post function, identifying post ID */
-  let deleteButtons = document.querySelectorAll(".deleteButton");
-  for(let i = 0; i < deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener('click', () => {
-      const postId = event.target.id;
-      //Creating and showing delete Modal
-      document.getElementById('id01').style.display="block";
-      let deleteModal = document.getElementById("w3-form");
-      deleteModal.innerHTML = `
-      <section class="deleteConfirmationMessage">
-      <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
-      <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
-      <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
-      </section>
-      `;
-      //Adding functionality to the Accept and Cancel modal buttons
-      let deleteAccept = document.getElementById("deleteAcceptButton");
-      let deleteCancel = document.getElementById("deleteCancelButton");
-      deleteAccept.addEventListener("click", () => {
-        deletePost(postId);
-      });
-      deleteCancel.addEventListener("click", () => {
-        document.getElementById('id01').style.display="none";
-      });
-    })
-  };
-  /* End-Delete post function, identifying post ID */
-});
-};
- //End-Function to show published posts
+    };
+    //End-Function to show published posts
 
 /* Begining-Delete post function */
 const deletePost = (id) => {
@@ -311,18 +303,17 @@ const deletePost = (id) => {
 
 /*Beggining- Function to count I like
 
-let likeButton = document.querySelectorAll(".likeButton");
-
-  const countLikes = () => {
     let likesCounter = 0;
+
+    const clickLikes =() => {
       likesCounter += 1;
         document.getElementById("likesCounter").innerHTML = likesCounter;
-    }
+ }
+
 End- Function to count I like*/
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
-
   document.getElementById('id01').style.display="block";
   let  profileModal= document.getElementById("w3-form");
   profileModal.innerHTML = `
@@ -398,10 +389,10 @@ const addContacts =  () =>{
   let  contactsModal= document.getElementById("w3-form");
   contactsModal.innerHTML = `
   <section class='profileUser'>
-  <h4>Agregar nuevos contactos.</h4>
+  <h4>Selecciona un contacto para enviar mensaje.</h4>
   </section>`
 
-};
+}
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */
@@ -419,11 +410,59 @@ const logOut = () => {
 };
 /* End-Log out function to close user session */
 
+//Beginning chat function
+const chatFunction = () => {
+let tablaBase = database.ref("chat");
+let postModal = document.getElementById("w3-form");
+document.getElementById("id01").style.display="block";
+  postModal.innerHTML =
+  `<section class="enterContent">
+      <label>Conversación privada con profesor asignado</label>
+      <p class="chat"></p>
+      <input type="text" id="mensaje" size="35" placeholder="Escribe aquí tu mensaje..."></input>
+      <input class="submit" value="Enviar" id="enviarMensaje"></input>
+      </section>
+      `
+
+document.getElementById("enviarMensaje").addEventListener("click", () => {
+let mensaje = document.getElementById("mensaje");
+let formatoFecha = new Date();
+let d = formatoFecha.getUTCDate();
+let m = formatoFecha.getMonth()+1;
+let y = formatoFecha.getFullYear();
+let h = formatoFecha.getHours();
+let min = formatoFecha.getMinutes();
+let fecha = d + "/" + m + "/" + y + "/" + h + ":" + min;
+
+tablaBase.push({
+ Nombre: postUser,
+ Mensaje: mensaje.value,
+ Fecha: fecha
+})
+});
+tablaBase.on("value", (snapshot) => {
+  let chat = document.querySelector(".chat");
+  chat.innerHTML="";
+  /*let plantilla =
+ snapshot.forEach((e) => {
+   let objeto = e.val();
+    if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
+    plantilla.clone().appendTo(chat);
+    chatplantilla.show(10);
+
+    }
+ })*/
+})
+}
+
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("profileButton").addEventListener("click", profileUser);
-document.getElementById("contactsButton").addEventListener("click",addContacts);
-document.getElementById("settingsButton").addEventListener("click", logOut);
+document.getElementById("bigProfile").addEventListener("click", profileUser);
+document.getElementById("contactsButton").addEventListener("click", chatFunction);
+document.getElementById("bigContacts").addEventListener("click", chatFunction);
+document.getElementById("bigLogout").addEventListener("click", logOut);
+document.getElementById("logoutButton").addEventListener("click", logOut);
