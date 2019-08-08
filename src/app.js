@@ -75,6 +75,9 @@ const confirmedSignUp = () => {
   let verificationCode = document.getElementById("registerVerificationCode").value;
   let registerError = document.getElementById("registerError");
   let registerModal = document.getElementById("w3-form");
+  localStorage.setItem("postName", registeredName);
+
+
   if (registeredEmail.length === 0 || registeredName.length === 0 || registeredPassword.length === 0 || confirmedPassword.length === 0 || verificationCode.length === 0) {
     registerError.innerHTML = "⚠️ Debe llenar todos los campos";
   } else if (registeredPassword != confirmedPassword) {
@@ -114,7 +117,6 @@ const confirmedSignUp = () => {
 const icons = document.getElementById("myLinks");
 const topNav = document.querySelector(".topnav");
 const barsBack = document.querySelector(".icon");
-const profile = document.getElementById("port");
 const logo = document.getElementById("timelineLogo");
 
   const mobileMenu =  () => {
@@ -122,14 +124,12 @@ const logo = document.getElementById("timelineLogo");
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "inline";
       logo.style.display = "inline";
 
     } else {
       icons.style.display = "block";
       topNav.style.height = "28vh";
       barsBack.style.backgroundColor="#DDD";
-      profile.style.display = "none";
       logo.style.display = "none";
       icons.style.height= "28vh";
     }
@@ -194,7 +194,7 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
         </footer>
       </section>
       <section>
-        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="32" style="display:none"></input>
+        <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="28" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
@@ -240,25 +240,24 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
           iconsSect.style.display="block";
         })
       });
+      const updatePost = () => {
+
+        let myPost = posts.doc(editButton.id);
+        console.log(myPost);
+        let editPostInput = document.getElementById(editButton.id + "input");
+        myPost.set({
+          text: editPostInput.value,
+          date: new Date(),
+          day: new Date().toLocaleDateString(),
+          hour: new Date().toLocaleTimeString()
+        });
+      }
     });
 
-const updatePost = () => {
 
-  let myPost = posts.doc(editButton.id);
-  console.log(myPost);
-  let editPostInput = document.getElementById(editButton.id + "input");
-  myPost.set({
-    text: editPostInput.value,
-    date: new Date(),
-    day: new Date().toLocaleDateString(),
-    hour: new Date().toLocaleTimeString()
-  });
-}
 
 });
 }
-
-
 
   //End-Function to show published posts
 
@@ -364,7 +363,7 @@ const addContacts =  () =>{
   let  contactsModal= document.getElementById("w3-form");
   contactsModal.innerHTML = `
   <section class='profileUser'>
-  <h4>Agregar nuevos contactos.</h4>
+  <h4>Selecciona un contacto para enviar mensaje.</h4>
   </section>`
 
 }
@@ -386,11 +385,60 @@ const logOut = () => {
 };
 /* End-Log out function to close user session */
 
+//Beginning chat function
+const chatFunction = () => {
+let tablaBase = database.ref("chat");
+let postModal = document.getElementById("w3-form");
+document.getElementById("id01").style.display="block";
+  postModal.innerHTML =
+  `<section class="enterContent">
+      <label>Conversación privada con profesor asignado</label>
+      <p class="chat"></p>
+      <input type="text" id="mensaje" size="35" placeholder="Escribe aquí tu mensaje..."></input>
+      <input class="submit" value="Enviar" id="enviarMensaje"></input>
+      </section>
+      `
+
+document.getElementById("enviarMensaje").addEventListener("click", () => {
+let mensaje = document.getElementById("mensaje");
+let formatoFecha = new Date();
+let d = formatoFecha.getUTCDate();
+let m = formatoFecha.getMonth()+1;
+let y = formatoFecha.getFullYear();
+let h = formatoFecha.getHours();
+let min = formatoFecha.getMinutes();
+let fecha = d + "/" + m + "/" + y + "/" + h + ":" + min;
+
+tablaBase.push({
+ Nombre: postUser,
+ Mensaje: mensaje.value,
+ Fecha: fecha
+})
+});
+tablaBase.on("value", (snapshot) => {
+  let chat = document.querySelector(".chat");
+  chat.innerHTML="";
+  /*let plantilla = 
+ snapshot.forEach((e) => {
+   let objeto = e.val();
+    if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
+    plantilla.clone().appendTo(chat);
+    chatplantilla.show(10);
+
+    }
+ })*/
+})
+
+}
+
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
 document.getElementById("registerConfirm").addEventListener("click", confirmedSignUp);
 document.querySelector(".icon").addEventListener("click", mobileMenu);
 document.getElementById("postButton").addEventListener("click", createPost);
 document.getElementById("profileButton").addEventListener("click", profileUser);
-document.getElementById("contactsButton").addEventListener("click",addContacts);
-document.getElementById("settingsButton").addEventListener("click", logOut);
+document.getElementById("bigProfile").addEventListener("click", profileUser);
+document.getElementById("contactsButton").addEventListener("click", chatFunction);
+document.getElementById("bigContacts").addEventListener("click", chatFunction);
+document.getElementById("bigLogout").addEventListener("click", logOut);
+document.getElementById("logoutButton").addEventListener("click", logOut);
