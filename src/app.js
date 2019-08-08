@@ -251,7 +251,7 @@ const publishPost = () => {
           hour: new Date().toLocaleTimeString()
         });
       };
-      
+
      /* Begining-Delete post function, identifying post ID */
      let deleteButtons = document.querySelectorAll(".deleteButton");
      for(let i = 0; i < deleteButtons.length; i++) {
@@ -280,7 +280,7 @@ const publishPost = () => {
       };
       /* End-Delete post function, identifying post ID */
     });
-    };
+  });
     //End-Function to show published posts
 
 /* Begining-Delete post function */
@@ -320,7 +320,7 @@ likesButtons.forEach(likeButton => {
         return totalLikes;
     });
 }*/
-  
+
   });
 });
 /*End- Function to count I like*/
