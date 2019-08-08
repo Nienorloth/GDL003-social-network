@@ -155,7 +155,7 @@ const createPost = () => {
        name: postName,
        text: toPost.value,
        date: new Date(),
-       likes: totalLikes,
+       //likes: totalLikes,
        day: new Date().toLocaleDateString(),
        hour: new Date().toLocaleTimeString()
 
@@ -266,21 +266,21 @@ const updatePost = () => {
 let likesButtons = document.querySelectorAll(".likeButton");
 likesButtons.forEach(likeButton => {
   likeButton.addEventListener("click", () => {
-    let totalLike = document.getElementById(likeButton.id + "like");
+    //let totalLike = document.getElementById(likeButton.id + "like");
 
 
-  function countLike(ref) {
+  /*function countLike(ref) {
     let myLike = posts.doc(likeButton.id);
   console.log(myLike);
     return ref.collection('post').get().then(snapshot => {
         let totalLikes = 0;
         snapshot.forEach(doc => {
-          totalLikes += doc.data().likes;
+          totalLikes += doc.data().count;
         });
 
         return totalLikes;
     });
-}
+}*/
   
   });
 });
