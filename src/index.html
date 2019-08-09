@@ -36,9 +36,6 @@
                 <div id="w3-form" class="w3-form">
                   <form id="signupForm">
                     <span id="registerError" class="registerError" aria-live="polite"></span>
-                    <label for="registerName">Nombre:</label>
-                    <input type="name" id="registerName" class="registerName" name="registerName" placeholder="Ingrese su nombre...">
-
                     <label for="registerEmail">Correo electrónico:</label>
                     <input type="email" id="registerEmail" class="registerEmail" name="registerEmail" placeholder="Ingrese correo electrónico...">
 
@@ -64,30 +61,31 @@
     <section id="timeLine" class="timeLine">
          <!--Beginning of mobile menu-->
          <header class="topnav">
-           <!-- Navigation links (hidden by default) -->
-           <section id="myLinks">
-             <div id= "imagenFirebase"></div>
-             <a href="#" id="profileButton"><img src="Images/icon-user.png">  Perfil de usuario</a>
-             <a href="#" id="contactsButton"><img src="Images/chat.png" width="27">  Mensaje privado</a>
-             <a href="#" id="logoutButton"><img src="Images/logout.png" width="27">  Cerrar sesión</a>
-            </section>
-            <button id="bigLogout"><img src="Images/logout.png" width="40"> Cerrar sesión</button>
-            <button id="bigProfile"><img src="Images/icon-user.png" width="40">  Editar perfil</button>
-            <button id="bigContacts"><img src="Images/chat.png" width="38">  Mensaje privado</button>
-            <img class="iconsShown" id="timelineLogo" src="Images/sociallogo.png" alt="Logo" width="60">
-            <!-- "mobile menu" / "Bar icon" to toggle the navigation links -->
-            <a class="icon" id="menuIcon"><img src="Images/icon-menu.png"></a>
-        </header>
+          <!-- Navigation links (hidden by default) -->
+          <section id="myLinks">
+            <div id= "imagenFirebase"></div>
+            <a href="#" id="profileButton"><img src="Images/icon-user.png">  Perfil de usuario</a>
+            <a href="#" id="contactsButton"><img src="Images/chat.png" width="27">  Mensaje privado</a>
+            <a href="#" id="logoutButton"><img src="Images/logout.png" width="27">  Cerrar sesión</a>
+           </section>
+           <button id="bigLogout"><img src="Images/logout.png" width="40"> Cerrar sesión</button>
+           <button id="bigProfile"><img src="Images/icon-user.png" width="40">  Editar perfil</button>
+           <button id="bigContacts"><img src="Images/chat.png" width="38">  Mensaje privado</button>
+           <img class="iconsShown" id="timelineLogo" src="Images/sociallogo.png" alt="Logo" width="60">
+           <!-- "mobile menu" / "Bar icon" to toggle the navigation links -->
+           <a class="icon" id="menuIcon"><img src="Images/icon-menu.png"></a>
+       </header>
         <!--End of mobile menu-->
+
         <!--Beginning Post section-->
         <section id="createPost" >
         <textarea id="toPost" placeholder="Escribe una publicación..." class="posts"> </textarea>
         </section>
         <section class="postButtons">
-         <!-- <select id="privacyButton">
-            <option id="friendsPost" value="friends">Personal docente</option>
-            <option id ="publicPost" value="public">Comunidad escolar</option>
-          </select> -->
+          <select id="privacyButton">
+            <option id="friendsPost" value="friends">Amigos</option>
+            <option id ="publicPost" value="public">Público</option>
+          </select>
           <button id="postButton">Publicar</button>
         </section>
         <section id="timelinePosted">
