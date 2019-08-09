@@ -181,6 +181,13 @@ posts.orderBy("date", "desc").onSnapshot(function(doc){
     publishPost();
 });
 
+db.collection("users").onSnapshot( () => {
+  userNameRegistered = document.getElementById("editedName").value;
+
+});
+
+
+
 //Beggining-Function to show posts
 const publishPost = () => {
    array.forEach(doc => {
@@ -245,6 +252,7 @@ const publishPost = () => {
         console.log(myPost);
         let editPostInput = document.getElementById(editButton.id + "input");
         myPost.set({
+          name: userNameRegistered,
           text: editPostInput.value,
           date: new Date(),
           day: new Date().toLocaleDateString(),
@@ -281,6 +289,7 @@ const publishPost = () => {
       /* End-Delete post function, identifying post ID */
     });
   });
+}
     //End-Function to show published posts
 
 /* Begining-Delete post function */
@@ -316,7 +325,6 @@ likesButtons.forEach(likeButton => {
         snapshot.forEach(doc => {
           totalLikes += doc.data().count;
         });
-
         return totalLikes;
     });
 }*/
@@ -397,15 +405,15 @@ const profileUser =  () => {
 /*End-Edit profile user function */
 
 /*Beginning - Function add contacts */
-const addContacts =  () =>{
-  document.getElementById('id01').style.display="block";
-  let  contactsModal= document.getElementById("w3-form");
-  contactsModal.innerHTML = `
-  <section class='profileUser'>
-  <h4>Selecciona un contacto para enviar mensaje.</h4>
-  </section>`
+// const addContacts =  () =>{
+//   document.getElementById('id01').style.display="block";
+//   let  contactsModal= document.getElementById("w3-form");
+//   contactsModal.innerHTML = `
+//   <section class='profileUser'>
+//   <h4>Selecciona un contacto para enviar mensaje.</h4>
+//   </section>`
 
-}
+// }
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */
@@ -431,8 +439,8 @@ document.getElementById("id01").style.display="block";
   postModal.innerHTML =
   `<section class="enterContent">
       <label>Conversación privada con profesor asignado</label>
-      <p class="chat"></p>
-      <input type="text" id="mensaje" size="35" placeholder="Escribe aquí tu mensaje..."></input>
+      <p id="chat"></p>
+      <input type="text" id="mensaje" size="20" placeholder="Escribe aquí tu mensaje..."></input>
       <input class="submit" value="Enviar" id="enviarMensaje"></input>
       </section>
       `
@@ -452,6 +460,7 @@ tablaBase.push({
  Mensaje: mensaje.value,
  Fecha: fecha
 })
+mensaje.value = "";
 });
 tablaBase.on("value", (snapshot) => {
   let chat = document.querySelector(".chat");
@@ -462,7 +471,6 @@ tablaBase.on("value", (snapshot) => {
     if((objeto.Mensaje!=null)&&(objeto.Nombre!=null)){
     plantilla.clone().appendTo(chat);
     chatplantilla.show(10);
-
     }
  })*/
 })

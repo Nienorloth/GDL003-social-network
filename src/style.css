@@ -177,8 +177,9 @@ body,html {
   font-size: 15px;
   height: 20%;
   float: center;
-  padding: 0% 2% 2% 2%
-}
+  padding: 0% 2% 2% 2%;
+  box-sizing: content-box;
+  }
 #name {
   padding-top: 7px;
 }
@@ -250,9 +251,80 @@ display: inline;
   display:none;
 }
 /* End - Modal profile user*/
+.enterContent {
+  text-align: center;
+}
+#mensaje {
+  width: 15em;
+}
 
+/*Beginning - tablet media queries*/
+@media screen and (min-width: 760px) and (max-width: 1023px) {
+  .sociallogo {
+    margin-bottom: 30px;
+    width: 60%;
+  }
+  .loginform {
+    width: 38%;
+  }
+  #menuIcon {
+    display: none;
+    }
+  #bigLogout, #bigProfile, #bigContacts {
+    display:inline;
+    float: left;
+    background-color: #5BD9CC;
+    padding: 2%;
+    border: none;
+    border-radius: 5px;
+    font-size: 17px;
+    margin-top: 1.5%;
+      }
+  #timelineLogo {
+    float: right;
+    width: 75px;
+    margin: 1% 4% 1% 0;
+     }
+   #postButton {
+   font-size: 15px;
+  }
+  .edit {
+   width: 43em;
+   font-size: 15px;
+    }
+   .submit, .cancel {
+    font-size: 15px;
+    }
+  .enterContent {
+   text-align: center;
+  }
+  #mensaje {
+    width: 29em;
+  }
+  
+}
+/* End tablet media queries */
+
+/*Beginning - desktop media queries*/
 @media screen and (min-width: 1024px) {
-/*Beginning - time line*/
+
+  /*Beginning - time line*/
+#menuIcon {
+  display: none;
+  }
+#bigLogout, #bigProfile, #bigContacts {
+  display:inline;
+  float: left;
+  background-color: #5BD9CC;
+  padding: 2%;
+  border: none;
+  border-radius: 5px;
+  font-size: 17px;    }
+#timelineLogo {
+  float: right;
+  margin-right: 4%;
+  width: 75px;
+   }
 #toPost {
   float: center;
   font-size: 20px;
@@ -307,9 +379,7 @@ margin-bottom: -1%;
 #name {
 padding-top: 1%;
 }
-#menuIcon {
-display: none;
-}
+
 #profText {
 display: block;
 }
@@ -317,24 +387,10 @@ display: block;
 display: block;
 color: black;
 }
-#bigLogout, #bigProfile, #bigContacts {
-display:inline;
-float: left;
-background-color: #5BD9CC;
-padding: 2%;
-border: none;
-border-radius: 5px;
-font-size: 17px;
-}
 #bigLogout:hover, #bigProfile:hover, #bigContacts:hover {
 background-color: #49ada4;
 color: black;
 cursor: pointer;
-}
-#timelineLogo {
-float: right;
-margin-right: 4%;
-width: 75px;
 }
 .edit {
 width: 59em;
@@ -362,7 +418,7 @@ cursor: pointer;
   width: 25%;
 }
 
-/* Beginning - Register Modal*/
+/* Beginning - modals*/
 .w3-modal-content {
   width: 450px;
   }
@@ -370,9 +426,19 @@ cursor: pointer;
   width: 50%;
   margin: auto;
 }
-/* End- Register Modal */
-
-#mensaje {
-  ;
+.deleteConfirmationMessage {
+width: 450px;
+text-align: center;
+margin: auto;
 }
+.enterContent {
+  font-size: 20px;
+}
+.enterContent {
+  text-align: center;
+ }
+ #mensaje {
+   width: 35em;
+ }
+/* End-  Modals */
 }
