@@ -163,14 +163,10 @@ body,html {
 .posts, .publishedPosts, .edit {
   background-color: #E3E1DF;
   margin: 0% 8% 0% 8%;
-  height: 20%;
   float: center;
 }
 #timelinePosted {
   margin-top: 10%;
-}
-.pubPost {
-  box-sizing: content-box;
 }
 .publishedPosts {
   margin: 8% 8% 0% 8%;
@@ -178,10 +174,17 @@ body,html {
   height: 20%;
   float: center;
   padding: 0% 2% 2% 2%;
+<<<<<<< HEAD
   box-sizing: content-box;
   }
+=======
+  text-align: justify;
+  word-wrap: break-word;
+}
+>>>>>>> cfb57659eee8acc7d435edbd3f495e22f1eac876
 #name {
   padding-top: 7px;
+  font-weight: bold;
 }
 .edit {
   margin-left: 8%;
@@ -226,20 +229,32 @@ body,html {
   text-align: center;
   }
  .submit {
-    font-size: 12px;
-    margin-left: 8%;
-    margin-top: 1.5%;
+  font-size: 12px;
+  margin-left: 8%;
+  margin-top: 1.5%;
   }
 .postIcons {
-display: inline;
+  display: grid;
+  grid-template-columns: 8% 8% 67.5% 8% 8%;
+  margin: auto;
+  margin-top: 6px;
+  margin-bottom: 15px;
+  width: 84%;
 }
 .likeButton {
-  margin-left: 8%;
-  margin-right: 65%;
+  grid-column-start: 1;
 }
-.likesCounter {
-  margin-left: 8%;
-  margin-right: 70%;
+.likesCounterResult {
+  grid-column-start: 2;
+}
+.editButton {
+  grid-column-start: 4;
+}
+.deleteButton {
+  grid-column-start: 5;
+}
+#mensaje {
+ width: 15em;
 }
 /* End timeline post box style */
 
@@ -329,6 +344,9 @@ display: inline;
   float: center;
   font-size: 20px;
 }
+.postIcons {
+  grid-template-columns: 4% 4% 84% 4% 4%;
+}
 #postButton {
   font-size: 20px;
   display: flex;
@@ -340,9 +358,7 @@ display: inline;
  cursor: pointer;
 }
 .editButton {
-  margin-right: -10px;
   width: 25px;
-  margin-top: -5%;
 }
 .editButton:hover, .deleteButton:hover {
   width: 45px;
@@ -351,26 +367,21 @@ display: inline;
 }
 .deleteButton {
   float: right;
-  margin-right: 10%;
   width: 25px;
-  margin-top: -2.5%;
 }
 .likeButton {
  width: 25px;
- margin-left: 10%;
- margin-top: 2%;
 }
 .likeButton:hover {
  width: 30px;
  cursor: pointer;
 }
-#likesCounter {
+.likesCounterResult {
  font-size: 20px;
- margin-left: 3%;
 }
-.pubPost {
+.pubPost,.pubPostName {
 font-size: 20px;
-margin-top: -2%;
+margin-top: 0.5px;
 }
 .date {
 padding: -10%;
@@ -426,6 +437,7 @@ cursor: pointer;
   width: 50%;
   margin: auto;
 }
+<<<<<<< HEAD
 .deleteConfirmationMessage {
 width: 450px;
 text-align: center;
@@ -442,3 +454,55 @@ margin: auto;
  }
 /* End-  Modals */
 }
+=======
+/* End- Register Modal */
+
+#mensaje {
+  width: 35em;
+}
+}
+@media screen and (min-width: 760px) and (max-width: 1023px) {
+ .sociallogo {
+   margin-bottom: 30px;
+   width: 60%;
+ }
+ .loginform {
+   width: 38%;
+ }
+ #menuIcon {
+   display: none;
+   }
+ #bigLogout, #bigProfile, #bigContacts {
+   display:inline;
+   float: left;
+   background-color: #5BD9CC;
+   padding: 2%;
+   border: none;
+   border-radius: 5px;
+   font-size: 17px;
+   margin-top: 1.5%;
+     }
+ #timelineLogo {
+   float: right;
+   width: 75px;
+   margin: 1% 4% 1% 0;
+    }
+  #postButton {
+  font-size: 15px;
+ }
+ .edit {
+  width: 43em;
+  font-size: 15px;
+   }
+  .submit, .cancel {
+   font-size: 15px;
+   }
+ .enterContent {
+  text-align: center;
+ }
+ #mensaje {
+   width: 29em;
+ }
+}
+/* End tablet media queries */
+>>>>>>> cfb57659eee8acc7d435edbd3f495e22f1eac876

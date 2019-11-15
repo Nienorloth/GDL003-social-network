@@ -156,9 +156,9 @@ const createPost = () => {
        name: userNameRegistered,
        text: toPost.value,
        date: new Date(),
-       //likes: totalLikes,
        day: new Date().toLocaleDateString(),
-       hour: new Date().toLocaleTimeString()
+       hour: new Date().toLocaleTimeString(),
+       likes: 0
 })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -169,16 +169,19 @@ const createPost = () => {
 
 toPost.value="";
 }
-}
+};
 //End-Function to save post on db
 
-let userName = "";
-let array = "";
 
+let array = "";
 posts.orderBy("date", "desc").onSnapshot(function(doc){
   document.getElementById("timelinePosted").innerHTML = "";
   array = doc.docs;
     publishPost();
+    //countPostLikes();
+});
+db.collection("users").onSnapshot( () => {
+ userNameRegistered = document.getElementById("editedName").value;
 });
 
 db.collection("users").onSnapshot( () => {
@@ -193,20 +196,20 @@ const publishPost = () => {
    array.forEach(doc => {
     document.getElementById("timelinePosted").innerHTML+=
      `<section id="${ doc.id }post" class="publishedPosts">
-        <p id="name" class="pubPost">${ doc.data().name }  dice:</p>
-        <p  class="pubPost">${ doc.data().text }</p>
+        <p id="name" class="pubPostName">${ doc.data().name } dice:</p>
+        <p class="pubPost">${ doc.data().text }</p>
         <footer>
           <p class="date">Publicado el ${ doc.data().day } ${ doc.data().hour }</p>
         </footer>
       </section>
-      <section>
+      <section class="editedPosts">
         <input id="${ doc.id }input" type="text" value="${ doc.data().text }" class="edit" size="28" style="display:none"></input>
         <input id="${ doc.id }submit" class="submit" style="display:none" type="submit" value="Guardar cambios">
         <button id="${ doc.id }cancel" class="cancel" style="display:none">Cancelar</button>
       </section>
       <section id="${doc.id}icons" class="postIcons">
         <img id="${ doc.id }" class="likeButton"  src="Images/like.png" alt="like" width="20">
-        <span class = "likesCounter"><a id="likesCounter">0</a></span>
+        <span id="${ doc.id }likes" class ="likesCounterResult">${ doc.data().likes }</span>
         <img id="${ doc.id }"class="editButton" src="Images/icon-edit.png" alt="editar" width="20"/>
         <img id="${ doc.id }" class="deleteButton" src="Images/icon-garbage.png"alt="eliminar" width="20">
       </section>`
@@ -235,7 +238,7 @@ const publishPost = () => {
           inputSub.style.display="none";
           cancelButton.style.display="none";
           postToEdit.style.display="block";
-          iconsSect.style.display="block";
+          iconsSect.style.display="grid";
           updatePost();
           });
         cancelButton.addEventListener("click", () => {
@@ -243,54 +246,70 @@ const publishPost = () => {
           inputSub.style.display="none";
           cancelButton.style.display="none";
           postToEdit.style.display="block";
-          iconsSect.style.display="block";
+          iconsSect.style.display="grid";
         })
       });
+      /* Begining-Update post function */
       const updatePost = () => {
-
         let myPost = posts.doc(editButton.id);
-        console.log(myPost);
         let editPostInput = document.getElementById(editButton.id + "input");
+        let likesCounterResult = document.getElementById(editButton.id + "likes").innerHTML;
         myPost.set({
           name: userNameRegistered,
           text: editPostInput.value,
           date: new Date(),
           day: new Date().toLocaleDateString(),
-          hour: new Date().toLocaleTimeString()
+          hour: new Date().toLocaleTimeString(),
+          likes: parseInt(likesCounterResult)
         });
       };
-
-     /* Begining-Delete post function, identifying post ID */
-     let deleteButtons = document.querySelectorAll(".deleteButton");
-     for(let i = 0; i < deleteButtons.length; i++) {
+      /* End-Update post function */
+    });
+    /* Begining-Delete post function, identifying post ID */
+    let deleteButtons = document.querySelectorAll(".deleteButton");
+    for(let i = 0; i < deleteButtons.length; i++) {
       deleteButtons[i].addEventListener('click', () => {
         const postId = event.target.id;
         //Creating and showing delete Modal
         document.getElementById('id01').style.display="block";
         let deleteModal = document.getElementById("w3-form");
         deleteModal.innerHTML = `
-          <section class="deleteConfirmationMessage">
-          <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
-          <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
-          <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
-          </section>
-          `;
-          //Adding functionality to the Accept and Cancel modal buttons
-          let deleteAccept = document.getElementById("deleteAcceptButton");
-          let deleteCancel = document.getElementById("deleteCancelButton");
-          deleteAccept.addEventListener("click", () => {
-            deletePost(postId);
-          });
-          deleteCancel.addEventListener("click", () => {
-            document.getElementById('id01').style.display="none";
-          });
-        })
-      };
-      /* End-Delete post function, identifying post ID */
-    });
+        <section class="deleteConfirmationMessage">
+        <p>⚠️ ¿Seguro que desea eliminar la publicación?</p>
+        <button type="button" id="deleteAcceptButton" class="deleteAcceptButton">Aceptar</button>
+        <button type="button" id="deleteCancelButton" class="deleteCancelButton">Cancelar</button>
+        </section>
+        `;
+        //Adding functionality to the Accept and Cancel modal buttons
+        let deleteAccept = document.getElementById("deleteAcceptButton");
+        let deleteCancel = document.getElementById("deleteCancelButton");
+        deleteAccept.addEventListener("click", () => {
+          deletePost(postId);
+        });
+        deleteCancel.addEventListener("click", () => {
+          document.getElementById('id01').style.display="none";
+        });
+      })
+    };
+    /* End-Delete post function, identifying post ID */
+
+    /* Begining-Likes function, identifying post ID */
+    let likeButtons = document.querySelectorAll(".likeButton");
+    for(let i = 0; i < likeButtons.length; i++) {
+      likeButtons[i].addEventListener('click', () => {
+        const postId = event.target.id;
+        countPostLikes(postId);
+      });
+    };
+    /* End-Likes function, identifying post ID */
   });
+<<<<<<< HEAD
 }
     //End-Function to show published posts
+=======
+};
+//End-Function to show published posts
+>>>>>>> cfb57659eee8acc7d435edbd3f495e22f1eac876
 
 /* Begining-Delete post function */
 const deletePost = (id) => {
@@ -310,6 +329,7 @@ const deletePost = (id) => {
  };
 /* End-Delete post function */
 
+<<<<<<< HEAD
 /*Beggining- Function to count I like*/
 let likesButtons = document.querySelectorAll(".likeButton");
 likesButtons.forEach(likeButton => {
@@ -332,6 +352,13 @@ likesButtons.forEach(likeButton => {
   });
 });
 /*End- Function to count I like*/
+=======
+/*Beggining- Function to count likes*/
+const countPostLikes = (id) => {
+  posts.doc(id).update("likes", firebase.firestore.FieldValue.increment(1));
+};
+/*End- Function to count likes*/
+>>>>>>> cfb57659eee8acc7d435edbd3f495e22f1eac876
 
 /* Beginning-Edit profile user function*/
 const profileUser =  () => {
@@ -405,6 +432,7 @@ const profileUser =  () => {
 /*End-Edit profile user function */
 
 /*Beginning - Function add contacts */
+<<<<<<< HEAD
 // const addContacts =  () =>{
 //   document.getElementById('id01').style.display="block";
 //   let  contactsModal= document.getElementById("w3-form");
@@ -414,6 +442,16 @@ const profileUser =  () => {
 //   </section>`
 
 // }
+=======
+const addContacts =  () => {
+  document.getElementById('id01').style.display="block";
+  let  contactsModal= document.getElementById("w3-form");
+  contactsModal.innerHTML = `
+  <section class='profileUser'>
+  <h4>Selecciona un contacto para enviar mensaje.</h4>
+  </section>`
+};
+>>>>>>> cfb57659eee8acc7d435edbd3f495e22f1eac876
 /*End-Function add contacts */
 
 /* Beginning-Log out function to close user session */
@@ -425,7 +463,6 @@ const logOut = () => {
       icons.style.display = "none";
       topNav.style.height = "12vh";
       barsBack.style.backgroundColor="#5BD9CC";
-      profile.style.display = "inline";
       logo.style.display = "inline";
   });
 };
@@ -474,7 +511,7 @@ tablaBase.on("value", (snapshot) => {
     }
  })*/
 })
-}
+};
 
 document.getElementById("loginButton").addEventListener("click", login);
 document.getElementById("registerButton").addEventListener("click", signUp);
